@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, KGModalCloseButtonType){
     KGModalCloseButtonTypeRight
 };
 
-@interface KGModal : NSObject
+@interface KGModal : NSObject<UITextViewDelegate>
 
 // Determines if the modal should dismiss if the user taps outside of the modal view
 // Defaults to YES

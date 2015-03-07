@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
 
-@interface HomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate,UITextFieldDelegate>
+@interface HomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate,UITextViewDelegate>
 
 @end

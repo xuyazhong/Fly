@@ -145,35 +145,7 @@
      */
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
     
-    CGRect welcomeLabelRect = contentView.bounds;
-    welcomeLabelRect.origin.y = 0;
-    welcomeLabelRect.size.height = 20;
-    UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:17];
-    UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
-    welcomeLabel.text = @"发微博";
-    welcomeLabel.font = welcomeLabelFont;
-    welcomeLabel.textAlignment = NSTextAlignmentCenter;
-    welcomeLabel.textColor = [UIColor orangeColor];
-    welcomeLabel.backgroundColor = [UIColor clearColor];
-    welcomeLabel.shadowColor = [UIColor blackColor];
-    welcomeLabel.shadowOffset = CGSizeMake(0, 1);
-    [contentView addSubview:welcomeLabel];
     
-    CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 5);
-    infoLabelRect.origin.y = CGRectGetMaxY(welcomeLabelRect)+5;
-    infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect) + 50;
-    UITextField *infoLabel = [[UITextField alloc] initWithFrame:infoLabelRect];
-    //[infoLabel becomeFirstResponder];
-    infoLabel.delegate = self;
-    infoLabel.tag = 10;
-//    infoLabel.text = @"KGModal is an easy drop in control that allows you to display any view "
-//    "in a modal popup. The modal will automatically scale to fit the content view "
-//    "and center it on screen with nice animations!";
-    //infoLabel.numberOfLines = 6;
-    infoLabel.textColor = [UIColor whiteColor];
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.backgroundColor = [UIColor clearColor];
-    [contentView addSubview:infoLabel];
     
     [[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
 }
@@ -631,16 +603,6 @@
 {
     
 }
-#pragma mark - textfieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    return YES;
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    UITextField *mytext = (UITextField *)[self.view viewWithTag:10];
-    [mytext becomeFirstResponder];
-    [textField becomeFirstResponder];
-    return YES;
-}
+
+
 @end
