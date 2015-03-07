@@ -8,10 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@class SendMessageToWeiboViewController;
 
+@interface AppDelegate : UIResponder <UIApplicationDelegate, WeiboSDKDelegate>
+{
+    NSString* wbtoken;
+    NSString* wbCurrentUserID;
+}
 @property (strong, nonatomic) UIWindow *window;
 
+@property (strong, nonatomic) SendMessageToWeiboViewController *viewController;
+
+@property (strong, nonatomic) NSString *wbtoken;
+@property (strong, nonatomic) NSString *wbCurrentUserID;
 
 @end
 

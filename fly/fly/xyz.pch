@@ -1,0 +1,61 @@
+//
+//  xyz.pch
+//  fly
+//
+//  Created by xyz on 15-3-7.
+//  Copyright (c) 2015年 xuyazhong. All rights reserved.
+//
+
+#ifndef fly_xyz_pch
+#define fly_xyz_pch
+
+/*
+App Key：
+App Secret：
+ */
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "WeiboSDK.h"
+#import "SVProgressHUD.h"
+#import "ShareToken.h"
+
+#define kAppKey         @"2808054411"
+#define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
+#define kAppSecret      @"cdea7b35f1421b640f58f9ca5ed6b465"
+
+#define kURLHomeLine    @"https://api.weibo.com/2/statuses/home_timeline.json"
+#define kURLGroupLists  @"https://api.weibo.com/2/friendships/groups.json"
+#define kURLGroup       @"https://api.weibo.com/2/friendships/groups/timeline.json"
+#define kURLupdate      @"https://api.weibo.com/2/statuses/update.json"
+#define kURLUserTimeLine    @"https://api.weibo.com/2/statuses/user_timeline.json"
+
+#define kURLCreateComment   @"https://api.weibo.com/2/comments/create.json"
+//所有评论
+#define kURLCommentTimeLine    @"https://api.weibo.com/2/comments/timeline.json"
+//发出的评论
+#define kURLCommentByMe        @"https://api.weibo.com/2/comments/by_me.json"
+//收到的评论
+#define kURLCommentToMe        @"https://api.weibo.com/2/comments/to_me.json"
+#define kURLCommentShow @"https://api.weibo.com/2/comments/show.json"
+
+//转发
+#define kURLRepost      @"https://api.weibo.com/2/statuses/repost.json"
+//转发列表
+#define kURLRepostList  @"https://api.weibo.com/2/statuses/repost_timeline.json"
+
+
+//@我的微博
+#define kURLATMe        @"https://api.weibo.com/2/statuses/mentions.json"
+#define kURLATComment   @"https://api.weibo.com/2/comments/mentions.json"
+
+
+#define kURLCheckToken  @"https://api.weibo.com/oauth2/get_token_info"
+#define kURLShowMe      @"https://api.weibo.com/2/users/show.json"
+//收藏列表
+#define kURLFavorites   @"https://api.weibo.com/2/favorites.json"
+
+
+
+#endif
