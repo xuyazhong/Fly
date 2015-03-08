@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <MAMapKit/MAMapKit.h>
 
-@interface LocationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
+@interface LocationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,MAMapViewDelegate>
 
 @end

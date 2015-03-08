@@ -14,6 +14,8 @@
     NSMutableArray *_dataArray;
     UITableView *mytableView;
     CLLocationManager *_location;
+    BOOL isFirst;
+    CGFloat lat,lon;
 }
 @end
 
@@ -23,6 +25,7 @@
 {
     [super viewDidLoad];
     self.title = @"我的位置";
+    isFirst = YES;
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setTitle:@"取消" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
@@ -30,8 +33,11 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
     self.navigationController.navigationItem.leftBarButtonItem = backItem;
     _dataArray = [[NSMutableArray alloc]init];
+    
     _mapView = [[MAMapView alloc]initWithFrame:CGRectMake(0, 64, [DeviceManager currentScreenSize].width, 250)];
+    _mapView.delegate = self;
     [self.view addSubview:_mapView];
+    
     mytableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 250, [DeviceManager currentScreenSize].width, [DeviceManager currentScreenSize].height-250-64)];
     mytableView.delegate = self;
     mytableView.dataSource = self;
@@ -43,6 +49,10 @@
     [_location startUpdatingLocation];
     [_location requestAlwaysAuthorization];
     // Do any additional setup after loading the view.
+}
+-(void)addtomap
+{
+    
 }
 -(void)backAction
 {
@@ -66,7 +76,17 @@
 #pragma mark - cll
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"locations:%@",locations);
+    CLLocation *location = [locations lastObject];
+    if (isFirst)
+    {
+        lat = location.coordinate.latitude;
+        lon = location.coordinate.longitude;
+        [self addtomap];
+        isFirst = NO;
+    }
+    
+    //CLLocationCoordinate2D lc2d = (CLLocationCoordinate2D)locations[0];
+    
 }
 #pragma mark - tableview delegate 
 
