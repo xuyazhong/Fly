@@ -49,6 +49,7 @@
     if (self)
     {
         mytoken = [ShareToken sharedToken];
+        self.window = [[UIWindow alloc]initWithFrame:self.view.bounds];
     }
     return self;
 }
@@ -494,16 +495,17 @@
 
 -(void)zoomInAction:(UIGestureRecognizer *)touchtap
 {
+    [self.view addSubview:self.window];
     _coverView.backgroundColor = [UIColor clearColor];
     [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    self.navigationController.navigationBarHidden = YES;
+    //self.navigationController.navigationBarHidden = YES;
     if (_coverView == nil)
     {
         _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         _coverView.backgroundColor = [UIColor blackColor];
         UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
         [_coverView addGestureRecognizer:tap];
-        [self.view addSubview:_coverView];
+        [self.window addSubview:_coverView];
     }
     
     if (_fullImageView == nil)
@@ -518,7 +520,9 @@
         _fullImageView.userInteractionEnabled = YES;
         [_coverView addSubview:_fullImageView];
     }
-    [self.view bringSubviewToFront:_coverView];
+    CGRect frame =[self.view convertRect:self.view.bounds toView:self.window];
+    _fullImageView.frame = frame;
+    //[self.view bringSubviewToFront:_coverView];
     //NSLog(@"super view:%@",self.tabBarController.view.subviews);
     //MyTabBarViewController *customTabBarVC = [self.tabBarController.view.subviews lastObject];
     //customTabBarVC.view.hidden = YES;
@@ -538,6 +542,7 @@
 //缩小图片
 -(void)zoomOutAction:(UITapGestureRecognizer *)tap
 {
+    
     self.navigationController.navigationBarHidden = NO;
 
     [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
@@ -548,6 +553,7 @@
     }completion:^(BOOL finished)
      {
          [_coverView removeFromSuperview];
+         [self.window removeFromSuperview];
         _coverView = nil;
          _fullImageView =nil;
          

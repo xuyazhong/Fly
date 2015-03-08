@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "fly/HomeViewController.m"
-            timestampString = "447440303.600346"
+            timestampString = "447485636.946176"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "-updateTweet"
             landmarkType = "5">
          </BreakpointContent>

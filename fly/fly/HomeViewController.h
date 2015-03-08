@@ -11,4 +11,6 @@
 
 @interface HomeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate,UITextViewDelegate>
 
+@property (nonatomic,strong) UIWindow *window;
+
 @end
