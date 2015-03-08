@@ -495,7 +495,6 @@
 
 -(void)zoomInAction:(UIGestureRecognizer *)touchtap
 {
-    [self.view addSubview:self.window];
     _coverView.backgroundColor = [UIColor clearColor];
     [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     //self.navigationController.navigationBarHidden = YES;
@@ -505,7 +504,7 @@
         _coverView.backgroundColor = [UIColor blackColor];
         UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
         [_coverView addGestureRecognizer:tap];
-        [self.window addSubview:_coverView];
+        [self.view addSubview:_coverView];
     }
     
     if (_fullImageView == nil)
