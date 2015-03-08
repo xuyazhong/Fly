@@ -13,6 +13,18 @@
 @property (nonatomic,copy) NSString *uid;
 @property (nonatomic,copy) NSString *name;
 @property (nonatomic,copy) NSString *profile_image_url;
+@property (nonatomic,copy) NSString *url;
+//粉丝
+@property (nonatomic,copy) NSString *followers_count;
+//关注
+@property (nonatomic,copy) NSString *friends_count;
+//微博
+@property (nonatomic,copy) NSString *statuses_count;
+//收藏
+@property (nonatomic,copy) NSString *favourites_count;
+@property (nonatomic,copy) NSString *location;
+@property (nonatomic,copy) NSString *mydescription;
+@property (nonatomic,assign) BOOL following;
 //"screen_name": "zaku",
 //"province": "11",
 //"city": "5",

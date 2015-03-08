@@ -62,6 +62,7 @@ typedef NS_ENUM(NSUInteger, KGModalCloseButtonType){
 // Set the content view controller to display in the modal and display with animations
 - (void)showWithContentViewController:(UIViewController *)contentViewController;
 
+-(void)updateTweet;
 // Set the content view controller to display in the modal and whether the modal should animate in
 - (void)showWithContentViewController:(UIViewController *)contentViewController andAnimated:(BOOL)animated;
 

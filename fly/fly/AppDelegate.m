@@ -14,6 +14,8 @@
 #import "AFNetworking.h"
 
 
+
+
 @interface WBBaseRequest ()
 - (void)debugPrint;
 @end
@@ -41,7 +43,11 @@
 {
     // Override point for customization after application launch.
     // Required
-    
+    /*
+    [MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
+    */
+    [MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
+    //[MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kAppKey];
     
@@ -54,6 +60,9 @@
     ShareToken *token = [ShareToken sharedToken];
     NSLog(@"check token:%@",[token tk]);
     [self checkToken:[token tk]];
+    [[ShareToken sharedToken] setUserDetail:[ShareToken readUserInfo]];
+    [SVProgressHUD showProgress:5];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
@@ -73,13 +82,8 @@
     [manager POST:kURLCheckToken parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSString *expire_in = [responseObject objectForKey:@"expire_in"];
-         
-         if ([responseObject isKindOfClass:[NSDictionary class]])
-         {
-             NSLog(@"字典 ");
-             [ShareToken setUserInfo:responseObject];
-             [ShareToken readUserInfo];
-         }
+        [ShareToken setUserInfo:responseObject];
+        [ShareToken readUserInfo];
          
          if ([expire_in integerValue]>0)
          {

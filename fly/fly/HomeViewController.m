@@ -19,6 +19,7 @@
 #import "XYZImageView.h"
 #import "MyTabBarViewController.h"
 #import "KGModal.h"
+#import "ZoomImageView.h"
 
 
 @interface HomeViewController ()
@@ -49,7 +50,6 @@
     if (self)
     {
         mytoken = [ShareToken sharedToken];
-        self.window = [[UIWindow alloc]initWithFrame:self.view.bounds];
     }
     return self;
 }
@@ -139,16 +139,9 @@
 }
 -(void)updateTweet
 {
-    /*
-    UpdateTweetVC *update = [[UpdateTweetVC alloc]init];
-    UINavigationController *upNav = [[UINavigationController alloc]initWithRootViewController:update];
-    [self presentViewController:upNav animated:YES completion:nil];
-     */
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
-    
-    
-    
-    [[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
+    [[KGModal sharedInstance] updateTweet];
+    //UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
+    //[[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
 }
 -(void)listGroup:(UIButton *)btn
 {
@@ -476,17 +469,29 @@
     }
     for (int i=0; i<subArr.count; i++)
     {
+        ZoomImageView *_imageView=[[ZoomImageView alloc] initWithFrame:CGRectMake(85*i, 0, 80, 80)];
+        //UIViewContentModeScaleAspectFit 顯示圖片的原始比例,自適應
+        _imageView.contentMode =UIViewContentModeScaleAspectFit;
+        _imageView.backgroundColor=[UIColor clearColor];
+        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
+        [_imageView addZoom:[bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"]];
+        /*
         XYZImageView *imageview = [[XYZImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
+        
         imageview.userInteractionEnabled  = YES;
         NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];;
+        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
         NSLog(@"bmiddle:%@",imageview.strUrl);
         imageview.contentMode =UIViewContentModeScaleAspectFit;
         [imageview sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
+         */
+        /*
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction:)];
         //imageview.tag = 300+i;
         [imageview addGestureRecognizer:tap];
-        [myview addSubview:imageview];
+         */
+        [myview addSubview:_imageView];
     }
     
 }
@@ -497,7 +502,6 @@
 {
     _coverView.backgroundColor = [UIColor clearColor];
     [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    //self.navigationController.navigationBarHidden = YES;
     if (_coverView == nil)
     {
         _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -506,7 +510,6 @@
         [_coverView addGestureRecognizer:tap];
         [self.view addSubview:_coverView];
     }
-    
     if (_fullImageView == nil)
     {
         XYZImageView *tapimage = (XYZImageView *)touchtap.view;
@@ -519,15 +522,11 @@
         _fullImageView.userInteractionEnabled = YES;
         [_coverView addSubview:_fullImageView];
     }
-    CGRect frame =[self.view convertRect:self.view.bounds toView:self.window];
-    _fullImageView.frame = frame;
-    //[self.view bringSubviewToFront:_coverView];
-    //NSLog(@"super view:%@",self.tabBarController.view.subviews);
-    //MyTabBarViewController *customTabBarVC = [self.tabBarController.view.subviews lastObject];
-    //customTabBarVC.view.hidden = YES;
-    //[customTabBarVC setViewHidden];
+
+    _fullImageView.frame = self.view.bounds;
     
-    [UIView animateWithDuration:0.3f animations:^{
+    [UIView animateWithDuration:0.3f animations:^
+    {
         _fullImageView.frame = [UIScreen mainScreen].bounds;
         
     }completion:^(BOOL finished)
@@ -552,8 +551,7 @@
     }completion:^(BOOL finished)
      {
          [_coverView removeFromSuperview];
-         [self.window removeFromSuperview];
-        _coverView = nil;
+         _coverView = nil;
          _fullImageView =nil;
          
      }];

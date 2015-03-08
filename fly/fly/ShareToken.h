@@ -14,7 +14,9 @@
 -(void)setToken:(NSString *)token;
 -(NSString *)tk;
 +(NSString *)readToken;
++(NSDictionary *)readUserDetail;
 -(void)logout;
+-(void)setUserDetail:(NSDictionary *)dict;
 +(ShareToken *)sharedToken;
 +(void)setUserInfo:(NSDictionary *)dict;
 +(NSDictionary *)readUserInfo;

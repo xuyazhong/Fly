@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MAMapKit/MAMapKit.h>
 
 @class SendMessageToWeiboViewController;
 

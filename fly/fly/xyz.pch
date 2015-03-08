@@ -18,6 +18,7 @@ App Secret：
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "WeiboSDK.h"
+#import "DeviceManager.h"
 #import "SVProgressHUD.h"
 #import "ShareToken.h"
 
@@ -49,7 +50,6 @@ App Secret：
 //@我的微博
 #define kURLATMe        @"https://api.weibo.com/2/statuses/mentions.json"
 #define kURLATComment   @"https://api.weibo.com/2/comments/mentions.json"
-
 
 #define kURLCheckToken  @"https://api.weibo.com/oauth2/get_token_info"
 #define kURLShowMe      @"https://api.weibo.com/2/users/show.json"

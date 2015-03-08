@@ -9,6 +9,7 @@
 #import "KGModal.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AFNetworking.h"
+#import "LocationViewController.h"
 
 CGFloat const kFadeInAnimationDuration = 0.3;
 CGFloat const kTransformPart1AnimationDuration = 0.2;
@@ -106,7 +107,20 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     self.contentViewController = contentViewController;
     [self showWithContentView:contentViewController.view andAnimated:YES];
 }
-
+-(void)updateTweet
+{
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+    [self showWithContentView:contentView andAnimated:YES];
+    
+}
+-(void)commentTweet
+{
+    
+}
+-(void)repostTweet
+{
+    
+}
 - (void)showWithContentView:(UIView *)contentView andAnimated:(BOOL)animated
 {
     CGRect welcomeLabelRect = contentView.bounds;
@@ -129,11 +143,13 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     [cancelBtn setFrame:CGRectMake(0, 0, 40, 20)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn addTarget:self action:@selector(cancelSendTweetAction) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [contentView addSubview:cancelBtn];
     
     UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sendBtn setFrame:CGRectMake(240, 0, 40, 20)];
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     [sendBtn addTarget:self action:@selector(sendTweetAction) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:sendBtn];
     
@@ -143,7 +159,8 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     userNameRect.size.width = 200;
     userNameRect.size.height = 15;
     UILabel *userNameLabel = [[UILabel alloc] initWithFrame:userNameRect];
-    userNameLabel.text = @"许亚中在学习";
+    NSDictionary *userdict = [ShareToken readUserDetail];
+    userNameLabel.text = [userdict objectForKey:@"name"];
     userNameLabel.font = [UIFont boldSystemFontOfSize:13];;
     userNameLabel.textAlignment = NSTextAlignmentCenter;
     userNameLabel.textColor = [UIColor orangeColor];
@@ -168,7 +185,17 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     infoLabel.backgroundColor = [UIColor clearColor];
     [contentView addSubview:infoLabel];
     
+    UIButton *locationBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 190, 22, 22)];
+    [locationBtn setImage:[UIImage imageNamed:@"location"] forState:UIControlStateNormal];
+    [locationBtn setImage:[UIImage imageNamed:@"hasLocation"] forState:UIControlStateSelected];
+    [locationBtn addTarget:self action:@selector(locationAction) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:locationBtn];
     
+    UIButton *imageBtn = [[UIButton alloc]initWithFrame:CGRectMake(45, 190, 22, 22)];
+    [imageBtn setImage:[UIImage imageNamed:@"photo"] forState:UIControlStateNormal];
+    [imageBtn setImage:[UIImage imageNamed:@"hasPhoto"] forState:UIControlStateSelected];
+    [imageBtn addTarget:self action:@selector(addPicture) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:imageBtn];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     self.window.opaque = NO;
@@ -182,7 +209,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     containerViewRect.origin.x = containerViewRect.origin.y = 0;
     containerViewRect.origin.x = round(CGRectGetMidX(self.window.bounds)-CGRectGetMidX(containerViewRect));
     //containerViewRect.origin.y = round(CGRectGetMidY(self.window.bounds)-CGRectGetMidY(containerViewRect));
-    containerViewRect.origin.y = 64;
+    containerViewRect.origin.y = 20;
     KGModalContainerView *containerView = [[KGModalContainerView alloc] initWithFrame:containerViewRect];
     containerView.modalBackgroundColor = self.modalBackgroundColor;
     containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|
@@ -241,6 +268,18 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
             }];
         }
     });
+}
+-(void)locationAction
+{
+    NSLog(@"location");
+    LocationViewController *location = [[LocationViewController alloc]init];
+    UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:location];
+    [self.viewController presentViewController:nvc animated:YES completion:nil];
+    
+}
+-(void)addPicture
+{
+    NSLog(@"picture");
 }
 -(void)cancelSendTweetAction
 {
@@ -339,11 +378,13 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 
 @implementation KGModalViewController
 
-- (void)loadView{
+- (void)loadView
+{
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor clearColor];
@@ -356,11 +397,13 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     self.styleView = styleView;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
     return [[KGModal sharedInstance] shouldRotate];
 }
 
-- (BOOL)shouldAutorotate{
+- (BOOL)shouldAutorotate
+{
     return [[KGModal sharedInstance] shouldRotate];
 }
 
@@ -368,8 +411,10 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 
 @implementation KGModalContainerView
 
-- (instancetype)initWithFrame:(CGRect)frame{
-    if(!(self = [super initWithFrame:frame])){
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if(!(self = [super initWithFrame:frame]))
+    {
         return nil;
     }
     

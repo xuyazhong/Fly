@@ -39,6 +39,46 @@
     [defaults setObject:dict forKey:@"userinfo"];
     [defaults synchronize];
 }
+-(NSDictionary *)readUserDetail
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"userDetail"];
+}
++(NSDictionary *)readUserDetail
+{
+    return [[ShareToken sharedToken] readUserDetail];
+}
+-(void)setUserDetail:(NSDictionary *)dict
+{
+    NSLog(@"user Detail begin");
+    NSDictionary *mydict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[dict objectForKey:@"uid"],@"uid", nil];
+    NSLog(@"mydict:%@",mydict);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *userDict = [[NSMutableDictionary alloc]init];
+    [manager GET:kURLShowMe parameters:mydict success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        [userDict setObject:[responseObject objectForKey:@"idstr"] forKey:@"idstr"];
+        [userDict setObject:[responseObject objectForKey:@"name"] forKey:@"name"];
+        [userDict setObject:[responseObject objectForKey:@"location"] forKey:@"location"];
+        [userDict setObject:[responseObject objectForKey:@"description"] forKey:@"description"];
+        [userDict setObject:[responseObject objectForKey:@"url"] forKey:@"url"];
+        [userDict setObject:[responseObject objectForKey:@"profile_image_url"] forKey:@"profile_image_url"];
+        [userDict setObject:[responseObject objectForKey:@"profile_url"] forKey:@"profile_url"];
+        [userDict setObject:[responseObject objectForKey:@"followers_count"] forKey:@"followers_count"];
+        [userDict setObject:[responseObject objectForKey:@"friends_count"] forKey:@"friends_count"];
+        [userDict setObject:[responseObject objectForKey:@"statuses_count"] forKey:@"statuses_count"];
+        [userDict setObject:[responseObject objectForKey:@"favourites_count"] forKey:@"favourites_count"];
+        [userDict setObject:[responseObject objectForKey:@"domain"] forKey:@"domain"];
+        NSLog(@"userDetail:%@",userDict);
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSLog(@"write userDetail");
+        [defaults setObject:userDict forKey:@"userDetail"];
+        [defaults synchronize];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        NSLog(@"user Detail write failed");
+    }];
+}
 +(NSDictionary *)readUserInfo
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
