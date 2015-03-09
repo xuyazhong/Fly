@@ -1,14 +1,15 @@
 //
-//  TweetCell.m
-//  Weico
+//  MeCell.m
+//  fly
 //
-//  Created by xuyazhong on 15/2/19.
+//  Created by xuyazhong on 15/3/10.
 //  Copyright (c) 2015年 xuyazhong. All rights reserved.
 //
 
-#import "TweetCell.h"
+#import "MeCell.h"
+#import "AFNetworking.h"
 
-@implementation TweetCell
+@implementation MeCell
 
 - (void)awakeFromNib
 {
@@ -23,13 +24,13 @@
     }
     return self;
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
+
 -(void)createUI
 {
     [self createUserInfo];
@@ -45,11 +46,29 @@
     _nickName = [[UILabel alloc]initWithFrame:CGRectMake(70, 10,200, 20)];
     _timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(70, 35, 120, 10)];
     _sourceLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 35, 120, 10)];
+    _deleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_deleBtn setFrame:CGRectMake(270, 10, 30, 20)];
+    [_deleBtn setTitle:@"删除" forState:UIControlStateNormal];
+    [_deleBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    _deleBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [headView addSubview:_deleBtn];
     [headView addSubview:_userInfo];
     [headView addSubview:_nickName];
     [headView addSubview:_timeLabel];
     [headView addSubview:_sourceLabel];
     [self.contentView addSubview:headView];
+}
+-(void)alertshow
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认删除这条微博吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+
+}
+-(void)addDelete
+{
+    
+    [_deleBtn addTarget:self action:@selector(alertshow) forControlEvents:UIControlEventTouchUpInside];
+
 }
 -(void)createTweet
 {
@@ -59,8 +78,8 @@
 }
 -(void)createTweetImage
 {
-//    _tweetImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 150, 80, 80)];
-//    [self.contentView addSubview:_tweetImage];
+    //    _tweetImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 150, 80, 80)];
+    //    [self.contentView addSubview:_tweetImage];
     
     _myscrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 150, 300, 80)];
     _myscrollview.showsVerticalScrollIndicator = NO;
@@ -108,25 +127,21 @@
     [_controlview addSubview:_commentsCount];
     
     
-    //    _forward = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    //    _forward.frame = CGRectMake(0, 0, 100, 30);
-    //    [_forward setTitle:@"转发" forState:UIControlStateNormal];
-    //    [_forward addTarget:self action:@selector(repostAction:) forControlEvents:UIControlEventTouchUpInside];
-    //    [_controlview addSubview:_forward];
-//    
-//    _comment = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    _comment.frame = CGRectMake(100, 0, 100, 30);
-//    [_comment setTitle:@"评论" forState:UIControlStateNormal];
-//    [_comment addTarget:self action:@selector(commentAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [_controlview addSubview:_comment];
-//    
-//    _like = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    _like.frame = CGRectMake(200, 0, 100, 30);
-//    [_like setTitle:@"赞" forState:UIControlStateNormal];
-//    [_like addTarget:self action:@selector(favAction:) forControlEvents:UIControlEventTouchUpInside ];
-//    [_controlview addSubview:_like];
-//    
     
+}
+
+-(void)deleTweet
+{
+    NSLog(@"deletweet");
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"id", nil];
+    [manager POST:kURLDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSLog(@"delete success:%@",responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        NSLog(@"error:%@",error);
+    }];
 }
 -(void)repostAction:(UIButton *)btn
 {
@@ -141,6 +156,20 @@
 -(void)favAction:(UIButton *)btn
 {
     NSLog(@"fav!!");
+
+}
+#pragma mark - alertview delegate 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 1:
+            [self deleTweet];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

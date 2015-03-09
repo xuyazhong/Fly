@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "TweetModel.h"
 #import "DetailViewController.h"
-#import "TweetCell.h"
+#import "MeCell.h"
 #import "XYZImageView.h"
 
 @interface MeViewController ()
@@ -46,13 +46,8 @@
     currentPage = 1;
     currentURL = kURLUserTimeLine;
     _dataArray = [[NSMutableArray alloc]init];
-    //kURLUserTimeLine
-    //https://api.weibo.com/2/statuses/user_timeline.json?access_token=2.00tjcdDC0IVHcFd870066fd90qij7q&uid=1886038381
     self.title = @"我";
-//    UIButton *imageview = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [imageview setFrame:CGRectMake(100, 100, 50, 50)];
-//    [imageview sd_setImageWithURL:[NSURL URLWithString:@"http://ww2.sinaimg.cn/crop.0.0.640.640.1024/706aa96djw8ecemzyzbz8j20hs0hsq38.jpg"] forState:UIControlStateNormal];
-//    [self.view addSubview:imageview];
+
     _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
@@ -225,12 +220,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *myCellID = @"me";
-    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:myCellID];
+    MeCell *cell = [tableView dequeueReusableCellWithIdentifier:myCellID];
+    cell.isDelete = YES;
     if (cell == nil)
     {
-        cell = [[TweetCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellID];
+        cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellID];
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
+    cell.tid = model.tid;
+    [cell addDelete];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
     cell.tweetLabel.text = model.text;
@@ -250,10 +248,7 @@
     [cell.commentsCount setText:[NSString stringWithFormat:@"%@",model.comments_count]];
     [cell.repostsCount setText:[NSString stringWithFormat:@"%@",model.reposts_count]];
     
-    //    cell.retweetView.hidden = YES;
-    //    //cell.retweetLabel.hidden = YES;
-    //    cell.myscrollview.hidden = YES;
-    //    //cell.rescrollview.hidden = YES;
+
     if (model.pic_urls.count>0)
     {
         cell.retweetView.hidden = YES;

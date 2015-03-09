@@ -1,16 +1,17 @@
 //
-//  TweetCell.h
-//  Weico
+//  MeCell.h
+//  fly
 //
-//  Created by xuyazhong on 15/2/19.
+//  Created by xuyazhong on 15/3/10.
 //  Copyright (c) 2015年 xuyazhong. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
+@interface MeCell : UITableViewCell<UIAlertViewDelegate>
 
-@interface TweetCell : UITableViewCell
 @property (strong, nonatomic)  UIImageView *userInfo;
+@property (nonatomic,copy) NSString *tid;
 @property (nonatomic,assign) BOOL isDelete;
 @property (strong, nonatomic)  UILabel *nickName;
 @property (strong, nonatomic)  UILabel *timeLabel;
@@ -28,6 +29,7 @@
 @property (strong, nonatomic)  UIScrollView *rescrollview;
 @property (strong, nonatomic)  UILabel *repostsCount;
 @property (strong, nonatomic)  UILabel *commentsCount;
-
+@property (strong,nonatomic)    UIButton *deleBtn;
+-(void)addDelete;
 
 @end

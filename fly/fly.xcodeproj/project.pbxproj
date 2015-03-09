@@ -15,6 +15,7 @@
 		872E226A1AAA010C00C552F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872E22691AAA010C00C552F7 /* Images.xcassets */; };
 		872E226D1AAA010C00C552F7 /* LaunchScreen1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 872E226B1AAA010C00C552F7 /* LaunchScreen1.xib */; };
 		872E22791AAA010C00C552F7 /* flyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 872E22781AAA010C00C552F7 /* flyTests.m */; };
+		87AFAB391AAE08C100ED5B70 /* MeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87AFAB381AAE08C100ED5B70 /* MeCell.m */; };
 		BC0EE9A31AAD45840020CD74 /* SelectImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */; };
 		BC0EE9A81AAD4B650020CD74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC0EE9AA1AAD4B650020CD74 /* InfoPlist.strings */; };
 		BC0EE9AF1AADAA550020CD74 /* POIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0EE9AE1AADAA550020CD74 /* POIModel.m */; };
@@ -165,6 +166,8 @@
 		872E22721AAA010C00C552F7 /* flyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		872E22771AAA010C00C552F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		872E22781AAA010C00C552F7 /* flyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = flyTests.m; sourceTree = "<group>"; };
+		87AFAB371AAE08C100ED5B70 /* MeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeCell.h; sourceTree = "<group>"; };
+		87AFAB381AAE08C100ED5B70 /* MeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeCell.m; sourceTree = "<group>"; };
 		BC0EE9A11AAD45840020CD74 /* SelectImageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectImageVC.h; sourceTree = "<group>"; };
 		BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectImageVC.m; sourceTree = "<group>"; };
 		BC0EE9A41AAD499D0020CD74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -583,6 +586,8 @@
 				BC0EE9B01AADB32E0020CD74 /* POICell.h */,
 				BC0EE9B11AADB32E0020CD74 /* POICell.m */,
 				BC0EE9B31AADB3B60020CD74 /* POICell.xib */,
+				87AFAB371AAE08C100ED5B70 /* MeCell.h */,
+				87AFAB381AAE08C100ED5B70 /* MeCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -988,6 +993,7 @@
 				BC17CEE61AAAD74200582DBB /* MessageViewController.m in Sources */,
 				BC17CED71AAAD6C500582DBB /* MyTabBarViewController.m in Sources */,
 				BC17CE8E1AAAD49400582DBB /* MJRefreshBaseView.m in Sources */,
+				87AFAB391AAE08C100ED5B70 /* MeCell.m in Sources */,
 				BCD0E5E31AAC64DE00BC20D5 /* ZoomImageView.m in Sources */,
 				BC17CEEF1AAAD79E00582DBB /* MeViewController.m in Sources */,
 				BC17CE811AAAD45600582DBB /* AFURLSessionManager.m in Sources */,
