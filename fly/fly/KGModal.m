@@ -661,6 +661,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"success:%@",responseObject);
             [self hideAnimated:self.animateWhenDismissed];
+            self.hasPic = NO;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"failed:%@",error);
         }];
