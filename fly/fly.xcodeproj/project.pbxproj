@@ -15,6 +15,11 @@
 		872E226A1AAA010C00C552F7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 872E22691AAA010C00C552F7 /* Images.xcassets */; };
 		872E226D1AAA010C00C552F7 /* LaunchScreen1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 872E226B1AAA010C00C552F7 /* LaunchScreen1.xib */; };
 		872E22791AAA010C00C552F7 /* flyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 872E22781AAA010C00C552F7 /* flyTests.m */; };
+		BC0EE9A31AAD45840020CD74 /* SelectImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */; };
+		BC0EE9A81AAD4B650020CD74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC0EE9AA1AAD4B650020CD74 /* InfoPlist.strings */; };
+		BC0EE9AF1AADAA550020CD74 /* POIModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0EE9AE1AADAA550020CD74 /* POIModel.m */; };
+		BC0EE9B21AADB32E0020CD74 /* POICell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0EE9B11AADB32E0020CD74 /* POICell.m */; };
+		BC0EE9B41AADB3B60020CD74 /* POICell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC0EE9B31AADB3B60020CD74 /* POICell.xib */; };
 		BC17CDE81AAA97DC00582DBB /* libPushSDK-1.8.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC17CDE71AAA97DC00582DBB /* libPushSDK-1.8.2.a */; };
 		BC17CDEA1AAA97F500582DBB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC17CDE91AAA97F500582DBB /* CFNetwork.framework */; };
 		BC17CDEC1AAA97FC00582DBB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC17CDEB1AAA97FC00582DBB /* CoreFoundation.framework */; };
@@ -160,6 +165,18 @@
 		872E22721AAA010C00C552F7 /* flyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		872E22771AAA010C00C552F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		872E22781AAA010C00C552F7 /* flyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = flyTests.m; sourceTree = "<group>"; };
+		BC0EE9A11AAD45840020CD74 /* SelectImageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectImageVC.h; sourceTree = "<group>"; };
+		BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectImageVC.m; sourceTree = "<group>"; };
+		BC0EE9A41AAD499D0020CD74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		BC0EE9A51AAD499D0020CD74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen1.strings"; sourceTree = "<group>"; };
+		BC0EE9A91AAD4B650020CD74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BC0EE9AB1AAD4B670020CD74 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BC0EE9AC1AAD4B680020CD74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		BC0EE9AD1AADAA550020CD74 /* POIModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POIModel.h; sourceTree = "<group>"; };
+		BC0EE9AE1AADAA550020CD74 /* POIModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POIModel.m; sourceTree = "<group>"; };
+		BC0EE9B01AADB32E0020CD74 /* POICell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POICell.h; sourceTree = "<group>"; };
+		BC0EE9B11AADB32E0020CD74 /* POICell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POICell.m; sourceTree = "<group>"; };
+		BC0EE9B31AADB3B60020CD74 /* POICell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = POICell.xib; sourceTree = "<group>"; };
 		BC17CDDA1AAA875A00582DBB /* xyz.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xyz.pch; sourceTree = "<group>"; };
 		BC17CDE61AAA97DC00582DBB /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
 		BC17CDE71AAA97DC00582DBB /* libPushSDK-1.8.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.2.a"; sourceTree = "<group>"; };
@@ -449,6 +466,7 @@
 				872E225E1AAA010C00C552F7 /* main.m */,
 				BC17CDDA1AAA875A00582DBB /* xyz.pch */,
 				BC17CDFB1AAA991700582DBB /* PushConfig.plist */,
+				BC0EE9AA1AAD4B650020CD74 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -470,6 +488,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		BC0EE99A1AAD34B40020CD74 /* ZoomImageView */ = {
+			isa = PBXGroup;
+			children = (
+				BCD0E5E11AAC64DE00BC20D5 /* ZoomImageView.h */,
+				BCD0E5E21AAC64DE00BC20D5 /* ZoomImageView.m */,
+			);
+			name = ZoomImageView;
+			sourceTree = "<group>";
+		};
 		BC17CDE51AAA97DC00582DBB /* jpush */ = {
 			isa = PBXGroup;
 			children = (
@@ -482,8 +509,7 @@
 		BC17CE061AAAD21B00582DBB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				BCD0E5E11AAC64DE00BC20D5 /* ZoomImageView.h */,
-				BCD0E5E21AAC64DE00BC20D5 /* ZoomImageView.m */,
+				BC0EE99A1AAD34B40020CD74 /* ZoomImageView */,
 				BC3CE94A1AAB30D1007086CC /* KGModal */,
 				BC17CEC81AAAD52F00582DBB /* Devices */,
 				BC17CEC71AAAD52D00582DBB /* DB */,
@@ -535,6 +561,8 @@
 				BC17CF151AAAD8C100582DBB /* TweetModel.m */,
 				BC17CF161AAAD8C100582DBB /* UserModel.h */,
 				BC17CF171AAAD8C100582DBB /* UserModel.m */,
+				BC0EE9AD1AADAA550020CD74 /* POIModel.h */,
+				BC0EE9AE1AADAA550020CD74 /* POIModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -552,6 +580,9 @@
 				BC17CF0A1AAAD87700582DBB /* DetailRepostCell.xib */,
 				BC17CF0F1AAAD88700582DBB /* XYZImageView.h */,
 				BC17CF101AAAD88700582DBB /* XYZImageView.m */,
+				BC0EE9B01AADB32E0020CD74 /* POICell.h */,
+				BC0EE9B11AADB32E0020CD74 /* POICell.m */,
+				BC0EE9B31AADB3B60020CD74 /* POICell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -593,6 +624,8 @@
 				BCD0E5DF1AAC626200BC20D5 /* ImageViewController.m */,
 				BCD0E5F81AAC773600BC20D5 /* LocationViewController.h */,
 				BCD0E5F91AAC773600BC20D5 /* LocationViewController.m */,
+				BC0EE9A11AAD45840020CD74 /* SelectImageVC.h */,
+				BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -861,6 +894,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 872E22501AAA010B00C552F7;
 			productRefGroup = 872E225A1AAA010C00C552F7 /* Products */;
@@ -914,8 +948,10 @@
 				BC17CE3B1AAAD37B00582DBB /* Default-568h@2x.png in Resources */,
 				87243E471AAC94C000BE0A26 /* AMap.bundle in Resources */,
 				BC17CF0E1AAAD87700582DBB /* DetailRepostCell.xib in Resources */,
+				BC0EE9B41AADB3B60020CD74 /* POICell.xib in Resources */,
 				BC17CE631AAAD43A00582DBB /* SVProgressHUD.bundle in Resources */,
 				BC17CE581AAAD37B00582DBB /* tab_user_message_selected@2x.png in Resources */,
+				BC0EE9A81AAD4B650020CD74 /* InfoPlist.strings in Resources */,
 				BC17CE451AAAD37B00582DBB /* myTabBar@2x.png in Resources */,
 				BCD0E5DB1AAC544C00BC20D5 /* location@2x.png in Resources */,
 				BC17CE4C1AAAD37B00582DBB /* tab_style@2x.png in Resources */,
@@ -984,11 +1020,13 @@
 				BC17CEB61AAAD4A500582DBB /* SDImageCache.m in Sources */,
 				BC17CEE31AAAD73600582DBB /* HomeViewController.m in Sources */,
 				BC17CF041AAAD84E00582DBB /* TweetCell.m in Sources */,
+				BC0EE9A31AAD45840020CD74 /* SelectImageVC.m in Sources */,
 				BC17CF0D1AAAD87700582DBB /* DetailRepostCell.m in Sources */,
 				BC17CEB91AAAD4A500582DBB /* SDWebImageDownloader.m in Sources */,
 				BC17CEEC1AAAD75E00582DBB /* SearchViewController.m in Sources */,
 				BC17CEF51AAAD7CD00582DBB /* CommentMeViewController.m in Sources */,
 				BC17CE641AAAD43A00582DBB /* SVProgressHUD.m in Sources */,
+				BC0EE9B21AADB32E0020CD74 /* POICell.m in Sources */,
 				BC17CF191AAAD8C100582DBB /* TweetModel.m in Sources */,
 				BC17CE7A1AAAD45600582DBB /* AFHTTPRequestOperationManager.m in Sources */,
 				BC17CEBF1AAAD4A500582DBB /* UIImage+MultiFormat.m in Sources */,
@@ -1002,6 +1040,7 @@
 				BC17CEDD1AAAD6F500582DBB /* SendMessageToWeiboViewController.m in Sources */,
 				BC17CE7B1AAAD45600582DBB /* AFHTTPSessionManager.m in Sources */,
 				BC17CF111AAAD88700582DBB /* XYZImageView.m in Sources */,
+				BC0EE9AF1AADAA550020CD74 /* POIModel.m in Sources */,
 				BC17CEE91AAAD74F00582DBB /* CommentVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1029,6 +1068,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				872E22671AAA010C00C552F7 /* Base */,
+				BC0EE9A41AAD499D0020CD74 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1037,8 +1077,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				872E226C1AAA010C00C552F7 /* Base */,
+				BC0EE9A51AAD499D0020CD74 /* zh-Hans */,
 			);
 			name = LaunchScreen1.xib;
+			sourceTree = "<group>";
+		};
+		BC0EE9AA1AAD4B650020CD74 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BC0EE9A91AAD4B650020CD74 /* en */,
+				BC0EE9AB1AAD4B670020CD74 /* Base */,
+				BC0EE9AC1AAD4B680020CD74 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

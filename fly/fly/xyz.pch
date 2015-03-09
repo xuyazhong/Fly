@@ -30,6 +30,7 @@ App Secret：
 #define kURLGroupLists  @"https://api.weibo.com/2/friendships/groups.json"
 #define kURLGroup       @"https://api.weibo.com/2/friendships/groups/timeline.json"
 #define kURLupdate      @"https://api.weibo.com/2/statuses/update.json"
+#define kURLupload      @"https://upload.api.weibo.com/2/statuses/upload.json"
 #define kURLUserTimeLine    @"https://api.weibo.com/2/statuses/user_timeline.json"
 
 #define kURLCreateComment   @"https://api.weibo.com/2/comments/create.json"
@@ -56,6 +57,6 @@ App Secret：
 //收藏列表
 #define kURLFavorites   @"https://api.weibo.com/2/favorites.json"
 
-
+#define kURLPOIS        @"https://api.weibo.com/2/place/nearby/pois.json"
 
 #endif

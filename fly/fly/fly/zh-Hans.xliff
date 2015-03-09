@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="fly/AFNetworking.strings" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body>
+      <trans-unit id="Could not decode string: %@">
+        <source>Could not decode string: %@</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Data failed decoding as a UTF-8 string">
+        <source>Data failed decoding as a UTF-8 string</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Expected URL to be a file URL">
+        <source>Expected URL to be a file URL</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="File URL not reachable.">
+        <source>File URL not reachable.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Not Reachable">
+        <source>Not Reachable</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Reachable via WWAN">
+        <source>Reachable via WWAN</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Reachable via WiFi">
+        <source>Reachable via WiFi</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Request failed: %@ (%ld)">
+        <source>Request failed: %1$@ (%2$ld)</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Request failed: unacceptable content-type: %@">
+        <source>Request failed: unacceptable content-type: %@</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unknown">
+        <source>Unknown</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="fly/Base.lproj/LaunchScreen1.xib" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body>
+      <trans-unit id="8ie-xW-0ye.text">
+        <source>  Copyright (c) 2015年 xuyazhong. All rights reserved.</source>
+        <target>  Copyright (c) 2015年 xuyazhong. All rights reserved.</target>
+        <note>Class = "UILabel"; text = "  Copyright (c) 2015年 xuyazhong. All rights reserved."; ObjectID = "8ie-xW-0ye";</note>
+      </trans-unit>
+      <trans-unit id="kId-c2-rCX.text">
+        <source>fly</source>
+        <target>fly</target>
+        <note>Class = "UILabel"; text = "fly"; ObjectID = "kId-c2-rCX";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="fly/Base.lproj/Main.storyboard" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body/>
+  </file>
+  <file original="fly/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="fly/Localizable.strings" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body>
+      <trans-unit id="Open API:">
+        <source>Open API:</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="使用微博登陆">
+        <source>使用微博登陆</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="关闭">
+        <source>关闭</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="分享:">
+        <source>分享:</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="分享消息到微博">
+        <source>分享消息到微博</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="分享网页内容简介-%.0f">
+        <source>分享网页内容简介-%.0f</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="分享网页标题">
+        <source>分享网页标题</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="刷新关注状态">
+        <source>刷新关注状态</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="刷新评论按钮">
+        <source>刷新评论按钮</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="原请求UserInfo数据">
+        <source>原请求UserInfo数据</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="发送结果">
+        <source>发送结果</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="响应UserInfo数据">
+        <source>响应UserInfo数据</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="响应状态">
+        <source>响应状态</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="图片">
+        <source>图片</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="多媒体">
+        <source>多媒体</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="微博SDK示例">
+        <source>微博SDK示例</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="支付">
+        <source>支付</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="支付:">
+        <source>支付:</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="支付结果">
+        <source>支付结果</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="收到网络回调">
+        <source>收到网络回调</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="文字">
+        <source>文字</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="测试通过WeiboSDK发送文字到微博!">
+        <source>测试通过WeiboSDK发送文字到微博!</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="登出">
+        <source>登出</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="登录:">
+        <source>登录:</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="确定">
+        <source>确定</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="认证结果">
+        <source>认证结果</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="请求异常">
+        <source>请求异常</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="调用OpenAPI">
+        <source>调用OpenAPI</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="flyTests/Info.plist" source-language="en" datatype="plaintext" target-language="zh-Hans">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.2" build-num="6C101"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

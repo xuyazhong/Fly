@@ -7,8 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MAMapKit/MAMapKit.h>
+#import <MapKit/MapKit.h>
+//#import <MAMapKit/MAMapKit.h>
 
-@interface LocationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,MAMapViewDelegate>
+typedef void(^SelectBlock)(NSDictionary *latlong);
+typedef void(^notSelectBlock)(NSString *noLocation);
+@interface LocationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,MKMapViewDelegate>
+
+-(void)requestLocation:(SelectBlock)block failed:(notSelectBlock)noLocation;
 
 @end

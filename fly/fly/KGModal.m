@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AFNetworking.h"
 #import "LocationViewController.h"
+#import "SelectImageVC.h"
 
 CGFloat const kFadeInAnimationDuration = 0.3;
 CGFloat const kTransformPart1AnimationDuration = 0.2;
@@ -66,7 +67,8 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     if(!(self = [super init])){
         return nil;
     }
-    
+    self.hasPic = NO;
+    self.hasLocation = NO;
     self.shouldRotate = YES;
     self.tapOutsideToDismiss = YES;
     self.animateWhenDismissed = YES;
@@ -113,13 +115,291 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     [self showWithContentView:contentView andAnimated:YES];
     
 }
--(void)commentTweet
+-(void)commentTweet:(TweetModel *)model
 {
-    
+    self.model = model;
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+    [self showWithComment:contentView andAnimated:YES];
 }
--(void)repostTweet
+-(void)repostTweet:(TweetModel *)model
 {
+    self.model = model;
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+    [self showRepost:contentView andAnimated:YES];
+}
+- (void)showRepost:(UIView *)contentView andAnimated:(BOOL)animated
+{
+    CGRect welcomeLabelRect = contentView.bounds;
+    welcomeLabelRect.origin.x = 40;
+    welcomeLabelRect.origin.y = 0;
+    welcomeLabelRect.size.width = 200;
+    welcomeLabelRect.size.height = 13;
+    UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:12];
+    UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
+    welcomeLabel.text = @"转发微博";
+    welcomeLabel.font = welcomeLabelFont;
+    welcomeLabel.textAlignment = NSTextAlignmentCenter;
+    welcomeLabel.textColor = [UIColor orangeColor];
+    welcomeLabel.backgroundColor = [UIColor clearColor];
+    welcomeLabel.shadowColor = [UIColor blackColor];
+    welcomeLabel.shadowOffset = CGSizeMake(0, 1);
+    [contentView addSubview:welcomeLabel];
     
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn setFrame:CGRectMake(0, 0, 40, 20)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn addTarget:self action:@selector(cancelSendTweetAction) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [contentView addSubview:cancelBtn];
+    
+    UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendBtn setFrame:CGRectMake(240, 0, 40, 20)];
+    [sendBtn setTitle:@"转发" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [sendBtn addTarget:self action:@selector(repostTweetAction) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:sendBtn];
+    
+    CGRect userNameRect = contentView.bounds;
+    userNameRect.origin.y = 13;
+    userNameRect.origin.x = 40;
+    userNameRect.size.width = 200;
+    userNameRect.size.height = 15;
+    UILabel *userNameLabel = [[UILabel alloc] initWithFrame:userNameRect];
+    NSDictionary *userdict = [ShareToken readUserDetail];
+    userNameLabel.text = [userdict objectForKey:@"name"];
+    userNameLabel.font = [UIFont boldSystemFontOfSize:13];;
+    userNameLabel.textAlignment = NSTextAlignmentCenter;
+    userNameLabel.textColor = [UIColor orangeColor];
+    userNameLabel.backgroundColor = [UIColor clearColor];
+    userNameLabel.shadowColor = [UIColor blackColor];
+    userNameLabel.shadowOffset = CGSizeMake(0, 1);
+    [contentView addSubview:userNameLabel];
+    UILabel *splitLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, 260, 1)];
+    splitLabel.backgroundColor = [UIColor orangeColor];
+    [contentView addSubview:splitLabel];
+    
+    CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 5);
+    infoLabelRect.origin.y = 30;
+    infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect) + 50;
+    self.accessibilityElementsHidden = NO;
+    infoLabel = [[UITextView alloc]initWithFrame:infoLabelRect];
+    [infoLabel becomeFirstResponder];
+    infoLabel.delegate = self;
+    infoLabel.tag = 10;
+    infoLabel.font = [UIFont systemFontOfSize:16];
+    infoLabel.textColor = [UIColor whiteColor];
+    infoLabel.backgroundColor = [UIColor clearColor];
+    [contentView addSubview:infoLabel];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.window.opaque = NO;
+    
+    KGModalViewController *viewController = [[KGModalViewController alloc] init];
+    self.window.rootViewController = viewController;
+    self.viewController = viewController;
+    
+    CGFloat padding = 17;
+    CGRect containerViewRect = CGRectInset(contentView.bounds, -padding, -padding);
+    containerViewRect.origin.x = containerViewRect.origin.y = 0;
+    containerViewRect.origin.x = round(CGRectGetMidX(self.window.bounds)-CGRectGetMidX(containerViewRect));
+    //containerViewRect.origin.y = round(CGRectGetMidY(self.window.bounds)-CGRectGetMidY(containerViewRect));
+    containerViewRect.origin.y = 20;
+    KGModalContainerView *containerView = [[KGModalContainerView alloc] initWithFrame:containerViewRect];
+    containerView.modalBackgroundColor = self.modalBackgroundColor;
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|
+    UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
+    containerView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    contentView.frame = (CGRect){padding, 20, contentView.bounds.size};
+    //contentView.frame = (CGRect){padding, padding, contentView.bounds.size};
+    [containerView addSubview:contentView];
+    [viewController.view addSubview:containerView];
+    self.containerView = containerView;
+    
+    KGModalCloseButton *closeButton = [[KGModalCloseButton alloc] init];
+    
+    if(self.closeButtonType == KGModalCloseButtonTypeRight){
+        CGRect closeFrame = closeButton.frame;
+        closeFrame.origin.x = CGRectGetWidth(containerView.bounds)-CGRectGetWidth(closeFrame);
+        closeButton.frame = closeFrame;
+    }
+    
+    [closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
+    [containerView addSubview:closeButton];
+    self.closeButton = closeButton;
+    
+    // Force adjust visibility and placing
+    [self setCloseButtonType:self.closeButtonType];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tapCloseAction:)
+                                                 name:KGModalGradientViewTapped object:nil];
+    
+    // The window has to be un-hidden on the main thread
+    // This will cause the window to display
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KGModalWillShowNotification object:self];
+        [self.window makeKeyAndVisible];
+        
+        if(animated){
+            viewController.styleView.alpha = 0;
+            [UIView animateWithDuration:kFadeInAnimationDuration animations:^{
+                viewController.styleView.alpha = 1;
+            }];
+            
+            containerView.alpha = 0;
+            containerView.layer.shouldRasterize = YES;
+            containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+            [UIView animateWithDuration:kTransformPart1AnimationDuration animations:^{
+                containerView.alpha = 1;
+                containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:kTransformPart2AnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    containerView.alpha = 1;
+                    containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+                } completion:^(BOOL finished2) {
+                    containerView.layer.shouldRasterize = NO;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KGModalDidShowNotification object:self];
+                }];
+            }];
+        }
+    });
+}
+- (void)showWithComment:(UIView *)contentView andAnimated:(BOOL)animated
+{
+    CGRect welcomeLabelRect = contentView.bounds;
+    welcomeLabelRect.origin.x = 40;
+    welcomeLabelRect.origin.y = 0;
+    welcomeLabelRect.size.width = 200;
+    welcomeLabelRect.size.height = 13;
+    UIFont *welcomeLabelFont = [UIFont boldSystemFontOfSize:12];
+    UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:welcomeLabelRect];
+    welcomeLabel.text = @"评论";
+    welcomeLabel.font = welcomeLabelFont;
+    welcomeLabel.textAlignment = NSTextAlignmentCenter;
+    welcomeLabel.textColor = [UIColor orangeColor];
+    welcomeLabel.backgroundColor = [UIColor clearColor];
+    welcomeLabel.shadowColor = [UIColor blackColor];
+    welcomeLabel.shadowOffset = CGSizeMake(0, 1);
+    [contentView addSubview:welcomeLabel];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn setFrame:CGRectMake(0, 0, 40, 20)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn addTarget:self action:@selector(cancelSendTweetAction) forControlEvents:UIControlEventTouchUpInside];
+    [cancelBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [contentView addSubview:cancelBtn];
+    
+    UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sendBtn setFrame:CGRectMake(240, 0, 40, 20)];
+    [sendBtn setTitle:@"评论" forState:UIControlStateNormal];
+    [sendBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [sendBtn addTarget:self action:@selector(commentTweetAction) forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:sendBtn];
+    
+    CGRect userNameRect = contentView.bounds;
+    userNameRect.origin.y = 13;
+    userNameRect.origin.x = 40;
+    userNameRect.size.width = 200;
+    userNameRect.size.height = 15;
+    UILabel *userNameLabel = [[UILabel alloc] initWithFrame:userNameRect];
+    NSDictionary *userdict = [ShareToken readUserDetail];
+    userNameLabel.text = [userdict objectForKey:@"name"];
+    userNameLabel.font = [UIFont boldSystemFontOfSize:13];;
+    userNameLabel.textAlignment = NSTextAlignmentCenter;
+    userNameLabel.textColor = [UIColor orangeColor];
+    userNameLabel.backgroundColor = [UIColor clearColor];
+    userNameLabel.shadowColor = [UIColor blackColor];
+    userNameLabel.shadowOffset = CGSizeMake(0, 1);
+    [contentView addSubview:userNameLabel];
+    UILabel *splitLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 29, 260, 1)];
+    splitLabel.backgroundColor = [UIColor orangeColor];
+    [contentView addSubview:splitLabel];
+    
+    CGRect infoLabelRect = CGRectInset(contentView.bounds, 5, 5);
+    infoLabelRect.origin.y = 30;
+    infoLabelRect.size.height -= CGRectGetMinY(infoLabelRect) + 50;
+    self.accessibilityElementsHidden = NO;
+    infoLabel = [[UITextView alloc]initWithFrame:infoLabelRect];
+    [infoLabel becomeFirstResponder];
+    infoLabel.delegate = self;
+    infoLabel.tag = 10;
+    infoLabel.font = [UIFont systemFontOfSize:16];
+    infoLabel.textColor = [UIColor whiteColor];
+    infoLabel.backgroundColor = [UIColor clearColor];
+    [contentView addSubview:infoLabel];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.window.opaque = NO;
+    
+    KGModalViewController *viewController = [[KGModalViewController alloc] init];
+    self.window.rootViewController = viewController;
+    self.viewController = viewController;
+    
+    CGFloat padding = 17;
+    CGRect containerViewRect = CGRectInset(contentView.bounds, -padding, -padding);
+    containerViewRect.origin.x = containerViewRect.origin.y = 0;
+    containerViewRect.origin.x = round(CGRectGetMidX(self.window.bounds)-CGRectGetMidX(containerViewRect));
+    //containerViewRect.origin.y = round(CGRectGetMidY(self.window.bounds)-CGRectGetMidY(containerViewRect));
+    containerViewRect.origin.y = 20;
+    KGModalContainerView *containerView = [[KGModalContainerView alloc] initWithFrame:containerViewRect];
+    containerView.modalBackgroundColor = self.modalBackgroundColor;
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|
+    UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin;
+    containerView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    contentView.frame = (CGRect){padding, 20, contentView.bounds.size};
+    //contentView.frame = (CGRect){padding, padding, contentView.bounds.size};
+    [containerView addSubview:contentView];
+    [viewController.view addSubview:containerView];
+    self.containerView = containerView;
+    
+    KGModalCloseButton *closeButton = [[KGModalCloseButton alloc] init];
+    
+    if(self.closeButtonType == KGModalCloseButtonTypeRight){
+        CGRect closeFrame = closeButton.frame;
+        closeFrame.origin.x = CGRectGetWidth(containerView.bounds)-CGRectGetWidth(closeFrame);
+        closeButton.frame = closeFrame;
+    }
+    
+    [closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
+    [containerView addSubview:closeButton];
+    self.closeButton = closeButton;
+    
+    // Force adjust visibility and placing
+    [self setCloseButtonType:self.closeButtonType];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tapCloseAction:)
+                                                 name:KGModalGradientViewTapped object:nil];
+    
+    // The window has to be un-hidden on the main thread
+    // This will cause the window to display
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KGModalWillShowNotification object:self];
+        [self.window makeKeyAndVisible];
+        
+        if(animated){
+            viewController.styleView.alpha = 0;
+            [UIView animateWithDuration:kFadeInAnimationDuration animations:^{
+                viewController.styleView.alpha = 1;
+            }];
+            
+            containerView.alpha = 0;
+            containerView.layer.shouldRasterize = YES;
+            containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+            [UIView animateWithDuration:kTransformPart1AnimationDuration animations:^{
+                containerView.alpha = 1;
+                containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:kTransformPart2AnimationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                    containerView.alpha = 1;
+                    containerView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, 1);
+                } completion:^(BOOL finished2) {
+                    containerView.layer.shouldRasterize = NO;
+                    [[NSNotificationCenter defaultCenter] postNotificationName:KGModalDidShowNotification object:self];
+                }];
+            }];
+        }
+    });
 }
 - (void)showWithContentView:(UIView *)contentView andAnimated:(BOOL)animated
 {
@@ -274,24 +554,120 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     NSLog(@"location");
     LocationViewController *location = [[LocationViewController alloc]init];
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:location];
+    [location requestLocation:^(NSDictionary *latlong)
+    {
+        NSLog(@"lat:%@long:%@",[latlong objectForKey:@"lat"],[latlong objectForKey:@"long"]);
+        self.getLat = [latlong objectForKey:@"lat"];
+        self.getLong = [latlong objectForKey:@"long"];
+        self.hasLocation = YES;
+    } failed:^(NSString *noLocation)
+    {
+        NSLog(@"nolocation:%@",noLocation);
+        self.hasLocation = NO;
+    }];
     [self.viewController presentViewController:nvc animated:YES completion:nil];
-    
 }
 -(void)addPicture
 {
     NSLog(@"picture");
+    SelectImageVC *vc = [[SelectImageVC alloc]init];
+    UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:vc];
+    
+    [self.viewController presentViewController:nvc animated:NO completion:^{
+    }];
+    [vc requestImageSuccess:^(NSData *image)
+     {
+         self.selectImage = image;
+         self.hasPic = YES;
+         NSLog(@"get image!!:%@",image);
+         
+     } failed:^(NSString *str)
+     {
+         self.hasPic = NO;
+         NSLog(@"str:%@",str);
+     }];
+    
+//    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+//    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//    picker.allowsEditing = YES;
+//    picker.delegate = self;
+//    [self.viewController presentViewController:picker animated:YES completion:^{
+//    }];
 }
 -(void)cancelSendTweetAction
 {
     [self hideAnimated:self.animateWhenDismissed];
     //[self dismissViewControllerAnimated:YES completion:nil];
 }
+-(void)repostTweetAction
+{
+    NSString *str = infoLabel.text;
+    if (str.length == 0)
+    {
+        str = @"repost";
+    }
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_model.tid,@"id",str,@"status", nil];
+    [manager POST:kURLRepost parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success:%@",responseObject);
+         [self hideAnimated:self.animateWhenDismissed];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"failed:%@",error.localizedDescription);
+     }];
+}
+-(void)commentTweetAction
+{
+    NSString *str = infoLabel.text;
+    if (str.length == 0)
+    {
+        str = @"repost";
+    }
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_model.tid,@"id",str,@"status", nil];
+    [manager POST:kURLRepost parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success:%@",responseObject);
+         [self hideAnimated:self.animateWhenDismissed];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"failed:%@",error.localizedDescription);
+     }];
+}
 -(void)sendTweetAction
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token", nil];
+    NSString *currentUrl = kURLupdate;
+    NSDictionary *tweetdict;
+    if (infoLabel.text == 0)
+    {
+        infoLabel.text = @"分享微博";
+    }
+    if (self.hasPic)
+    {
+        currentUrl = kURLupload;
+        if (self.hasLocation)
+        {
+            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token",self.selectImage,@"pic",self.getLat,@"lat",self.getLong,@"long", nil];
+        }else
+        {
+            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token",self.selectImage,@"pic", nil];
+        }
+    }else
+    {
+        currentUrl = kURLupdate;
+        if (self.hasLocation)
+        {
+            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token",self.getLat,@"lat",self.getLong,@"long", nil];
+        }else
+        {
+            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token", nil];
+        }
+    }
+    
     NSLog(@"dict:%@",tweetdict);
-    [manager POST:kURLupdate parameters:tweetdict success:^(AFHTTPRequestOperation *operation, id responseObject)
+    [manager POST:currentUrl parameters:tweetdict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success:%@",responseObject);
          [self hideAnimated:self.animateWhenDismissed];
@@ -571,4 +947,5 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     }
     return YES;
 }
+
 @end

@@ -41,6 +41,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *proName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+    NSString *dispName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    
+    NSLog(@"proName:%@ dispName:%@",proName,dispName);
+    NSLog(@"dicName ==== %@",[[NSBundle mainBundle] infoDictionary]);
     // Override point for customization after application launch.
     // Required
     /*
