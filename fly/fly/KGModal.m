@@ -652,8 +652,18 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
             tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token",self.selectImage,@"pic",self.getLat,@"lat",self.getLong,@"long", nil];
         }else
         {
-            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token",self.selectImage,@"pic", nil];
+            tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token", nil];
         }
+        
+        
+        [manager POST:currentUrl parameters:tweetdict constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            [formData appendPartWithFileData:self.selectImage name:@"pic" fileName:@"test" mimeType:@"image/png"];
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSLog(@"success:%@",responseObject);
+            [self hideAnimated:self.animateWhenDismissed];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"failed:%@",error);
+        }];
     }else
     {
         currentUrl = kURLupdate;
@@ -664,9 +674,21 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         {
             tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token", nil];
         }
+        [manager POST:currentUrl parameters:tweetdict success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"success:%@",responseObject);
+             [self hideAnimated:self.animateWhenDismissed];
+             //[self dismissViewControllerAnimated:YES completion:nil];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             //NSLog(@"failed:%@",error.localizedDescription);
+             NSLog(@"failed:%@",error);
+         }];
     }
+    //NSLog(@"current url :%@",currentUrl);
+    //NSLog(@"dict:%@",tweetdict);
     
-    NSLog(@"dict:%@",tweetdict);
+    /*
     [manager POST:currentUrl parameters:tweetdict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success:%@",responseObject);
@@ -674,8 +696,10 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
          //[self dismissViewControllerAnimated:YES completion:nil];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"failed:%@",error.localizedDescription);
+         //NSLog(@"failed:%@",error.localizedDescription);
+         NSLog(@"failed:%@",error);
      }];
+     */
 }
 - (void)closeAction:(id)sender{
     [self hideAnimated:self.animateWhenDismissed];
