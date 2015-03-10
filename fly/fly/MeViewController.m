@@ -228,7 +228,7 @@
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     cell.tid = model.tid;
-    [cell addDelete];
+    //[cell addDelete];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
     cell.tweetLabel.text = model.text;

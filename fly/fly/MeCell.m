@@ -8,6 +8,7 @@
 
 #import "MeCell.h"
 #import "AFNetworking.h"
+#import "XYZButton.h"
 
 @implementation MeCell
 
@@ -58,18 +59,33 @@
     [headView addSubview:_sourceLabel];
     [self.contentView addSubview:headView];
 }
+-(void)addDeleAddTarget:(id)target Action:(SEL)DeleAction pram:(NSDictionary *)dict isTweet:(BOOL)isTweet
+{
+    [_deleBtn addTarget:target action:DeleAction forControlEvents:UIControlEventTouchUpInside];
+    NSLog(@"add target!!!");
+}
+/*
 -(void)alertshow
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认删除这条微博吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alert show];
 
 }
+
+-(void)destoryShow
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认删除这条评论吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+}
 -(void)addDelete
 {
-    
     [_deleBtn addTarget:self action:@selector(alertshow) forControlEvents:UIControlEventTouchUpInside];
-
 }
+-(void)addDeleDestroy
+{
+    [_deleBtn addTarget:self action:@selector(destoryShow) forControlEvents:UIControlEventTouchUpInside];
+}
+ */
 -(void)createTweet
 {
     _tweetLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 300, 80)];
@@ -132,16 +148,39 @@
 
 -(void)deleTweet
 {
+    
+    
+}
+
+-(void)addDeleteTweet:(SEL)DeleAction pram:(NSDictionary *)dict
+{
     NSLog(@"deletweet");
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"id", nil];
+//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"id", nil];
     [manager POST:kURLDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-    {
-        NSLog(@"delete success:%@",responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
-        NSLog(@"error:%@",error);
-    }];
+     {
+         NSLog(@"delete success:%@",responseObject);
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"error:%@",error);
+     }];
+}
+-(void)addDeleDestroy:(SEL)DeleAction pram:(NSDictionary *)dict
+{
+    NSLog(@"deleDestoryTweet");
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"cid", nil];
+    [manager POST:kUrlReply parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"delete reply success:%@",responseObject);
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"reply error:%@",error);
+     }];
+}
+-(void)deleDestoryTweet
+{
+    
 }
 -(void)repostAction:(UIButton *)btn
 {
@@ -161,15 +200,30 @@
 #pragma mark - alertview delegate 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex)
+    if (self.isDestroy)
     {
-        case 1:
-            [self deleTweet];
-            break;
-            
-        default:
-            break;
+        switch (buttonIndex)
+        {
+            case 1:
+                [self deleDestoryTweet];
+                break;
+                
+            default:
+                break;
+        }
+    }else if (self.isDelete)
+    {
+        switch (buttonIndex)
+        {
+            case 1:
+                [self deleTweet];
+                break;
+                
+            default:
+                break;
+        }
     }
+    
 }
 
 @end

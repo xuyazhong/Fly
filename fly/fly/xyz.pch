@@ -21,6 +21,7 @@ App Secret：
 #import "DeviceManager.h"
 #import "SVProgressHUD.h"
 #import "ShareToken.h"
+#import "DXAlertView.h"
 
 #define kAppKey         @"2808054411"
 #define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
@@ -42,6 +43,9 @@ App Secret：
 #define kURLCommentToMe        @"https://api.weibo.com/2/comments/to_me.json"
 
 #define kURLCommentShow @"https://api.weibo.com/2/comments/show.json"
+
+//删除评论
+#define kUrlReply       @"https://api.weibo.com/2/comments/reply.json"
 
 //转发
 #define kURLRepost      @"https://api.weibo.com/2/statuses/repost.json"

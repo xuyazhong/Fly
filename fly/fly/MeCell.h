@@ -13,6 +13,8 @@
 @property (strong, nonatomic)  UIImageView *userInfo;
 @property (nonatomic,copy) NSString *tid;
 @property (nonatomic,assign) BOOL isDelete;
+@property (nonatomic,assign) BOOL isDestroy;
+@property (nonatomic,assign) BOOL isSuccess;
 @property (strong, nonatomic)  UILabel *nickName;
 @property (strong, nonatomic)  UILabel *timeLabel;
 @property (strong, nonatomic)  UILabel *sourceLabel;
@@ -29,7 +31,8 @@
 @property (strong, nonatomic)  UIScrollView *rescrollview;
 @property (strong, nonatomic)  UILabel *repostsCount;
 @property (strong, nonatomic)  UILabel *commentsCount;
-@property (strong,nonatomic)    UIButton *deleBtn;
--(void)addDelete;
-
+@property (strong,nonatomic)  UIButton *deleBtn;
+//-(void)addDeleteTweet:(SEL)DeleAction pram:(NSDictionary *)dict;
+//-(void)addDeleDestroy:(SEL)DeleAction pram:(NSDictionary *)dict;
+-(void)addDeleAddTarget:(id)target Action:(SEL)DeleAction pram:(NSDictionary *)dict isTweet:(BOOL)isTweet;
 @end

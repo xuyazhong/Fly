@@ -73,6 +73,7 @@ typedef NS_ENUM(NSUInteger, KGModalCloseButtonType){
 -(void)updateTweet;
 -(void)commentTweet:(TweetModel *)model;
 -(void)repostTweet:(TweetModel *)model;
+-(void)replyTweet:(TweetModel *)model;
 
 // Set the content view controller to display in the modal and whether the modal should animate in
 - (void)showWithContentViewController:(UIViewController *)contentViewController andAnimated:(BOOL)animated;

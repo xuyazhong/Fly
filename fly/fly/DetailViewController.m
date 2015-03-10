@@ -18,6 +18,8 @@
 #import "RepostViewController.h"
 #import "CommentViewController.h"
 #import "KGModal.h"
+#import "ZoomImageView.h"
+
 
 
 @interface DetailViewController ()
@@ -543,14 +545,37 @@
     
      */
 }
+//-(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
+//{
+//    for (int i=0; i<subArr.count; i++)
+//    {
+//        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
+//        [image sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
+//        [myview addSubview:image];
+//    }
+//}
 -(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
 {
+    NSArray *allImages = myview.subviews;
+    for (UIView *subImages in allImages)
+    {
+        if ([subImages isKindOfClass:[ZoomImageView class]])
+        {
+            [subImages removeFromSuperview];
+        }
+    }
     for (int i=0; i<subArr.count; i++)
     {
-        UIImageView *image = [[UIImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        [image sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-        [myview addSubview:image];
+        ZoomImageView *_imageView=[[ZoomImageView alloc] initWithFrame:CGRectMake(85*i, 0, 80, 80)];
+        //UIViewContentModeScaleAspectFit 顯示圖片的原始比例,自適應
+        _imageView.contentMode =UIViewContentModeScaleAspectFit;
+        _imageView.backgroundColor=[UIColor clearColor];
+        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
+        [_imageView addZoom:[bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"]];
+        [myview addSubview:_imageView];
     }
+    
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {

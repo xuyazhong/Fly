@@ -462,7 +462,7 @@
     NSArray *allImages = myview.subviews;
     for (UIView *subImages in allImages)
     {
-        if ([subImages isKindOfClass:[XYZImageView class]])
+        if ([subImages isKindOfClass:[ZoomImageView class]])
         {
             [subImages removeFromSuperview];
         }

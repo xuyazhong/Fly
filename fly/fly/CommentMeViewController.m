@@ -12,8 +12,9 @@
 #import "AFNetworking.h"
 #import "TweetModel.h"
 #import "DetailViewController.h"
-#import "TweetCell.h"
+#import "MeCell.h"
 #import "XYZImageView.h"
+#import "KGModal.h"
 
 @interface CommentMeViewController ()
 {
@@ -24,7 +25,7 @@
     NSString *currentURL;
     UIImageView *_fullImageView;
     UIScrollView *_coverView;
-    NSUInteger currentPage;
+    NSInteger currentPage;
     
     UIButton *titleBtn;
     UIScrollView *groupList;
@@ -272,10 +273,9 @@
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    DetailViewController *detail = [[DetailViewController alloc]init];
-//    TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
-//    detail.model = model;
-//    [self presentViewController:detail animated:YES completion:nil];
+
+    TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
+    [[KGModal sharedInstance] replyTweet:model];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -285,12 +285,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *myCommentCell = @"comment";
-    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:myCommentCell];
+    MeCell *cell = [tableView dequeueReusableCellWithIdentifier:myCommentCell];
     if (cell == nil)
     {
-        cell = [[TweetCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCommentCell];
+        cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCommentCell];
     }
+    cell.isDestroy = YES;
+    
+    //[cell addDeleDestroy];
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",model.tid,@"cid", nil];
+    [cell addDeleAddTarget:self Action:@selector(deleDestroy:) pram:dict isTweet:NO];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
     cell.tweetLabel.text = model.text;
@@ -367,6 +372,18 @@
         [cell.controlview setFrame:CGRectMake(10, 55+model.size.height+10+10, 300, 40)];
     }
     return cell;
+}
+-(void)deleDestroy
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确定删除评论?" contentText:nil leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
+    [alert show];
+    alert.leftBlock = ^()
+    {
+        NSLog(@"left button clicked");
+    };
+    alert.rightBlock = ^() {
+        NSLog(@"right button clicked");
+    };
 }
 -(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
 {
