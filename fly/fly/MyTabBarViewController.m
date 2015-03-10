@@ -17,6 +17,7 @@
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
+#import "KGModal.h"
 
 
 @interface MyTabBarViewController ()
@@ -128,7 +129,9 @@
             headBtn.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
             [headBtn addGestureRecognizer:tap];
-            //[headBtn addTarget:self action:@selector(btnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+            UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressAction)];
+            [headBtn addGestureRecognizer:longPress];
+            
             [customTabBar addSubview:headBtn];
         }
         else
@@ -156,6 +159,10 @@
     [self.view addSubview:customTabBar];
     self.selectedIndex = 2;
 
+}
+-(void)longPressAction
+{
+    [[KGModal sharedInstance] updateTweet];
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {

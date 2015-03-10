@@ -25,6 +25,10 @@
     UIImageView *_fullImageView;
     UIScrollView *_coverView;
     NSUInteger currentPage;
+    UIButton *titleBtn;
+    UIScrollView *groupList;
+    NSMutableArray *groupArray;
+    NSMutableArray *groupUrl;
 }
 @end
 
@@ -37,7 +41,7 @@
     currentURL = kURLATMe;
     _dataArray = [[NSMutableArray alloc]init];
 
-    self.title = @"@我";
+    //self.title = @"@我";
 
     _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
     _myTableView.delegate = self;
@@ -49,14 +53,79 @@
     footer.delegate = self;
     
     [self getJSON:1 andUrl:currentURL];
+    [self createNav];
     // Do any additional setup after loading the view.
 }
 
+-(void)createNav
+{
+    titleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [titleBtn setFrame:CGRectMake(0, 0, 80, 64)];
+    [titleBtn setTitle:@"@我的微博" forState:UIControlStateNormal];
+    [titleBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [titleBtn addTarget:self action:@selector(listGroup:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = titleBtn;
+         
+    
+    groupArray = [[NSMutableArray alloc]initWithObjects:@"@我的微博",@"@我的评论", nil];
+    groupUrl = [[NSMutableArray alloc]initWithObjects:kURLATMe,kURLATComment, nil];
+    groupList = [[UIScrollView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2-100, 64, 200, 40*groupArray.count)];
+    groupList.backgroundColor = [UIColor blackColor];
+    groupList.alpha = 0.8;
+    groupList.hidden = YES;
+        for (int i=0;i<groupArray.count;i++)
+        {
+             UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+             [btn setFrame:CGRectMake(5, 5+30*i, 190, 40)];
+             btn.titleLabel.font = [UIFont systemFontOfSize:14];
+             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+             btn.tag = 80 + i;
+             [btn addTarget:self action:@selector(selectGroup:) forControlEvents:UIControlEventTouchUpInside];
+             [btn setTitle:groupArray[i] forState:UIControlStateNormal];
+             [groupList addSubview:btn];
+             [groupList setContentSize:CGSizeMake(0, 5+30*i+30)];
+         }
+         [self.view addSubview:groupList];
+}
+-(void)listGroup:(UIButton *)btn
+{
+    if (btn.selected == YES)
+    {
+        NSLog(@"select");
+        btn.selected = NO;
+        groupList.hidden = YES;
+        //[self.view bringSubviewToFront:groupList];
+    }else
+    {
+        NSLog(@"normal");
+        btn.selected = YES;
+        groupList.hidden = NO;
+        [self.view bringSubviewToFront:groupList];
+    }
+}
+-(void)selectGroup:(UIButton *)btn
+{
+    NSInteger index = btn.tag - 80;
+
+    [titleBtn setTitle:groupArray[index] forState:UIControlStateNormal];
+    for (int i=0; i<groupArray.count; i++)
+    {
+        UIButton *myBtn = (UIButton *)[self.view viewWithTag:80+i];
+        myBtn.selected = NO;
+    }
+    btn.selected = YES;
+    titleBtn.selected = NO;
+    groupList.hidden = YES;
+    currentURL = groupUrl[index];
+    currentPage=1;
+    [self getJSON:currentPage andUrl:currentURL];
+}
 -(void)getJSON:(int)page andUrl:(NSString *)url
 {
     NSDictionary *dict;
-    dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page",@"uid",[[ShareToken readUserInfo] objectForKey:@"uid"], nil];
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page", nil];
     //NSLog(@"dict:%@",dict);
+    NSLog(@"url:%@",url);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -66,6 +135,10 @@
              [_dataArray removeAllObjects];
          }
          NSArray *array = [responseObject objectForKey:@"statuses"];
+         if (array.count == 0)
+         {
+             array = [responseObject objectForKey:@"comments"];
+         }
          for (NSDictionary *subDict in array)
          {
              TweetModel *model = [[TweetModel alloc]init];
