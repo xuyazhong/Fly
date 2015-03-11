@@ -15,6 +15,8 @@
 #import "MeCell.h"
 #import "XYZImageView.h"
 
+#define CELLFRAME CGRectMake(0, 0, 320, 80)
+
 @interface MeViewController ()
 {
     UITableView *_myTableView;
@@ -66,6 +68,7 @@
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
         [refreshingImages addObject:image];
     }
+    
     [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
     [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
@@ -90,6 +93,7 @@
 }
 -(void)loadMoreData
 {
+    NSLog(@"上拉加载");
     currentPage ++;
     [self getJSON:currentPage andUrl:currentURL];
 }
@@ -260,6 +264,8 @@
     {
         cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellID];
     }
+
+    
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     cell.tid = model.tid;
     cell.model = model;
@@ -349,6 +355,8 @@
         cell.rescrollview.hidden = YES;
         [cell.controlview setFrame:CGRectMake(10, 55+model.size.height+10+10, 300, 40)];
     }
+    
+    
     return cell;
 }
 -(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
