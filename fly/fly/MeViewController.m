@@ -14,10 +14,11 @@
 #import "DetailViewController.h"
 #import "MeCell.h"
 #import "XYZImageView.h"
+#import "MeCell.h"
 
 #define CELLFRAME CGRectMake(0, 0, 320, 80)
 
-@interface MeViewController ()
+@interface MeViewController ()<SWTableViewCellDelegate>
 {
     UITableView *_myTableView;
     NSMutableArray *_dataArray;
@@ -242,6 +243,40 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (NSArray *)rightButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
+                                                title:@"More"];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
+                                                title:@"Delete"];
+    
+    return rightUtilityButtons;
+}
+
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"check.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"clock.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"cross.png"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"list.png"]];
+    
+    return leftUtilityButtons;
+}
+
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -263,6 +298,9 @@
     if (cell == nil)
     {
         cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellID];
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.rightUtilityButtons = [self rightButtons];
+        cell.delegate = self;
     }
 
     

@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWTableViewCell.h"
+
 #import "TweetModel.h"
 
 typedef void(^SuccessDeleTweet)(BOOL result);
 typedef void(^FailedDeleTweet)(BOOL ret);
 
-@interface MeCell : UITableViewCell<UIAlertViewDelegate>
+@interface MeCell : SWTableViewCell<SWTableViewCellDelegate>
 
 @property (strong, nonatomic)  UIImageView *userInfo;
 @property (nonatomic,copy) NSString *tid;
