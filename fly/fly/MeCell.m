@@ -8,10 +8,13 @@
 
 #import "MeCell.h"
 #import "AFNetworking.h"
-#import "XYZButton.h"
+#import "DXAlertView.h"
 
 @implementation MeCell
-
+{
+    SuccessDeleTweet _successBlock;
+    FailedDeleTweet _failBlock;
+}
 - (void)awakeFromNib
 {
     // Initialization code
@@ -59,33 +62,71 @@
     [headView addSubview:_sourceLabel];
     [self.contentView addSubview:headView];
 }
--(void)addDeleAddTarget:(id)target Action:(SEL)DeleAction pram:(NSDictionary *)dict isTweet:(BOOL)isTweet
+
+-(void)addDeleteCommentSuccess:(SuccessDeleTweet)success failed:(FailedDeleTweet)failed
 {
-    [_deleBtn addTarget:target action:DeleAction forControlEvents:UIControlEventTouchUpInside];
+    [_deleBtn addTarget:self action:@selector(deleCommentAlertView) forControlEvents:UIControlEventTouchUpInside];
+    _successBlock = success;
+    _failBlock = failed;
     NSLog(@"add target!!!");
 }
-/*
--(void)alertshow
+-(void)addDeleteTweetSuccess:(SuccessDeleTweet)success failed:(FailedDeleTweet)failed
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认删除这条微博吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [_deleBtn addTarget:self action:@selector(deleAlertView) forControlEvents:UIControlEventTouchUpInside];
+    _successBlock = success;
+    _failBlock = failed;
+    NSLog(@"add target!!!");
+}
+-(void)deleCommentAlertView
+{
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确认删除吗？" contentText:@"确认删除吗？" leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
     [alert show];
-
+    alert.leftBlock = ^()
+    {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.model.tid,@"cid", nil];
+        [manager POST:kURLCommentDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"删除成功");
+             _successBlock(YES);
+             NSLog(@"delete success:%@",responseObject);
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             _failBlock(NO);
+             NSLog(@"删除失败:%@",error);
+         }];
+        
+    };
+    alert.rightBlock = ^() {
+        NSLog(@"取消");
+        _failBlock(NO);
+    };
 }
-
--(void)destoryShow
+-(void)deleAlertView
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"确认删除这条评论吗？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确认删除吗？" contentText:@"确认删除吗？" leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
     [alert show];
+    alert.leftBlock = ^()
+    {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.model.tid,@"id", nil];
+        [manager POST:kURLTweetDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"删除");
+             _successBlock(YES);
+             NSLog(@"delete success:%@",responseObject);
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"删除失败:%@",error);
+         }];
+        
+    };
+    alert.rightBlock = ^() {
+        NSLog(@"取消");
+        _failBlock(NO);
+    };
 }
--(void)addDelete
-{
-    [_deleBtn addTarget:self action:@selector(alertshow) forControlEvents:UIControlEventTouchUpInside];
-}
--(void)addDeleDestroy
-{
-    [_deleBtn addTarget:self action:@selector(destoryShow) forControlEvents:UIControlEventTouchUpInside];
-}
- */
+
 -(void)createTweet
 {
     _tweetLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 300, 80)];
@@ -94,9 +135,6 @@
 }
 -(void)createTweetImage
 {
-    //    _tweetImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 150, 80, 80)];
-    //    [self.contentView addSubview:_tweetImage];
-    
     _myscrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 150, 300, 80)];
     _myscrollview.showsVerticalScrollIndicator = NO;
     _myscrollview.showsHorizontalScrollIndicator = NO;
@@ -113,9 +151,7 @@
     _retweetLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 80)];
     [_retweetView addSubview:_retweetLabel];
     
-    //_retweetImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 80, 80, 80)];
-    //[_retweetView addSubview:_retweetImage];
-    
+  
     _rescrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 80, 300, 80)];
     _rescrollview.showsVerticalScrollIndicator = NO;
     _rescrollview.showsHorizontalScrollIndicator = NO;
@@ -141,47 +177,10 @@
     
     _commentsCount = [[UILabel alloc] initWithFrame:CGRectMake([DeviceManager currentScreenSize].width-50, 5,50, 20)];
     [_controlview addSubview:_commentsCount];
-    
-    
-    
+
 }
 
--(void)deleTweet
-{
-    
-    
-}
 
--(void)addDeleteTweet:(SEL)DeleAction pram:(NSDictionary *)dict
-{
-    NSLog(@"deletweet");
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"id", nil];
-    [manager POST:kURLDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"delete success:%@",responseObject);
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"error:%@",error);
-     }];
-}
--(void)addDeleDestroy:(SEL)DeleAction pram:(NSDictionary *)dict
-{
-    NSLog(@"deleDestoryTweet");
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",self.tid,@"cid", nil];
-    [manager POST:kUrlReply parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"delete reply success:%@",responseObject);
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         NSLog(@"reply error:%@",error);
-     }];
-}
--(void)deleDestoryTweet
-{
-    
-}
 -(void)repostAction:(UIButton *)btn
 {
     NSLog(@"repost!!");
@@ -197,33 +196,6 @@
     NSLog(@"fav!!");
 
 }
-#pragma mark - alertview delegate 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (self.isDestroy)
-    {
-        switch (buttonIndex)
-        {
-            case 1:
-                [self deleDestoryTweet];
-                break;
-                
-            default:
-                break;
-        }
-    }else if (self.isDelete)
-    {
-        switch (buttonIndex)
-        {
-            case 1:
-                [self deleTweet];
-                break;
-                
-            default:
-                break;
-        }
-    }
-    
-}
+
 
 @end

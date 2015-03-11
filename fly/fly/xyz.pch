@@ -65,6 +65,8 @@ App Secret：
 #define kURLPOIS        @"https://api.weibo.com/2/place/nearby/pois.json"
 
 //删除一条微博
-#define kURLDelete      @"https://api.weibo.com/2/statuses/destroy.json"
+#define kURLTweetDelete      @"https://api.weibo.com/2/statuses/destroy.json"
+//删除一条评论
+#define kURLCommentDelete    @"https://api.weibo.com/2/comments/destroy.json"
 
 #endif

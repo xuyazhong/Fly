@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TweetModel.h"
+
+typedef void(^SuccessDeleTweet)(BOOL result);
+typedef void(^FailedDeleTweet)(BOOL ret);
 
 @interface MeCell : UITableViewCell<UIAlertViewDelegate>
 
@@ -32,7 +36,9 @@
 @property (strong, nonatomic)  UILabel *repostsCount;
 @property (strong, nonatomic)  UILabel *commentsCount;
 @property (strong,nonatomic)  UIButton *deleBtn;
-//-(void)addDeleteTweet:(SEL)DeleAction pram:(NSDictionary *)dict;
-//-(void)addDeleDestroy:(SEL)DeleAction pram:(NSDictionary *)dict;
--(void)addDeleAddTarget:(id)target Action:(SEL)DeleAction pram:(NSDictionary *)dict isTweet:(BOOL)isTweet;
+@property (nonatomic,strong) TweetModel *model;
+
+
+-(void)addDeleteCommentSuccess:(SuccessDeleTweet)success failed:(FailedDeleTweet)failed;
+-(void)addDeleteTweetSuccess:(SuccessDeleTweet)success failed:(FailedDeleTweet)failed;
 @end

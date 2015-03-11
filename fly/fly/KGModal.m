@@ -793,7 +793,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_model.tid,@"id",str,@"status", nil];
-    [manager POST:kURLRepost parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+    [manager POST:kURLCreateComment parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success:%@",responseObject);
          [self hideAnimated:self.animateWhenDismissed];

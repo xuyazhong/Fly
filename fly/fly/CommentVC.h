@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "MJRefresh.h"
 
-@interface CommentVC : UIViewController<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate>
+@interface CommentVC : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

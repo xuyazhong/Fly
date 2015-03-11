@@ -17,20 +17,10 @@
     
     //UIDevice设备相关的类，里面带有设备名称、型号、操作系统版本号等信息。
     CGSize size;
-    CGFloat version = [[UIDevice currentDevice].systemVersion floatValue];
-    if (version >= 7.0)
-    {
-        //iOS7之后
-        NSDictionary *mydict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16],NSFontAttributeName, nil];
+    //iOS7之后
+    NSDictionary *mydict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16],NSFontAttributeName, nil];
         size = [_text boundingRectWithSize:CGSizeMake(280, 999) options:NSStringDrawingTruncatesLastVisibleLine|NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:mydict context:nil].size;
-        
-    }else
-    {
-        //iOS7之前
-        //根据字体、设定的size范围,换行方式,计算字符串的大小
-        size = [_text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(280, 999) lineBreakMode:NSLineBreakByCharWrapping];
-        
-    }
+
     
     return size;
 }

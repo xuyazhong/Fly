@@ -31,8 +31,8 @@
     NSString *currentGroupId;
     NSString *currentUrl;
     UIScrollView *groupList;
-    MJRefreshHeaderView *header;
-    MJRefreshFooterView *footer;
+//    MJRefreshHeaderView *header;
+//    MJRefreshFooterView *footer;
     UIButton *titleBtn;
     ShareToken *mytoken;
     
@@ -65,6 +65,7 @@
     //[self createNav];
     [self createUI];
     [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
+    
     // Do any additional setup after loading the view.
 }
 -(void)createUI
@@ -74,11 +75,34 @@
     _myTableView.dataSource = self;
     _myTableView.scrollsToTop = YES;
     [self.view addSubview:_myTableView];
-    header = [[MJRefreshHeaderView alloc]initWithScrollView:_myTableView];
-    footer = [[MJRefreshFooterView alloc]initWithScrollView:_myTableView];
-    header.delegate = self;
-    footer.delegate = self;
     
+    
+    // 设置普通状态的动画图片
+    NSMutableArray *idleImages = [NSMutableArray array];
+    for (NSUInteger i = 0; i<=72; i++)
+    {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
+        [idleImages addObject:image];
+    }
+    
+    NSMutableArray *refreshingImages = [NSMutableArray array];
+    for (NSUInteger i = 73; i<=140; i++)
+    {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
+        [refreshingImages addObject:image];
+    }
+    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
+    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
+    _myTableView.header.updatedTimeHidden = YES;
+    _myTableView.header.stateHidden = YES;
+    
+    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    // 隐藏状态
+    _myTableView.footer.stateHidden = YES;
+    _myTableView.footer.stateHidden = YES;
+    _myTableView.gifFooter.refreshingImages = refreshingImages;
+
     UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     updateBtn.frame = CGRectMake(0, 0, 40, 40);
     //[updateBtn setBackgroundImage:[UIImage imageNamed:@"mask_timeline_top_icon_2"] forState:UIControlStateNormal];
@@ -89,6 +113,18 @@
     
 }
 
+-(void)loadNewData
+{
+    NSLog(@"下拉刷新");
+    currentPage = 1;
+    [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
+}
+-(void)loadMoreData
+{
+    currentPage ++;
+    [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
+}
 -(void)createNav
 {
     
@@ -298,9 +334,10 @@
         
         [_myTableView reloadData];
         
-        [header endRefreshing];
-        [footer endRefreshing];
+
         NSLog(@"开始加载");
+        [_myTableView.header endRefreshing];
+        [_myTableView.footer endRefreshing];
         [SVProgressHUD dismiss];
         [self performSelector:@selector(loadSuccess) withObject:nil afterDelay:0.3f];
         if (page==1)
@@ -580,32 +617,8 @@
 
 
 
-#pragma mark - MJRefreshBaseViewDelegate
-// 开始进入刷新状态就会调用
-- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
-{
-    if ([refreshView isKindOfClass:[header class]])
-    {
-        NSLog(@"下拉刷新");
-        currentPage = 1;
-        [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }else if([refreshView isKindOfClass:[footer class]])
-    {
-        NSLog(@"上拉加载");
-        currentPage ++;
-    }
-    [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
-}
-// 刷新完毕就会调用
-- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
-{
-    
-}
-// 刷新状态变更就会调用
-- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
-{
-    
-}
+
+
 
 
 @end

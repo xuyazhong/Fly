@@ -18,8 +18,7 @@
 @interface AtMeViewController ()
 {
     UITableView *_myTableView;
-    MJRefreshHeaderView *header;
-    MJRefreshFooterView *footer;
+
     NSMutableArray *_dataArray;
     NSString *currentURL;
     UIImageView *_fullImageView;
@@ -47,14 +46,49 @@
     _myTableView.delegate = self;
     _myTableView.dataSource = self;
     [self.view addSubview:_myTableView];
-    header = [[MJRefreshHeaderView alloc]initWithScrollView:_myTableView];
-    footer = [[MJRefreshFooterView alloc]initWithScrollView:_myTableView];
-    header.delegate = self;
-    footer.delegate = self;
+    
+
+    // 设置普通状态的动画图片
+    NSMutableArray *idleImages = [NSMutableArray array];
+    for (NSUInteger i = 0; i<=72; i++)
+    {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
+        [idleImages addObject:image];
+    }
+    
+    NSMutableArray *refreshingImages = [NSMutableArray array];
+    for (NSUInteger i = 73; i<=140; i++)
+    {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
+        [refreshingImages addObject:image];
+    }
+    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
+    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
+    _myTableView.header.updatedTimeHidden = YES;
+    _myTableView.header.stateHidden = YES;
+    
+    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    // 隐藏状态
+    _myTableView.footer.stateHidden = YES;
+    _myTableView.footer.stateHidden = YES;
+    _myTableView.gifFooter.refreshingImages = refreshingImages;
     
     [self getJSON:1 andUrl:currentURL];
     [self createNav];
     // Do any additional setup after loading the view.
+}
+-(void)loadNewData
+{
+    NSLog(@"下拉刷新");
+    currentPage = 1;
+    [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
+    [self getJSON:currentPage andUrl:currentURL];
+}
+-(void)loadMoreData
+{
+    currentPage ++;
+    [self getJSON:currentPage andUrl:currentURL];
 }
 
 -(void)createNav
@@ -222,8 +256,9 @@
          //NSLog(@"success:%@",responseObject);
          
          [_myTableView reloadData];
-         [header endRefreshing];
-         [footer endRefreshing];
+         [_myTableView.header endRefreshing];
+         [_myTableView.footer endRefreshing];
+
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"error:%@",error.localizedDescription);
@@ -473,31 +508,31 @@
 
 
 
-#pragma mark - MJRefreshBaseViewDelegate
-// 开始进入刷新状态就会调用
-- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
-{
-    if ([refreshView isKindOfClass:[header class]])
-    {
-        NSLog(@"下拉刷新");
-        currentPage = 1;
-        [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }else if([refreshView isKindOfClass:[footer class]])
-    {
-        NSLog(@"上拉加载");
-        currentPage ++;
-    }
-    [self getJSON:currentPage andUrl:currentURL];
-}
-// 刷新完毕就会调用
-- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
-{
-    
-}
-// 刷新状态变更就会调用
-- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
-{
-    
-}
+//#pragma mark - MJRefreshBaseViewDelegate
+//// 开始进入刷新状态就会调用
+//- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+//{
+//    if ([refreshView isKindOfClass:[header class]])
+//    {
+//        NSLog(@"下拉刷新");
+//        currentPage = 1;
+//        [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
+//    }else if([refreshView isKindOfClass:[footer class]])
+//    {
+//        NSLog(@"上拉加载");
+//        currentPage ++;
+//    }
+//    [self getJSON:currentPage andUrl:currentURL];
+//}
+//// 刷新完毕就会调用
+//- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
+//{
+//    
+//}
+//// 刷新状态变更就会调用
+//- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
+//{
+//    
+//}
 
 @end

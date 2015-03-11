@@ -126,7 +126,6 @@
 //----------saveAction----------------
 -(void)saveAction
 {
-    UIImage *image = _fullImageView.image;
    
 }
 //圖片保存至相簿調用的方法 一定要實現的方法
