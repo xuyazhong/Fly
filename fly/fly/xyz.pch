@@ -22,6 +22,9 @@ App Secret：
 #import "SVProgressHUD.h"
 #import "ShareToken.h"
 #import "DXAlertView.h"
+#import "JDStatusBarNotification.h"
+
+static NSString *const XYZStyle = @"XYZStyle";
 
 #define kAppKey         @"2808054411"
 #define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
@@ -68,5 +71,7 @@ App Secret：
 #define kURLTweetDelete      @"https://api.weibo.com/2/statuses/destroy.json"
 //删除一条评论
 #define kURLCommentDelete    @"https://api.weibo.com/2/comments/destroy.json"
+
+
 
 #endif

@@ -6,9 +6,8 @@
 //  Copyright (c) 2015年 xuyazhong. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "MJRefresh.h"
+#import "ParentViewController.h"
 
-@interface AtMeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface AtMeViewController : ParentViewController
 
 @end

@@ -18,6 +18,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 #import "KGModal.h"
+#import "SendTweetViewController.h"
 
 
 @interface MyTabBarViewController ()
@@ -27,6 +28,7 @@
     UILabel *selectLabel;
     CGFloat btnWidth;
     UIImageView  *customTabBar;
+    int isLongPress;
 }
 @end
 
@@ -151,9 +153,7 @@
             [btn setImage:[UIImage imageNamed:norArr[i]] forState:UIControlStateNormal];
             [customTabBar addSubview:btn];
         }
-        
-        //[btn setImage:[UIImage imageNamed:selArr[i]] forState:UIControlStateSelected];
-        
+
         
     }
     [self.view addSubview:customTabBar];
@@ -162,7 +162,12 @@
 }
 -(void)longPressAction
 {
-    [[KGModal sharedInstance] updateTweet];
+    if (isLongPress == 1)
+    {
+        [[KGModal sharedInstance] updateTweet];
+        NSLog(@"isLongPress");
+        isLongPress = 0;
+    }
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
@@ -197,16 +202,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 
 @end

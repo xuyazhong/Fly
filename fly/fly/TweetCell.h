@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWTableViewCell.h"
 
 
-@interface TweetCell : UITableViewCell
+@interface TweetCell : SWTableViewCell<SWTableViewCellDelegate>
 @property (strong, nonatomic)  UIImageView *userInfo;
 @property (nonatomic,assign) BOOL isDelete;
 @property (strong, nonatomic)  UILabel *nickName;

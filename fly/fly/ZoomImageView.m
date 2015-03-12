@@ -29,7 +29,6 @@
     
     self.userInteractionEnabled = YES;
     
-    //添加放大圖片的點擊手勢
     UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction)];
     [self addGestureRecognizer:tap];
     
@@ -41,7 +40,6 @@
     if (_coverView == nil) {
         _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         _coverView.backgroundColor = [UIColor blackColor];
-        //縮小圖片的手勢
           UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction)];
         [_coverView addGestureRecognizer:tap];
       
@@ -61,7 +59,7 @@
     _fullImageView.frame = frame;
 
 }
-//放大圖片
+
 -(void)zoomInAction
 {
     [self _initView];
@@ -128,10 +126,10 @@
 {
    
 }
-//圖片保存至相簿調用的方法 一定要實現的方法
-//存檔完成會調用 ,失敗也會
+
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
+    
 }
 
 

@@ -7,25 +7,21 @@
 //
 
 #import "MeViewController.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
-#import "AFNetworking.h"
-#import "TweetModel.h"
-#import "DetailViewController.h"
-#import "MeCell.h"
-#import "XYZImageView.h"
-#import "MeCell.h"
+//#import "UIImageView+WebCache.h"
+//#import "UIButton+WebCache.h"
+//#import "AFNetworking.h"
+//#import "TweetModel.h"
+//#import "DetailViewController.h"
+//#import "MeCell.h"
+//#import "XYZImageView.h"
+//#import "MeCell.h"
+//#import "UIButton+WebCache.h"
+//#import "MeCell.h"
 
-#define CELLFRAME CGRectMake(0, 0, 320, 80)
 
-@interface MeViewController ()<SWTableViewCellDelegate>
+@interface MeViewController ()
 {
-    UITableView *_myTableView;
-    NSMutableArray *_dataArray;
-    NSString *currentURL;
-    UIImageView *_fullImageView;
-    UIScrollView *_coverView;
-    NSUInteger currentPage;
+    
 }
 @end
 
@@ -44,44 +40,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     currentPage = 1;
     currentURL = kURLUserTimeLine;
-    _dataArray = [[NSMutableArray alloc]init];
     self.title = @"我";
-
-    _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
-    _myTableView.delegate = self;
-    _myTableView.dataSource = self;
-    [self.view addSubview:_myTableView];
-    
-    
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (NSUInteger i = 0; i<=72; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [idleImages addObject:image];
-    }
-    
-    NSMutableArray *refreshingImages = [NSMutableArray array];
-    for (NSUInteger i = 73; i<=140; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [refreshingImages addObject:image];
-    }
-    
-    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
-    _myTableView.header.updatedTimeHidden = YES;
-    _myTableView.header.stateHidden = YES;
-    
-    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    // 隐藏状态
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.gifFooter.refreshingImages = refreshingImages;
-    
     [self getJSON:1 andUrl:currentURL];
     // Do any additional setup after loading the view.
 }
@@ -138,7 +100,7 @@
              model.idstr = [subDict objectForKey:@"idstr"];
              model.text = [subDict objectForKey:@"text"];
              //model.source = [subDict objectForKey:@"source"];
-             model.source = [self flattenHTML:[subDict objectForKey:@"source"]];
+             model.source = [super flattenHTML:[subDict objectForKey:@"source"]];
              model.rid = [subDict objectForKey:@"rid"];
              model.reposts_count = [subDict objectForKey:@"reposts_count"];
              model.comments_count = [subDict objectForKey:@"comments_count"];
@@ -206,26 +168,6 @@
     
 }
 
--(NSString *)flattenHTML:(NSString *)html
-{
-    NSScanner *theScanner;
-    NSString *text = nil;
-    theScanner = [NSScanner scannerWithString:html];
-    while ([theScanner isAtEnd] == NO)
-    {
-        // find start of tag
-        [theScanner scanUpToString:@"<" intoString:NULL] ;
-        // find end of tag
-        [theScanner scanUpToString:@">" intoString:&text] ;
-        // replace the found tag with a space
-        //(you can filter multi-spaces out later if you wish)
-        html = [html stringByReplacingOccurrencesOfString:
-                [NSString stringWithFormat:@"%@>", text]
-                                               withString:@""];
-    } // while //
-    
-    return html;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -244,38 +186,7 @@
 }
 */
 
-- (NSArray *)rightButtons
-{
-    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-                                                title:@"More"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                title:@"Delete"];
-    
-    return rightUtilityButtons;
-}
 
-- (NSArray *)leftButtons
-{
-    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
-    
-    [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"check.png"]];
-    [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"clock.png"]];
-    [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"cross.png"]];
-    [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"list.png"]];
-    
-    return leftUtilityButtons;
-}
 
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -397,89 +308,8 @@
     
     return cell;
 }
--(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
-{
-    NSArray *allImages = myview.subviews;
-    for (UIView *subImages in allImages)
-    {
-        if ([subImages isKindOfClass:[XYZImageView class]])
-        {
-            [subImages removeFromSuperview];
-        }
-    }
-    for (int i=0; i<subArr.count; i++)
-    {
-        XYZImageView *imageview = [[XYZImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        imageview.userInteractionEnabled  = YES;
-        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];;
-        //NSLog(@"bmiddle:%@",imageview.strUrl);
-        imageview.contentMode =UIViewContentModeScaleAspectFit;
-        [imageview sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction:)];
-        //imageview.tag = 300+i;
-        [imageview addGestureRecognizer:tap];
-        [myview addSubview:imageview];
-    }
-    
-}
 
 
-//放大图片
--(void)zoomInAction:(UIGestureRecognizer *)touchtap
-{
-    _coverView.backgroundColor = [UIColor clearColor];
-    [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    if (_coverView == nil)
-    {
-        _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _coverView.backgroundColor = [UIColor blackColor];
-        UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
-        [_coverView addGestureRecognizer:tap];
-        [self.view addSubview:_coverView];
-    }
-    
-    if (_fullImageView == nil)
-    {
-        XYZImageView *tapimage = (XYZImageView *)touchtap.view;
-        
-        _fullImageView = [[UIImageView alloc] init];
-        NSLog(@"tapImage:%@",tapimage.strUrl);
-        [_fullImageView sd_setImageWithURL:[NSURL URLWithString:tapimage.strUrl] placeholderImage:tapimage.image];
-        //_fullImageView.image =tapimage.image;
-        _fullImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _fullImageView.userInteractionEnabled = YES;
-        [_coverView addSubview:_fullImageView];
-    }
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        _fullImageView.frame = [UIScreen mainScreen].bounds;
-        
-    }completion:^(BOOL finished)
-     {
-         _coverView.backgroundColor = [UIColor blackColor];
-     }];
-    
-    
-}
-
-//缩小图片
--(void)zoomOutAction:(UITapGestureRecognizer *)tap
-{
-    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _coverView.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.3f animations:^{
-        CGRect frame = CGRectZero;
-        _fullImageView.frame = frame;
-    }completion:^(BOOL finished)
-     {
-         [_coverView removeFromSuperview];
-         _coverView = nil;
-         _fullImageView =nil;
-         
-     }];
-    
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
@@ -502,6 +332,97 @@
 }
 
 
+#pragma mark - SWTableViewDelegate
 
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
+{
+    switch (state) {
+        case 0:
+            NSLog(@"utility buttons closed");
+            break;
+        case 1:
+            NSLog(@"left utility buttons open");
+            break;
+        case 2:
+            NSLog(@"right utility buttons open");
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+            NSLog(@"left button 0 was pressed");
+            [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            break;
+        case 1:
+            NSLog(@"left button 1 was pressed");
+            [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            break;
+        case 2:
+            NSLog(@"left button 2 was pressed");
+            
+            [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2.0 styleName:@"XYZStyle"];
+            break;
+        case 3:
+            [JDStatusBarNotification showWithStatus:@"测试成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            NSLog(@"left btton 3 was pressed");
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"More button was pressed");
+            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
+            [alertTest show];
+            
+            [cell hideUtilityButtonsAnimated:YES];
+            break;
+        }
+        case 1:
+        {
+            // Delete button was pressed
+            NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
+            
+            [_dataArray removeObjectAtIndex:cellIndexPath.row];
+            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
+{
+    // allow just one cell's utility button to be open at once
+    return YES;
+}
+
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
+{
+    switch (state) {
+        case 1:
+            // set to NO to disable all left utility buttons appearing
+            return YES;
+            break;
+        case 2:
+            // set to NO to disable all right utility buttons appearing
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return YES;
+}
 
 @end

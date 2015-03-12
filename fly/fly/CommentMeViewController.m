@@ -7,26 +7,10 @@
 //
 
 #import "CommentMeViewController.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
-#import "AFNetworking.h"
-#import "TweetModel.h"
-#import "DetailViewController.h"
-#import "MeCell.h"
-#import "XYZImageView.h"
-#import "KGModal.h"
+
 
 @interface CommentMeViewController ()
 {
-    UITableView *_myTableView;
-
-    NSMutableArray *_dataArray;
-    NSString *currentURL;
-    UIImageView *_fullImageView;
-    UIScrollView *_coverView;
-    NSInteger currentPage;
-    
-    UIButton *titleBtn;
     UIScrollView *groupList;
     NSMutableArray *groupArray;
     NSMutableArray *groupUrl;
@@ -269,26 +253,6 @@
     
 }
 
--(NSString *)flattenHTML:(NSString *)html
-{
-    NSScanner *theScanner;
-    NSString *text = nil;
-    theScanner = [NSScanner scannerWithString:html];
-    while ([theScanner isAtEnd] == NO)
-    {
-        // find start of tag
-        [theScanner scanUpToString:@"<" intoString:NULL] ;
-        // find end of tag
-        [theScanner scanUpToString:@">" intoString:&text] ;
-        // replace the found tag with a space
-        //(you can filter multi-spaces out later if you wish)
-        html = [html stringByReplacingOccurrencesOfString:
-                [NSString stringWithFormat:@"%@>", text]
-                                               withString:@""];
-    } // while //
-    
-    return html;
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -296,16 +260,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -351,15 +306,7 @@
             NSLog(@"不删除");
         }
     }];
-    /*
-    [cell addDeleteSuccess:^(BOOL result)
-    {
-     
-    } failed:^(BOOL ret)
-    {
-        NSLog(@"not dele");
-    }];
-     */
+
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
     cell.tweetLabel.text = model.text;
@@ -448,110 +395,6 @@
     alert.rightBlock = ^() {
         NSLog(@"right button clicked");
     };
-}
--(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
-{
-    NSArray *allImages = myview.subviews;
-    for (UIView *subImages in allImages)
-    {
-        if ([subImages isKindOfClass:[XYZImageView class]])
-        {
-            [subImages removeFromSuperview];
-        }
-    }
-    for (int i=0; i<subArr.count; i++)
-    {
-        XYZImageView *imageview = [[XYZImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        imageview.userInteractionEnabled  = YES;
-        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];;
-        //NSLog(@"bmiddle:%@",imageview.strUrl);
-        imageview.contentMode =UIViewContentModeScaleAspectFit;
-        [imageview sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction:)];
-        //imageview.tag = 300+i;
-        [imageview addGestureRecognizer:tap];
-        [myview addSubview:imageview];
-    }
-    
-}
-
-
-//放大圖片
--(void)zoomInAction:(UIGestureRecognizer *)touchtap
-{
-    _coverView.backgroundColor = [UIColor clearColor];
-    [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
-    if (_coverView == nil)
-    {
-        _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _coverView.backgroundColor = [UIColor blackColor];
-        UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
-        [_coverView addGestureRecognizer:tap];
-        [self.view addSubview:_coverView];
-    }
-    
-    if (_fullImageView == nil)
-    {
-        XYZImageView *tapimage = (XYZImageView *)touchtap.view;
-        
-        _fullImageView = [[UIImageView alloc] init];
-        NSLog(@"tapImage:%@",tapimage.strUrl);
-        [_fullImageView sd_setImageWithURL:[NSURL URLWithString:tapimage.strUrl] placeholderImage:tapimage.image];
-        //_fullImageView.image =tapimage.image;
-        _fullImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _fullImageView.userInteractionEnabled = YES;
-        [_coverView addSubview:_fullImageView];
-    }
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        _fullImageView.frame = [UIScreen mainScreen].bounds;
-        
-    }completion:^(BOOL finished)
-     {
-         _coverView.backgroundColor = [UIColor blackColor];
-     }];
-    
-    
-}
-
-//縮小圖片
--(void)zoomOutAction:(UITapGestureRecognizer *)tap
-{
-    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _coverView.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.3f animations:^{
-        CGRect frame = CGRectZero;
-        _fullImageView.frame = frame;
-    }completion:^(BOOL finished)
-     {
-         [_coverView removeFromSuperview];
-         _coverView = nil;
-         _fullImageView =nil;
-         
-     }];
-    
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
-    NSInteger count = model.pic_urls.count;
-    if (count >0)
-    {
-        int customHeight = 55+model.size.height+10+40+80+10;
-        return customHeight;
-    }else if(model.model.size.height>0)
-    {
-        if (model.model.pic_urls.count>0)
-        {
-            return 55+model.size.height+10+40+10+model.model.size.height+10+80+20;
-        }else
-            return 55+model.size.height+10+40+10+model.model.size.height+10;
-    }else
-    {
-        return 55+model.size.height+10+40;
-    }
 }
 
 

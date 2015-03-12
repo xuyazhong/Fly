@@ -7,24 +7,9 @@
 //
 
 #import "AtMeViewController.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
-#import "AFNetworking.h"
-#import "TweetModel.h"
-#import "DetailViewController.h"
-#import "TweetCell.h"
-#import "XYZImageView.h"
 
 @interface AtMeViewController ()
 {
-    UITableView *_myTableView;
-
-    NSMutableArray *_dataArray;
-    NSString *currentURL;
-    UIImageView *_fullImageView;
-    UIScrollView *_coverView;
-    NSUInteger currentPage;
-    UIButton *titleBtn;
     UIScrollView *groupList;
     NSMutableArray *groupArray;
     NSMutableArray *groupUrl;
@@ -38,45 +23,17 @@
     [super viewDidLoad];
     currentPage = 1;
     currentURL = kURLATMe;
-    _dataArray = [[NSMutableArray alloc]init];
-
-    //self.title = @"@我";
-
-    _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
-    _myTableView.delegate = self;
-    _myTableView.dataSource = self;
-    [self.view addSubview:_myTableView];
-    
-
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (NSUInteger i = 0; i<=72; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [idleImages addObject:image];
-    }
-    
-    NSMutableArray *refreshingImages = [NSMutableArray array];
-    for (NSUInteger i = 73; i<=140; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [refreshingImages addObject:image];
-    }
-    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
-    _myTableView.header.updatedTimeHidden = YES;
-    _myTableView.header.stateHidden = YES;
-    
-    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    // 隐藏状态
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.gifFooter.refreshingImages = refreshingImages;
     
     [self getJSON:1 andUrl:currentURL];
     [self createNav];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    [self.view addGestureRecognizer:tap];
     // Do any additional setup after loading the view.
+}
+-(void)tapAction:(UITapGestureRecognizer *)tap
+{
+    NSLog(@"tap View = %@",tap.view);
+    groupList.hidden = YES;
 }
 -(void)loadNewData
 {
@@ -266,27 +223,15 @@
     
 }
 
--(NSString *)flattenHTML:(NSString *)html
-{
-    NSScanner *theScanner;
-    NSString *text = nil;
-    theScanner = [NSScanner scannerWithString:html];
-    while ([theScanner isAtEnd] == NO)
-    {
-        // find start of tag
-        [theScanner scanUpToString:@"<" intoString:NULL] ;
-        // find end of tag
-        [theScanner scanUpToString:@">" intoString:&text] ;
-        // replace the found tag with a space
-        //(you can filter multi-spaces out later if you wish)
-        html = [html stringByReplacingOccurrencesOfString:
-                [NSString stringWithFormat:@"%@>", text]
-                                               withString:@""];
-    } // while //
-    
-    return html;
-}
 
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"touchesBegan - touch count = %d",[touches count]);
+    for(UITouch *touch in event.allTouches)
+    {
+        NSLog(@"touch view:%@",touch.view);
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -401,90 +346,10 @@
     }
     return cell;
 }
--(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
-{
-    NSArray *allImages = myview.subviews;
-    for (UIView *subImages in allImages)
-    {
-        if ([subImages isKindOfClass:[XYZImageView class]])
-        {
-            [subImages removeFromSuperview];
-        }
-    }
-    for (int i=0; i<subArr.count; i++)
-    {
-        XYZImageView *imageview = [[XYZImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        imageview.userInteractionEnabled  = YES;
-        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];;
-        //NSLog(@"bmiddle:%@",imageview.strUrl);
-        imageview.contentMode =UIViewContentModeScaleAspectFit;
-        [imageview sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction:)];
-        //imageview.tag = 300+i;
-        [imageview addGestureRecognizer:tap];
-        [myview addSubview:imageview];
-    }
-    
-}
 
 
-//放大圖片
--(void)zoomInAction:(UIGestureRecognizer *)touchtap
-{
-    _coverView.backgroundColor = [UIColor clearColor];
-    [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    
-    if (_coverView == nil)
-    {
-        _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _coverView.backgroundColor = [UIColor blackColor];
-        UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
-        [_coverView addGestureRecognizer:tap];
-        [self.view addSubview:_coverView];
-    }
-    
-    if (_fullImageView == nil)
-    {
-        XYZImageView *tapimage = (XYZImageView *)touchtap.view;
-        
-        _fullImageView = [[UIImageView alloc] init];
-        NSLog(@"tapImage:%@",tapimage.strUrl);
-        [_fullImageView sd_setImageWithURL:[NSURL URLWithString:tapimage.strUrl] placeholderImage:tapimage.image];
-        //_fullImageView.image =tapimage.image;
-        _fullImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _fullImageView.userInteractionEnabled = YES;
-        [_coverView addSubview:_fullImageView];
-    }
-    
-    [UIView animateWithDuration:0.3f animations:^{
-        _fullImageView.frame = [UIScreen mainScreen].bounds;
-        
-    }completion:^(BOOL finished)
-     {
-         _coverView.backgroundColor = [UIColor blackColor];
-     }];
-    
-    
-}
 
-//縮小圖片
--(void)zoomOutAction:(UITapGestureRecognizer *)tap
-{
-    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _coverView.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.3f animations:^{
-        CGRect frame = CGRectZero;
-        _fullImageView.frame = frame;
-    }completion:^(BOOL finished)
-     {
-         [_coverView removeFromSuperview];
-         _coverView = nil;
-         _fullImageView =nil;
-         
-     }];
-    
-}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
@@ -507,32 +372,5 @@
 }
 
 
-
-//#pragma mark - MJRefreshBaseViewDelegate
-//// 开始进入刷新状态就会调用
-//- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
-//{
-//    if ([refreshView isKindOfClass:[header class]])
-//    {
-//        NSLog(@"下拉刷新");
-//        currentPage = 1;
-//        [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
-//    }else if([refreshView isKindOfClass:[footer class]])
-//    {
-//        NSLog(@"上拉加载");
-//        currentPage ++;
-//    }
-//    [self getJSON:currentPage andUrl:currentURL];
-//}
-//// 刷新完毕就会调用
-//- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView
-//{
-//    
-//}
-//// 刷新状态变更就会调用
-//- (void)refreshView:(MJRefreshBaseView *)refreshView stateChange:(MJRefreshState)state
-//{
-//    
-//}
 
 @end

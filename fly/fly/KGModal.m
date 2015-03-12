@@ -113,7 +113,6 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 {
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
     [self showWithContentView:contentView andAnimated:YES];
-    
 }
 -(void)commentTweet:(TweetModel *)model
 {
@@ -779,6 +778,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
      {
          NSLog(@"success:%@",responseObject);
          [self hideAnimated:self.animateWhenDismissed];
+         [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:0.5];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"failed:%@",error.localizedDescription);
@@ -797,6 +797,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
      {
          NSLog(@"success:%@",responseObject);
          [self hideAnimated:self.animateWhenDismissed];
+         [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:0.5];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"failed:%@",error.localizedDescription);
@@ -828,6 +829,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"success:%@",responseObject);
             [self hideAnimated:self.animateWhenDismissed];
+            [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:0.5];
             self.hasPic = NO;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"failed:%@",error);

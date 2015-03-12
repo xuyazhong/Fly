@@ -20,26 +20,11 @@
 #import "MyTabBarViewController.h"
 #import "KGModal.h"
 #import "ZoomImageView.h"
+#import "SendTweetViewController.h"
 
 
 @interface HomeViewController ()
-{
-    UITableView *_myTableView;
-    NSMutableArray *_dataArray;
-    NSMutableArray *_groupListArray;
-    int currentPage;
-    NSString *currentGroupId;
-    NSString *currentUrl;
-    UIScrollView *groupList;
-//    MJRefreshHeaderView *header;
-//    MJRefreshFooterView *footer;
-    UIButton *titleBtn;
-    ShareToken *mytoken;
-    
-    UIImageView *_fullImageView;
-    UIScrollView *_coverView;
-    
-}
+
 @end
 
 @implementation HomeViewController
@@ -49,69 +34,27 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        mytoken = [ShareToken sharedToken];
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
-    currentPage = 1;
-    _dataArray = [[NSMutableArray alloc]init];
-    _groupListArray = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     self.title = @"首页";
     currentUrl = kURLHomeLine;
-    //[self createNav];
-    [self createUI];
-    [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
     
-    // Do any additional setup after loading the view.
-}
--(void)createUI
-{
-    _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
-    _myTableView.delegate = self;
-    _myTableView.dataSource = self;
-    _myTableView.scrollsToTop = YES;
-    [self.view addSubview:_myTableView];
-    
-    
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (NSUInteger i = 0; i<=72; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [idleImages addObject:image];
-    }
-    
-    NSMutableArray *refreshingImages = [NSMutableArray array];
-    for (NSUInteger i = 73; i<=140; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [refreshingImages addObject:image];
-    }
-    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
-    _myTableView.header.updatedTimeHidden = YES;
-    _myTableView.header.stateHidden = YES;
-    
-    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    // 隐藏状态
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.gifFooter.refreshingImages = refreshingImages;
-
     UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     updateBtn.frame = CGRectMake(0, 0, 40, 40);
-    //[updateBtn setBackgroundImage:[UIImage imageNamed:@"mask_timeline_top_icon_2"] forState:UIControlStateNormal];
     [updateBtn setBackgroundImage:[UIImage imageNamed:@"tab_send"] forState:UIControlStateNormal];
     [updateBtn addTarget:self action:@selector(updateTweet) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:updateBtn];
     self.navigationItem.rightBarButtonItem = right;
+    [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
     
+    // Do any additional setup after loading the view.
 }
+
 
 -(void)loadNewData
 {
@@ -119,6 +62,7 @@
     currentPage = 1;
     [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
     [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
+    _myTableView.scrollsToTop = YES;
 }
 -(void)loadMoreData
 {
@@ -127,7 +71,6 @@
 }
 -(void)createNav
 {
-    
     titleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [titleBtn setFrame:CGRectMake(0, 0, 80, 64)];
     [titleBtn setTitle:@"首页" forState:UIControlStateNormal];
@@ -135,11 +78,10 @@
     [titleBtn addTarget:self action:@selector(listGroup:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = titleBtn;
 //    self.navigationController.navigationItem.titleView = titleBtn;
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:        mytoken.token,@"access_token", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken sharedToken],@"access_token", nil];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:kURLGroupLists parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        
         groupList = [[UIScrollView alloc]initWithFrame:CGRectMake(self.view.bounds.size.width/2-100, 64, 200, 300)];
         groupList.backgroundColor = [UIColor blackColor];
         groupList.alpha = 0.8;
@@ -175,7 +117,13 @@
 }
 -(void)updateTweet
 {
-    [[KGModal sharedInstance] updateTweet];
+    SendTweetViewController *send = [[SendTweetViewController alloc]init];
+    __weak HomeViewController *weakSelf = self;
+    [weakSelf addChildViewController:send];
+    [weakSelf.view addSubview:send.view];
+    [send didMoveToParentViewController:weakSelf];
+    NSLog(@"ok");
+    //[[KGModal sharedInstance] updateTweet];
     //UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
     //[[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
 }
@@ -217,27 +165,18 @@
     [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
 
 }
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    NSLog(@"touch:%@",touch);
-    if (groupList.hidden == NO)
-    {
-        groupList.hidden = YES;
-    }
-    
-}
+
 -(void)getJSON:(int)page andUrl:(NSString *)url andGroupID:(NSString *)groupid
 {
     [SVProgressHUD showWithStatus:@"正在加载数据..."];
     NSDictionary *dict;
     if (groupid != nil)
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:mytoken.token,@"access_token",groupid,@"list_id",[NSString stringWithFormat:@"%d",page],@"page", nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",groupid,@"list_id",[NSString stringWithFormat:@"%d",page],@"page", nil];
 
     }else
     {
-        dict = [NSDictionary dictionaryWithObjectsAndKeys:mytoken.token,@"access_token",[NSString stringWithFormat:@"%d",page],@"page", nil];
+        dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page", nil];
     }
     NSLog(@"dict:%@",dict);
     
@@ -248,7 +187,6 @@
         {
             [_dataArray removeAllObjects];
         }
-        NSLog(@"wbtoken:%@",mytoken.token);
         NSArray *array = [responseObject objectForKey:@"statuses"];
         for (NSDictionary *subDict in array)
         {
@@ -359,26 +297,7 @@
 {
     [SVProgressHUD showSuccessWithStatus:@"加载成功"];
 }
--(NSString *)flattenHTML:(NSString *)html
-{
-    NSScanner *theScanner;
-    NSString *text = nil;
-    theScanner = [NSScanner scannerWithString:html];
-    while ([theScanner isAtEnd] == NO)
-    {
-        // find start of tag
-        [theScanner scanUpToString:@"<" intoString:NULL] ;
-        // find end of tag
-        [theScanner scanUpToString:@">" intoString:&text] ;
-        // replace the found tag with a space
-        //(you can filter multi-spaces out later if you wish)
-        html = [html stringByReplacingOccurrencesOfString:
-                [NSString stringWithFormat:@"%@>", text]
-                                               withString:@""];
-    } // while //
-    
-    return html;
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -494,126 +413,8 @@
     }
     return cell;
 }
--(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview
-{
-    NSArray *allImages = myview.subviews;
-    for (UIView *subImages in allImages)
-    {
-        if ([subImages isKindOfClass:[ZoomImageView class]])
-        {
-            [subImages removeFromSuperview];
-        }
-    }
-    for (int i=0; i<subArr.count; i++)
-    {
-        ZoomImageView *_imageView=[[ZoomImageView alloc] initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        //UIViewContentModeScaleAspectFit 顯示圖片的原始比例,自適應
-        _imageView.contentMode =UIViewContentModeScaleAspectFit;
-        _imageView.backgroundColor=[UIColor clearColor];
-        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-        [_imageView addZoom:[bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"]];
-        /*
-        XYZImageView *imageview = [[XYZImageView alloc]initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        
-        imageview.userInteractionEnabled  = YES;
-        NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
-        imageview.strUrl = [bmiddle stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-        NSLog(@"bmiddle:%@",imageview.strUrl);
-        imageview.contentMode =UIViewContentModeScaleAspectFit;
-        [imageview sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];
-         */
-        /*
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomInAction:)];
-        //imageview.tag = 300+i;
-        [imageview addGestureRecognizer:tap];
-         */
-        [myview addSubview:_imageView];
-    }
-    
-}
 
 
-
--(void)zoomInAction:(UIGestureRecognizer *)touchtap
-{
-    _coverView.backgroundColor = [UIColor clearColor];
-    [[UIApplication sharedApplication]setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    if (_coverView == nil)
-    {
-        _coverView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-        _coverView.backgroundColor = [UIColor blackColor];
-        UITapGestureRecognizer *tap= [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zoomOutAction:)];
-        [_coverView addGestureRecognizer:tap];
-        [self.view addSubview:_coverView];
-    }
-    if (_fullImageView == nil)
-    {
-        XYZImageView *tapimage = (XYZImageView *)touchtap.view;
-        
-        _fullImageView = [[UIImageView alloc] init];
-        NSLog(@"tapImage:%@",tapimage.strUrl);
-        [_fullImageView sd_setImageWithURL:[NSURL URLWithString:tapimage.strUrl] placeholderImage:tapimage.image];
-        //_fullImageView.image =tapimage.image;
-        _fullImageView.contentMode = UIViewContentModeScaleAspectFit;
-        _fullImageView.userInteractionEnabled = YES;
-        [_coverView addSubview:_fullImageView];
-    }
-
-    _fullImageView.frame = self.view.bounds;
-    
-    [UIView animateWithDuration:0.3f animations:^
-    {
-        _fullImageView.frame = [UIScreen mainScreen].bounds;
-        
-    }completion:^(BOOL finished)
-     {
-         _coverView.backgroundColor = [UIColor blackColor];
-     }];
-    
-    
-}
-
-//缩小图片
--(void)zoomOutAction:(UITapGestureRecognizer *)tap
-{
-    
-    self.navigationController.navigationBarHidden = NO;
-
-    [[UIApplication sharedApplication]setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-    _coverView.backgroundColor = [UIColor clearColor];
-    [UIView animateWithDuration:0.3f animations:^{
-        CGRect frame = CGRectZero;
-        _fullImageView.frame = frame;
-    }completion:^(BOOL finished)
-     {
-         [_coverView removeFromSuperview];
-         _coverView = nil;
-         _fullImageView =nil;
-         
-     }];
-    
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
-    NSInteger count = model.pic_urls.count;
-    if (count >0)
-    {
-        int customHeight = 55+model.size.height+10+80+40+10;
-        return customHeight;
-    }else if(model.model.size.height>0)
-    {
-        if (model.model.pic_urls.count>0)
-        {
-            return 55+model.size.height+10+40+10+model.model.size.height+10+80+20;
-        }else
-            return 55+model.size.height+10+40+10+model.model.size.height+10;
-    }else
-    {
-        return 55+model.size.height+10+40;
-    }
-}
 
 
 
