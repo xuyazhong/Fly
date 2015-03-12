@@ -46,6 +46,7 @@
     /*
     [MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
     */
+    NSLog(@"path:%@",NSHomeDirectory());
     [MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
     //[MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
     [WeiboSDK enableDebugMode:YES];
@@ -197,8 +198,6 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    
-    
     // IOS 7 Support Required
     [APService handleRemoteNotification:userInfo];
     completionHandler(UIBackgroundFetchResultNewData);
