@@ -28,7 +28,6 @@
     UILabel *selectLabel;
     CGFloat btnWidth;
     UIImageView  *customTabBar;
-    int isLongPress;
 }
 @end
 
@@ -127,7 +126,7 @@
             UIImageView *headBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10+btnWidth*i, 0, 45, 45)];
 //            [headBtn setBackgroundImage:[UIImage imageNamed:norArr[i]] forState:UIControlStateNormal];
             [headBtn setImage:[UIImage imageNamed:norArr[i]]];
-            headBtn.tag = 100+i;
+            headBtn.tag = 500+i;
             headBtn.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
             [headBtn addGestureRecognizer:tap];
@@ -141,7 +140,7 @@
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(10+btnWidth*i, 0, 45, 45);
             //btn.tintColor = [UIColor orangeColor];
-            btn.tag = 100+i;
+            btn.tag = 500+i;
             if (i==2)
             {
                 btn.selected = YES;
@@ -162,18 +161,13 @@
 }
 -(void)longPressAction
 {
-    if (isLongPress == 1)
-    {
-        [[KGModal sharedInstance] updateTweet];
-        NSLog(@"isLongPress");
-        isLongPress = 0;
-    }
+    [[KGModal sharedInstance] updateTweet];
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
     for (int i=0; i<4; i++)
     {
-        UIButton *mybtn = (UIButton *)[self.view viewWithTag:100+i];
+        UIButton *mybtn = (UIButton *)[self.view viewWithTag:500+i];
         mybtn.selected = NO;
     }
     UIImageView *img = (UIImageView *)tap.view;
@@ -187,11 +181,11 @@
 {
     for (int i=0; i<4; i++)
     {
-        UIButton *mybtn = (UIButton *)[self.view viewWithTag:100+i];
+        UIButton *mybtn = (UIButton *)[self.view viewWithTag:500+i];
         mybtn.selected = NO;
     }
     btn.selected = YES;
-    self.selectedIndex = btn.tag-100;
+    self.selectedIndex = btn.tag-500;
     CGRect frame = selectLabel.frame;
     frame.origin.x = btn.frame.origin.x+btnWidth/2-10;
     selectLabel.frame = frame;

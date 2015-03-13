@@ -111,20 +111,32 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 }
 -(void)updateTweet
 {
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
-    [self showWithContentView:contentView andAnimated:YES];
+    if (![ShareToken sharedToken].isBusy)
+    {
+        [ShareToken sharedToken].isBusy = YES;
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+        [self showWithContentView:contentView andAnimated:YES];
+    }
 }
 -(void)commentTweet:(TweetModel *)model
 {
-    self.model = model;
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
-    [self showWithComment:contentView andAnimated:YES];
+    if (![ShareToken sharedToken].isBusy)
+    {
+        [ShareToken sharedToken].isBusy = YES;
+        self.model = model;
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+        [self showWithComment:contentView andAnimated:YES];
+    }
 }
 -(void)replyTweet:(TweetModel *)model
 {
-    self.model = model;
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
-    [self showReply:contentView andAnimated:YES];
+    if (![ShareToken sharedToken].isBusy)
+    {
+        [ShareToken sharedToken].isBusy = YES;
+        self.model = model;
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+        [self showReply:contentView andAnimated:YES];
+    }
 }
 - (void)showReply:(UIView *)contentView andAnimated:(BOOL)animated
 {
@@ -265,9 +277,13 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 }
 -(void)repostTweet:(TweetModel *)model
 {
-    self.model = model;
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
-    [self showRepost:contentView andAnimated:YES];
+    if (![ShareToken sharedToken].isBusy)
+    {
+        [ShareToken sharedToken].isBusy = YES;
+        self.model = model;
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+        [self showRepost:contentView andAnimated:YES];
+    }
 }
 - (void)showRepost:(UIView *)contentView andAnimated:(BOOL)animated
 {
@@ -721,7 +737,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
      {
          self.selectImage = image;
          self.hasPic = YES;
-         NSLog(@"get image!!:%@",image);
+         NSLog(@"get image!!");
          
      } failed:^(NSString *str)
      {
@@ -855,21 +871,6 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
              NSLog(@"failed:%@",error);
          }];
     }
-    //NSLog(@"current url :%@",currentUrl);
-    //NSLog(@"dict:%@",tweetdict);
-    
-    /*
-    [manager POST:currentUrl parameters:tweetdict success:^(AFHTTPRequestOperation *operation, id responseObject)
-     {
-         NSLog(@"success:%@",responseObject);
-         [self hideAnimated:self.animateWhenDismissed];
-         //[self dismissViewControllerAnimated:YES completion:nil];
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         //NSLog(@"failed:%@",error.localizedDescription);
-         NSLog(@"failed:%@",error);
-     }];
-     */
 }
 - (void)closeAction:(id)sender{
     [self hideAnimated:self.animateWhenDismissed];
@@ -890,6 +891,17 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 }
 
 - (void)hideAnimated:(BOOL)animated{
+    if ([ShareToken sharedToken].isBusy)
+    {
+        NSLog(@"yes");
+    }else
+    {
+        NSLog(@"no");
+    }
+    [ShareToken sharedToken].isBusy = NO;
+    self.model = nil;
+    self.selectImage = nil;
+    self.hasLocation = NO;
     [self hideAnimated:animated withCompletionBlock:nil];
 }
 

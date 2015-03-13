@@ -122,7 +122,9 @@
     if (token == nil )
     {
         token = [[ShareToken alloc]init];
+        token.isBusy = NO;
     }
     return token;
 }
+
 @end

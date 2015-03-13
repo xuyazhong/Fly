@@ -70,7 +70,7 @@
              [btn setFrame:CGRectMake(5, 5+30*i, 190, 40)];
              btn.titleLabel.font = [UIFont systemFontOfSize:14];
              [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-             btn.tag = 80 + i;
+             btn.tag = 300 + i;
              [btn addTarget:self action:@selector(selectGroup:) forControlEvents:UIControlEventTouchUpInside];
              [btn setTitle:groupArray[i] forState:UIControlStateNormal];
              [groupList addSubview:btn];
@@ -96,12 +96,12 @@
 }
 -(void)selectGroup:(UIButton *)btn
 {
-    NSInteger index = btn.tag - 80;
+    NSInteger index = btn.tag - 300;
 
     [titleBtn setTitle:groupArray[index] forState:UIControlStateNormal];
     for (int i=0; i<groupArray.count; i++)
     {
-        UIButton *myBtn = (UIButton *)[self.view viewWithTag:80+i];
+        UIButton *myBtn = (UIButton *)[self.view viewWithTag:300+i];
         myBtn.selected = NO;
     }
     btn.selected = YES;

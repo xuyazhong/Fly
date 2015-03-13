@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TweetModel.h"
+#import "SLPagingViewController.h"
 
-@interface DetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface DetailViewController : SLPagingViewController<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UIViewController *vc1;
 @property (nonatomic,strong) UIViewController *vc2;
 @property (nonatomic,strong) UIViewController *vc3;

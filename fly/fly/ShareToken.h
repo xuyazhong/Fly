@@ -11,6 +11,7 @@
 @interface ShareToken : NSObject
 
 @property (nonatomic,copy) NSString *token;
+@property (nonatomic,assign) BOOL isBusy;
 -(void)setToken:(NSString *)token;
 -(NSString *)tk;
 +(NSString *)readToken;
@@ -20,4 +21,6 @@
 +(ShareToken *)sharedToken;
 +(void)setUserInfo:(NSDictionary *)dict;
 +(NSDictionary *)readUserInfo;
+
+
 @end

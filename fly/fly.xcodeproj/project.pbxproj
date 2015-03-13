@@ -456,6 +456,17 @@
 		BCD2B7CC1AB14C11005241F6 /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD2B7C71AB14C11005241F6 /* JDStatusBarNotification.m */; };
 		BCD2B7CD1AB14C11005241F6 /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD2B7C91AB14C11005241F6 /* JDStatusBarStyle.m */; };
 		BCD2B7CE1AB14C11005241F6 /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCD2B7CB1AB14C11005241F6 /* JDStatusBarView.m */; };
+		BCECDEB01AB2C33F008A65AD /* UzysAssetPickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BCECDEA11AB2C33F008A65AD /* UzysAssetPickerController.bundle */; };
+		BCECDEB11AB2C33F008A65AD /* UzysAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEA31AB2C33F008A65AD /* UzysAssetsPickerController.m */; };
+		BCECDEB21AB2C33F008A65AD /* UzysAssetsPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCECDEA41AB2C33F008A65AD /* UzysAssetsPickerController.xib */; };
+		BCECDEB31AB2C33F008A65AD /* UzysAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEA71AB2C33F008A65AD /* UzysAssetsViewCell.m */; };
+		BCECDEB41AB2C33F008A65AD /* UzysGroupPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEA91AB2C33F008A65AD /* UzysGroupPickerView.m */; };
+		BCECDEB51AB2C33F008A65AD /* UzysGroupPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEAB1AB2C33F008A65AD /* UzysGroupPickerViewController.m */; };
+		BCECDEB61AB2C33F008A65AD /* UzysGroupViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEAD1AB2C33F008A65AD /* UzysGroupViewCell.m */; };
+		BCECDEB71AB2C33F008A65AD /* UzysWrapperPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDEAF1AB2C33F008A65AD /* UzysWrapperPickerController.m */; };
+		BCECDEB91AB2C39C008A65AD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCECDEB81AB2C39C008A65AD /* AVFoundation.framework */; };
+		BCECDED61AB3010C008A65AD /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = BCECDED31AB3010C008A65AD /* .gitignore */; };
+		BCECDED71AB3010C008A65AD /* SLPagingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCECDED51AB3010C008A65AD /* SLPagingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1028,6 +1039,25 @@
 		BCD2B7C91AB14C11005241F6 /* JDStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarStyle.m; sourceTree = "<group>"; };
 		BCD2B7CA1AB14C11005241F6 /* JDStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarView.h; sourceTree = "<group>"; };
 		BCD2B7CB1AB14C11005241F6 /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarView.m; sourceTree = "<group>"; };
+		BCECDEA11AB2C33F008A65AD /* UzysAssetPickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UzysAssetPickerController.bundle; sourceTree = "<group>"; };
+		BCECDEA21AB2C33F008A65AD /* UzysAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysAssetsPickerController.h; sourceTree = "<group>"; };
+		BCECDEA31AB2C33F008A65AD /* UzysAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysAssetsPickerController.m; sourceTree = "<group>"; };
+		BCECDEA41AB2C33F008A65AD /* UzysAssetsPickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UzysAssetsPickerController.xib; sourceTree = "<group>"; };
+		BCECDEA51AB2C33F008A65AD /* UzysAssetsPickerController_Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysAssetsPickerController_Configuration.h; sourceTree = "<group>"; };
+		BCECDEA61AB2C33F008A65AD /* UzysAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysAssetsViewCell.h; sourceTree = "<group>"; };
+		BCECDEA71AB2C33F008A65AD /* UzysAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysAssetsViewCell.m; sourceTree = "<group>"; };
+		BCECDEA81AB2C33F008A65AD /* UzysGroupPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysGroupPickerView.h; sourceTree = "<group>"; };
+		BCECDEA91AB2C33F008A65AD /* UzysGroupPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysGroupPickerView.m; sourceTree = "<group>"; };
+		BCECDEAA1AB2C33F008A65AD /* UzysGroupPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysGroupPickerViewController.h; sourceTree = "<group>"; };
+		BCECDEAB1AB2C33F008A65AD /* UzysGroupPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysGroupPickerViewController.m; sourceTree = "<group>"; };
+		BCECDEAC1AB2C33F008A65AD /* UzysGroupViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysGroupViewCell.h; sourceTree = "<group>"; };
+		BCECDEAD1AB2C33F008A65AD /* UzysGroupViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysGroupViewCell.m; sourceTree = "<group>"; };
+		BCECDEAE1AB2C33F008A65AD /* UzysWrapperPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UzysWrapperPickerController.h; sourceTree = "<group>"; };
+		BCECDEAF1AB2C33F008A65AD /* UzysWrapperPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UzysWrapperPickerController.m; sourceTree = "<group>"; };
+		BCECDEB81AB2C39C008A65AD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BCECDED31AB3010C008A65AD /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BCECDED41AB3010C008A65AD /* SLPagingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLPagingViewController.h; sourceTree = "<group>"; };
+		BCECDED51AB3010C008A65AD /* SLPagingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLPagingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1035,6 +1065,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCECDEB91AB2C39C008A65AD /* AVFoundation.framework in Frameworks */,
 				BCD0E5E71AAC6DDE00BC20D5 /* libstdc++.6.0.9.dylib in Frameworks */,
 				BCD0E5E51AAC6DD400BC20D5 /* CoreLocation.framework in Frameworks */,
 				BC17CED41AAAD68E00582DBB /* MobileCoreServices.framework in Frameworks */,
@@ -1068,6 +1099,7 @@
 		872E22501AAA010B00C552F7 = {
 			isa = PBXGroup;
 			children = (
+				BCECDEB81AB2C39C008A65AD /* AVFoundation.framework */,
 				BCD0E5E61AAC6DDE00BC20D5 /* libstdc++.6.0.9.dylib */,
 				BCD0E5E41AAC6DD400BC20D5 /* CoreLocation.framework */,
 				BC17CED31AAAD68E00582DBB /* MobileCoreServices.framework */,
@@ -1204,6 +1236,8 @@
 		BC17CE151AAAD33200582DBB /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BCECDED21AB3010C008A65AD /* SLPagingView */,
+				BCECDEA01AB2C33F008A65AD /* ImagePickerLibrary */,
 				BCD2B7C51AB14C11005241F6 /* JDStatusBarNotification */,
 				BC99A0D41AAFE7CB00BB46B1 /* MJRefresh */,
 				BCD0E5E81AAC6E8000BC20D5 /* AMap */,
@@ -3002,6 +3036,38 @@
 			path = JDStatusBarNotification;
 			sourceTree = "<group>";
 		};
+		BCECDEA01AB2C33F008A65AD /* ImagePickerLibrary */ = {
+			isa = PBXGroup;
+			children = (
+				BCECDEA11AB2C33F008A65AD /* UzysAssetPickerController.bundle */,
+				BCECDEA21AB2C33F008A65AD /* UzysAssetsPickerController.h */,
+				BCECDEA31AB2C33F008A65AD /* UzysAssetsPickerController.m */,
+				BCECDEA41AB2C33F008A65AD /* UzysAssetsPickerController.xib */,
+				BCECDEA51AB2C33F008A65AD /* UzysAssetsPickerController_Configuration.h */,
+				BCECDEA61AB2C33F008A65AD /* UzysAssetsViewCell.h */,
+				BCECDEA71AB2C33F008A65AD /* UzysAssetsViewCell.m */,
+				BCECDEA81AB2C33F008A65AD /* UzysGroupPickerView.h */,
+				BCECDEA91AB2C33F008A65AD /* UzysGroupPickerView.m */,
+				BCECDEAA1AB2C33F008A65AD /* UzysGroupPickerViewController.h */,
+				BCECDEAB1AB2C33F008A65AD /* UzysGroupPickerViewController.m */,
+				BCECDEAC1AB2C33F008A65AD /* UzysGroupViewCell.h */,
+				BCECDEAD1AB2C33F008A65AD /* UzysGroupViewCell.m */,
+				BCECDEAE1AB2C33F008A65AD /* UzysWrapperPickerController.h */,
+				BCECDEAF1AB2C33F008A65AD /* UzysWrapperPickerController.m */,
+			);
+			path = ImagePickerLibrary;
+			sourceTree = "<group>";
+		};
+		BCECDED21AB3010C008A65AD /* SLPagingView */ = {
+			isa = PBXGroup;
+			children = (
+				BCECDED31AB3010C008A65AD /* .gitignore */,
+				BCECDED41AB3010C008A65AD /* SLPagingViewController.h */,
+				BCECDED51AB3010C008A65AD /* SLPagingViewController.m */,
+			);
+			path = SLPagingView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3178,6 +3244,7 @@
 				BC79AE611AB0152300929832 /* PullToRefresh_013@2x.png in Resources */,
 				BC79AEB71AB0152400929832 /* PullToRefresh_056@2x.png in Resources */,
 				BC79AF3A1AB0152500929832 /* PullToRefresh_122.png in Resources */,
+				BCECDEB01AB2C33F008A65AD /* UzysAssetPickerController.bundle in Resources */,
 				BC79AEC31AB0152400929832 /* PullToRefresh_062@2x.png in Resources */,
 				BC79AF381AB0152400929832 /* PullToRefresh_121.png in Resources */,
 				BC79AE881AB0152300929832 /* PullToRefresh_033.png in Resources */,
@@ -3193,6 +3260,7 @@
 				BC17CE511AAAD37B00582DBB /* tab_user_comments_selected@3x.png in Resources */,
 				BC79AEA91AB0152300929832 /* PullToRefresh_049@2x.png in Resources */,
 				BC79AF3F1AB0152500929832 /* PullToRefresh_124@2x.png in Resources */,
+				BCECDED61AB3010C008A65AD /* .gitignore in Resources */,
 				BC79AEB31AB0152400929832 /* PullToRefresh_054@2x.png in Resources */,
 				BC79AF141AB0152400929832 /* PullToRefresh_103.png in Resources */,
 				BC17CE461AAAD37B00582DBB /* t_comments@2x.png in Resources */,
@@ -3344,6 +3412,7 @@
 				BC79AEAC1AB0152400929832 /* PullToRefresh_051.png in Resources */,
 				BC79AF021AB0152400929832 /* PullToRefresh_094.png in Resources */,
 				BC79AF501AB0152500929832 /* PullToRefresh_133.png in Resources */,
+				BCECDEB21AB2C33F008A65AD /* UzysAssetsPickerController.xib in Resources */,
 				BC79AF4B1AB0152500929832 /* PullToRefresh_130@2x.png in Resources */,
 				BC79AEBC1AB0152400929832 /* PullToRefresh_059.png in Resources */,
 				BC79AE941AB0152300929832 /* PullToRefresh_039.png in Resources */,
@@ -3458,6 +3527,8 @@
 				BC17CE791AAAD45600582DBB /* AFHTTPRequestOperation.m in Sources */,
 				BC17CEC11AAAD4A500582DBB /* UIImageView+HighlightedWebCache.m in Sources */,
 				BC17CE7C1AAAD45600582DBB /* AFNetworkReachabilityManager.m in Sources */,
+				BCECDEB31AB2C33F008A65AD /* UzysAssetsViewCell.m in Sources */,
+				BCECDEB41AB2C33F008A65AD /* UzysGroupPickerView.m in Sources */,
 				BC8A0B501AAEE0FE00512964 /* DXAlertView.m in Sources */,
 				BC17CEE01AAAD72800582DBB /* RepostViewController.m in Sources */,
 				BC99A0EE1AAFE7CC00BB46B1 /* MJRefreshComponent.m in Sources */,
@@ -3468,7 +3539,10 @@
 				BCD2B7CD1AB14C11005241F6 /* JDStatusBarStyle.m in Sources */,
 				87AFAB391AAE08C100ED5B70 /* MeCell.m in Sources */,
 				BCD0E5E31AAC64DE00BC20D5 /* ZoomImageView.m in Sources */,
+				BCECDEB11AB2C33F008A65AD /* UzysAssetsPickerController.m in Sources */,
+				BCECDEB51AB2C33F008A65AD /* UzysGroupPickerViewController.m in Sources */,
 				BC17CEEF1AAAD79E00582DBB /* MeViewController.m in Sources */,
+				BCECDED71AB3010C008A65AD /* SLPagingViewController.m in Sources */,
 				BC17CE811AAAD45600582DBB /* AFURLSessionManager.m in Sources */,
 				BC17CEBB1AAAD4A500582DBB /* SDWebImageManager.m in Sources */,
 				BC17CF1A1AAAD8C100582DBB /* UserModel.m in Sources */,
@@ -3479,6 +3553,7 @@
 				BC17CECB1AAAD54B00582DBB /* ShareToken.m in Sources */,
 				BC80EA851AB07C5700ABFC3B /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				BC17CE7F1AAAD45600582DBB /* AFURLRequestSerialization.m in Sources */,
+				BCECDEB61AB2C33F008A65AD /* UzysGroupViewCell.m in Sources */,
 				BC17CEBC1AAAD4A500582DBB /* SDWebImagePrefetcher.m in Sources */,
 				BC99A0F01AAFE7CC00BB46B1 /* MJRefreshFooter.m in Sources */,
 				BC17CEF21AAAD7C000582DBB /* AtMeViewController.m in Sources */,
@@ -3499,6 +3574,7 @@
 				BC17CEB51AAAD4A500582DBB /* NSData+ImageContentType.m in Sources */,
 				BC79AF791AB01E2A00929832 /* OverLayView.m in Sources */,
 				BC17CEF81AAAD7D800582DBB /* FavListViewController.m in Sources */,
+				BCECDEB71AB2C33F008A65AD /* UzysWrapperPickerController.m in Sources */,
 				BC17CEB71AAAD4A500582DBB /* SDWebImageCompat.m in Sources */,
 				BCD0E5FA1AAC773600BC20D5 /* LocationViewController.m in Sources */,
 				872E22621AAA010C00C552F7 /* AppDelegate.m in Sources */,

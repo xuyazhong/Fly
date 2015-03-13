@@ -21,6 +21,7 @@
 #import "KGModal.h"
 #import "ZoomImageView.h"
 #import "SendTweetViewController.h"
+#import "SLPagingViewController.h"
 
 
 @interface HomeViewController ()
@@ -318,11 +319,102 @@
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     DetailViewController *detail = [[DetailViewController alloc]init];
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     detail.model = model;
     [self presentViewController:detail animated:YES completion:nil];
+     */
+    UIColor *orange = [UIColor colorWithRed:255/255
+                                      green:69.0/255
+                                       blue:0.0/255
+                                      alpha:1.0];
+    
+    UIColor *gray = [UIColor colorWithRed:.84
+                                    green:.84
+                                     blue:.84
+                                    alpha:1.0];
+    
+    UIButton *repostBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [repostBtn setTitle:@"转发" forState:UIControlStateNormal];
+    repostBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [repostBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [repostBtn setFrame:CGRectMake(0, 0, 60, 30)];
+    
+    UIButton *commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commentBtn setTitle:@"评论" forState:UIControlStateNormal];
+    commentBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [commentBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [commentBtn setFrame:CGRectMake(0, 0, 60, 30)];
+
+
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn setTitle:@"关闭" forState:UIControlStateNormal];
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [cancelBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [cancelBtn setFrame:CGRectMake(0, 0, 60, 30)];
+
+    // Make views for the navigation bar
+
+    
+    SLPagingViewController *pageViewController = [[SLPagingViewController alloc] initWithNavBarItems:@[repostBtn,commentBtn,cancelBtn]
+                                                                                    navBarBackground:[UIColor whiteColor]
+                                                                                               views:@[[self viewWithBackground:orange], [self viewWithBackground:[UIColor yellowColor]], [self viewWithBackground:gray]]
+                                                                                     showPageControl:NO];
+    // Tinder Like
+    pageViewController.pagingViewMoving = ^(NSArray *subviews){
+        int i = 0;
+        for(UIButton *v in subviews){
+            UIColor *c = gray;
+            if(v.frame.origin.x > 45
+               && v.frame.origin.x < 145)
+                // Left part
+                c = [self gradient:v.frame.origin.x
+                               top:46
+                            bottom:144
+                              init:orange
+                              goal:gray];
+            else if(v.frame.origin.x > 145
+                    && v.frame.origin.x < 245)
+                // Right part
+                c = [self gradient:v.frame.origin.x
+                               top:146
+                            bottom:244
+                              init:gray
+                              goal:orange];
+            else if(v.frame.origin.x == 145)
+                c = orange;
+            v.tintColor= c;
+            i++;
+        }
+    };
+    
+    UINavigationController *nvc  = [[UINavigationController alloc] initWithRootViewController:pageViewController];
+    [self presentViewController:nvc animated:YES completion:^{
+        
+    }];
 }
+-(UIColor *)gradient:(double)percent top:(double)topX bottom:(double)bottomX init:(UIColor*)init goal:(UIColor*)goal{
+    double t = (percent - bottomX) / (topX - bottomX);
+    
+    t = MAX(0.0, MIN(t, 1.0));
+    
+    const CGFloat *cgInit = CGColorGetComponents(init.CGColor);
+    const CGFloat *cgGoal = CGColorGetComponents(goal.CGColor);
+    
+    double r = cgInit[0] + t * (cgGoal[0] - cgInit[0]);
+    double g = cgInit[1] + t * (cgGoal[1] - cgInit[1]);
+    double b = cgInit[2] + t * (cgGoal[2] - cgInit[2]);
+    
+    return [UIColor colorWithRed:r green:g blue:b alpha:1];
+}
+
+-(UIView*)viewWithBackground:(UIColor *)color{
+    UIView *v = [UIView new];
+    v.backgroundColor = color;
+    return v;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_dataArray count];

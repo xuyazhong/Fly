@@ -123,36 +123,7 @@
         [self.view bringSubviewToFront:groupList];
     }
 }
--(void)selectGroup:(UIButton *)btn
-{
-    ListsModel *model = [_groupListArray objectAtIndex:btn.tag-50];
-    NSLog(@"name:%@",model.name);
-    //NSLog(@"id:%@",model.idstr);
-    //btn.titleLabel.text
-    [titleBtn setTitle:model.name forState:UIControlStateNormal];
-    //self.navigationItem.titleView = btn;
-    for (int i=0; i<_dataArray.count; i++)
-    {
-        UIButton *myBtn = (UIButton *)[self.view viewWithTag:50+i];
-        myBtn.selected = NO;
-    }
-    btn.selected = YES;
-    titleBtn.selected = NO;
-    groupList.hidden = YES;
-    currentGroupId = model.idstr;
-    currentPage=1;
-    currentUrl = kURLGroup;
-    
-}
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    NSLog(@"touch:%@",touch);
-    if (groupList.hidden == NO)
-    {
-        groupList.hidden = YES;
-    }
-}
+
 
 -(void)loadSuccess
 {
