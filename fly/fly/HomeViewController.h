@@ -11,4 +11,8 @@
 
 @interface HomeViewController : ParentViewController
 
+@property (nonatomic,strong) UITableView *table1;
+@property (nonatomic,strong) UITableView *table2;
+@property (nonatomic,strong) UITableView *table3;
+
 @end

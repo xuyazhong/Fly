@@ -172,6 +172,9 @@
     if (cell == nil)
     {
         cell = [[TweetCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myFavCell];
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.rightUtilityButtons = [self rightButtons];
+        cell.delegate = self;
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];

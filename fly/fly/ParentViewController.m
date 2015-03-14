@@ -83,15 +83,29 @@
     _myTableView.gifFooter.refreshingImages = refreshingImages;
     
     UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    updateBtn.frame = CGRectMake(0, 0, 40, 40);
+    updateBtn.frame = CGRectMake(0, 0, 30, 30);
     //[updateBtn setBackgroundImage:[UIImage imageNamed:@"mask_timeline_top_icon_2"] forState:UIControlStateNormal];
-    [updateBtn setBackgroundImage:[UIImage imageNamed:@"tab_send"] forState:UIControlStateNormal];
+    [updateBtn setBackgroundImage:[UIImage imageNamed:@"icn_nav_bar_compose_tweet"] forState:UIControlStateNormal];
     [updateBtn addTarget:self action:@selector(updateTweet) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:updateBtn];
-    self.navigationItem.rightBarButtonItem = right;
+    
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(0, 0, 30, 30);
+    //[updateBtn setBackgroundImage:[UIImage imageNamed:@"mask_timeline_top_icon_2"] forState:UIControlStateNormal];
+    [searchBtn setBackgroundImage:[UIImage imageNamed:@"icn_title_search_default"] forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc]initWithCustomView:updateBtn];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc]initWithCustomView:searchBtn];
+    NSArray *right = [NSArray arrayWithObjects:item1,item2, nil];
+    self.navigationItem.rightBarButtonItems = right;
+    //self.navigationItem.rightBarButtonItem = right;
     
 }
-
+-(void)searchAction
+{
+    
+}
 -(void)loadNewData
 {
     NSLog(@"下拉刷新");
@@ -150,11 +164,19 @@
     NSMutableArray *rightUtilityButtons = [NSMutableArray new];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
-                                                title:@"More"];
+                                                title:@"详情"];
+    
+    return rightUtilityButtons;
+}
+- (NSArray *)rightDeleteButtons
+{
+    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+    [rightUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0]
+                                                title:@"详情"];
     [rightUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f]
-                                                title:@"Delete"];
-    
+                                                title:@"删除"];
     return rightUtilityButtons;
 }
 
@@ -164,16 +186,16 @@
     
     [leftUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"check.png"]];
+                                                icon:[UIImage imageNamed:@"messagescenter_at"]];
     [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:1.0f green:1.0f blue:0.35f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"clock.png"]];
+     [UIColor orangeColor]
+                                                icon:[UIImage imageNamed:@"messagescenter_comments"]];
     [leftUtilityButtons sw_addUtilityButtonWithColor:
      [UIColor colorWithRed:1.0f green:0.231f blue:0.188f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"cross.png"]];
-    [leftUtilityButtons sw_addUtilityButtonWithColor:
-     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
-                                                icon:[UIImage imageNamed:@"list.png"]];
+                                                icon:[UIImage imageNamed:@"more_friendscircle"]];
+//    [leftUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+//                                                icon:[UIImage imageNamed:@"list.png"]];
     
     return leftUtilityButtons;
 }
@@ -241,6 +263,99 @@
     {
         return 55+model.size.height+10+40;
     }
+}
+
+#pragma mark - SWTableViewDelegate
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
+{
+    switch (state) {
+        case 0:
+            NSLog(@"utility buttons closed");
+            break;
+        case 1:
+            NSLog(@"left utility buttons open");
+            break;
+        case 2:
+            NSLog(@"right utility buttons open");
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+            NSLog(@"left button 0 was pressed");
+            [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            break;
+        case 1:
+            NSLog(@"left button 1 was pressed");
+            [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            break;
+        case 2:
+            NSLog(@"left button 2 was pressed");
+            
+            [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2.0 styleName:@"XYZStyle"];
+            break;
+        case 3:
+            [JDStatusBarNotification showWithStatus:@"测试成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            NSLog(@"left btton 3 was pressed");
+        default:
+            break;
+    }
+}
+
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    switch (index) {
+        case 0:
+        {
+            NSLog(@"More button was pressed");
+            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
+            [alertTest show];
+            
+            [cell hideUtilityButtonsAnimated:YES];
+            break;
+        }
+        case 1:
+        {
+            // Delete button was pressed
+            NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
+            
+            [_dataArray removeObjectAtIndex:cellIndexPath.row];
+            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
+{
+    // allow just one cell's utility button to be open at once
+    return YES;
+}
+
+- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
+{
+    switch (state) {
+        case 1:
+            // set to NO to disable all left utility buttons appearing
+            return YES;
+            break;
+        case 2:
+            // set to NO to disable all right utility buttons appearing
+            return YES;
+            break;
+        default:
+            break;
+    }
+    
+    return YES;
 }
 
 

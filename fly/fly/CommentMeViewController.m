@@ -24,43 +24,8 @@
     [super viewDidLoad];
     currentPage = 1;
     currentURL = kURLCommentToMe;
-    _dataArray = [[NSMutableArray alloc]init];
     
     self.title = @"评论";
-
-    _myTableView = [[UITableView alloc]initWithFrame:self.view.bounds];
-    _myTableView.delegate = self;
-    _myTableView.dataSource = self;
-    [self.view addSubview:_myTableView];
-    
-    
-    // 设置普通状态的动画图片
-    NSMutableArray *idleImages = [NSMutableArray array];
-    for (NSUInteger i = 0; i<=72; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [idleImages addObject:image];
-    }
-    
-    NSMutableArray *refreshingImages = [NSMutableArray array];
-    for (NSUInteger i = 73; i<=140; i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"PullToRefresh_%03zd", i]];
-        [refreshingImages addObject:image];
-    }
-    [_myTableView addGifHeaderWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    [_myTableView.gifHeader setImages:idleImages forState:MJRefreshHeaderStateIdle];
-    [_myTableView.gifHeader setImages:refreshingImages forState:MJRefreshHeaderStateRefreshing];
-    _myTableView.header.updatedTimeHidden = YES;
-    _myTableView.header.stateHidden = YES;
-    
-    [_myTableView addGifFooterWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
-    // 隐藏状态
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.footer.stateHidden = YES;
-    _myTableView.gifFooter.refreshingImages = refreshingImages;
-    
-    
     
     [self getJSON:1 andUrl:currentURL];
     [self createNav];
@@ -280,6 +245,9 @@
     if (cell == nil)
     {
         cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCommentCell];
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.rightUtilityButtons = [self rightDeleteButtons];
+        cell.delegate = self;
     }
     cell.isDestroy = YES;
     

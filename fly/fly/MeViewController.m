@@ -210,7 +210,7 @@
     {
         cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCellID];
         cell.leftUtilityButtons = [self leftButtons];
-        cell.rightUtilityButtons = [self rightButtons];
+        cell.rightUtilityButtons = [self rightDeleteButtons];
         cell.delegate = self;
     }
 

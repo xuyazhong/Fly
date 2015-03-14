@@ -41,4 +41,5 @@
 -(NSArray *)leftButtons;
 -(NSArray *)rightButtons;
 -(NSString *)flattenHTML:(NSString *)html;
+-(NSArray *)rightDeleteButtons;
 @end

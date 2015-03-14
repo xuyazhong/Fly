@@ -22,10 +22,14 @@
 #import "ZoomImageView.h"
 #import "SendTweetViewController.h"
 #import "SLPagingViewController.h"
-
+#import "TweetDetailViewController.h"
+#import "XHTwitterPaggingViewer.h"
 
 @interface HomeViewController ()
+{
+    XHTwitterPaggingViewer *twitterPaggingViewer;
 
+}
 @end
 
 @implementation HomeViewController
@@ -45,12 +49,15 @@
     self.title = @"首页";
     currentUrl = kURLHomeLine;
     
-    UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    updateBtn.frame = CGRectMake(0, 0, 40, 40);
-    [updateBtn setBackgroundImage:[UIImage imageNamed:@"tab_send"] forState:UIControlStateNormal];
-    [updateBtn addTarget:self action:@selector(updateTweet) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:updateBtn];
-    self.navigationItem.rightBarButtonItem = right;
+    
+    
+    
+//    UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    updateBtn.frame = CGRectMake(0, 0, 40, 40);
+//    [updateBtn setBackgroundImage:[UIImage imageNamed:@"tab_send"] forState:UIControlStateNormal];
+//    [updateBtn addTarget:self action:@selector(updateTweet) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithCustomView:updateBtn];
+//    self.navigationItem.rightBarButtonItem = right;
     [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
     
     // Do any additional setup after loading the view.
@@ -118,15 +125,15 @@
 }
 -(void)updateTweet
 {
-    SendTweetViewController *send = [[SendTweetViewController alloc]init];
-    __weak HomeViewController *weakSelf = self;
-    [weakSelf addChildViewController:send];
-    [weakSelf.view addSubview:send.view];
-    [send didMoveToParentViewController:weakSelf];
-    NSLog(@"ok");
-    //[[KGModal sharedInstance] updateTweet];
-    //UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
-    //[[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
+//    SendTweetViewController *send = [[SendTweetViewController alloc]init];
+//    __weak HomeViewController *weakSelf = self;
+//    [weakSelf addChildViewController:send];
+//    [weakSelf.view addSubview:send.view];
+//    [send didMoveToParentViewController:weakSelf];
+//    NSLog(@"ok");
+    [[KGModal sharedInstance] updateTweet];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 250)];
+    [[KGModal sharedInstance] showWithContentView:contentView andAnimated:YES];
 }
 -(void)listGroup:(UIButton *)btn
 {
@@ -315,84 +322,54 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(void)setupNavigationBarStyle
+{
+    UINavigationBar *appearance = [UINavigationBar appearance];
+    [appearance setBarTintColor:[UIColor orangeColor]];
+    // 设置导航条的返回按钮或者系统按钮的文字颜色，在iOS7才这么用
+    [appearance setTintColor:[UIColor whiteColor]];
+    // 设置导航条的title文字颜色，在iOS7才这么用
+    [appearance setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [UIColor whiteColor], NSForegroundColorAttributeName, [UIFont systemFontOfSize:17], NSFontAttributeName, nil]];
+}
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self setupNavigationBarStyle];
+    
+    twitterPaggingViewer = [[XHTwitterPaggingViewer alloc] init];
+    
+    NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    NSArray *titles = @[@"转发", @"评论", @"详情"];
+    
+    [titles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
+        TweetDetailViewController *tableViewController = [[TweetDetailViewController alloc] init];
+        tableViewController.title = title;
+        [viewControllers addObject:tableViewController];
+    }];
+    [titles enumerateObjectsUsingBlock:^(NSDictionary* dic, NSUInteger idx, BOOL *stop) {
+        
+    }];
+    twitterPaggingViewer.viewControllers = viewControllers;
+    
+    twitterPaggingViewer.didChangedPageCompleted = ^(NSInteger cuurentPage, NSString *title) {
+        NSLog(@"cuurentPage : %ld on title : %@", (long)cuurentPage, title);
+    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [twitterPaggingViewer setCurrentPage:1 animated:YES];
+    });
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:twitterPaggingViewer];
+    [self presentViewController:nvc animated:YES completion:^{
+    }];
     /*
     DetailViewController *detail = [[DetailViewController alloc]init];
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     detail.model = model;
     [self presentViewController:detail animated:YES completion:nil];
      */
-    UIColor *orange = [UIColor colorWithRed:255/255
-                                      green:69.0/255
-                                       blue:0.0/255
-                                      alpha:1.0];
     
-    UIColor *gray = [UIColor colorWithRed:.84
-                                    green:.84
-                                     blue:.84
-                                    alpha:1.0];
-    
-    UIButton *repostBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [repostBtn setTitle:@"转发" forState:UIControlStateNormal];
-    repostBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [repostBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [repostBtn setFrame:CGRectMake(0, 0, 60, 30)];
-    
-    UIButton *commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [commentBtn setTitle:@"评论" forState:UIControlStateNormal];
-    commentBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [commentBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [commentBtn setFrame:CGRectMake(0, 0, 60, 30)];
-
-
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cancelBtn setTitle:@"关闭" forState:UIControlStateNormal];
-    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [cancelBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-    [cancelBtn setFrame:CGRectMake(0, 0, 60, 30)];
-
-    // Make views for the navigation bar
-
-    
-    SLPagingViewController *pageViewController = [[SLPagingViewController alloc] initWithNavBarItems:@[repostBtn,commentBtn,cancelBtn]
-                                                                                    navBarBackground:[UIColor whiteColor]
-                                                                                               views:@[[self viewWithBackground:orange], [self viewWithBackground:[UIColor yellowColor]], [self viewWithBackground:gray]]
-                                                                                     showPageControl:NO];
-    // Tinder Like
-    pageViewController.pagingViewMoving = ^(NSArray *subviews){
-        int i = 0;
-        for(UIButton *v in subviews){
-            UIColor *c = gray;
-            if(v.frame.origin.x > 45
-               && v.frame.origin.x < 145)
-                // Left part
-                c = [self gradient:v.frame.origin.x
-                               top:46
-                            bottom:144
-                              init:orange
-                              goal:gray];
-            else if(v.frame.origin.x > 145
-                    && v.frame.origin.x < 245)
-                // Right part
-                c = [self gradient:v.frame.origin.x
-                               top:146
-                            bottom:244
-                              init:gray
-                              goal:orange];
-            else if(v.frame.origin.x == 145)
-                c = orange;
-            v.tintColor= c;
-            i++;
-        }
-    };
-    
-    UINavigationController *nvc  = [[UINavigationController alloc] initWithRootViewController:pageViewController];
-    [self presentViewController:nvc animated:YES completion:^{
-        
-    }];
 }
 -(UIColor *)gradient:(double)percent top:(double)topX bottom:(double)bottomX init:(UIColor*)init goal:(UIColor*)goal{
     double t = (percent - bottomX) / (topX - bottomX);
@@ -427,6 +404,9 @@
     if (cell == nil)
     {
         cell = [[TweetCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell.leftUtilityButtons = [self leftButtons];
+        cell.rightUtilityButtons = [self rightButtons];
+        cell.delegate = self;
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
