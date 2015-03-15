@@ -64,6 +64,8 @@
     mytableView.dataSource = self;
     [self.view addSubview:mytableView];
     
+    
+    
     _location = [[CLLocationManager alloc]init];
     _location.distanceFilter = kCLLocationAccuracyBest;
     _location.delegate = self;

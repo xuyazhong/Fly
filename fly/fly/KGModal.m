@@ -707,6 +707,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         }
     });
 }
+
 -(void)locationAction
 {
     NSLog(@"location");
@@ -774,13 +775,17 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         [manager POST:kUrlReply parameters:mydict success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
              NSLog(@"success:%@",responseObject);
+             [ShareToken sendMsg];
+             [JDStatusBarNotification showWithStatus:@"回复成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
              [self hideAnimated:self.animateWhenDismissed];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
+             [JDStatusBarNotification showWithStatus:@"回复失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
              NSLog(@"failed:%@",error.localizedDescription);
          }];
     }
 }
+
 -(void)repostTweetAction
 {
     NSString *str = infoLabel.text;
@@ -793,10 +798,12 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     [manager POST:kURLRepost parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success:%@",responseObject);
+         [ShareToken recMsg];
+         [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
          [self hideAnimated:self.animateWhenDismissed];
-         [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:0.5];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
+         [JDStatusBarNotification showWithStatus:@"转发失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
          NSLog(@"failed:%@",error.localizedDescription);
      }];
 }
@@ -805,17 +812,19 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     NSString *str = infoLabel.text;
     if (str.length == 0)
     {
-        str = @"repost";
+        str = @"评论";
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_model.tid,@"id",str,@"status", nil];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_model.tid,@"id",str,@"comment", nil];
     [manager POST:kURLCreateComment parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success:%@",responseObject);
+         [ShareToken recMsgShort];
+         [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
          [self hideAnimated:self.animateWhenDismissed];
-         [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:0.5];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
+         [JDStatusBarNotification showWithStatus:@"评论失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
          NSLog(@"failed:%@",error.localizedDescription);
      }];
 }
@@ -844,10 +853,13 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
             [formData appendPartWithFileData:self.selectImage name:@"pic" fileName:@"test" mimeType:@"image/png"];
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"success:%@",responseObject);
+            [ShareToken messageSend];
+            [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
             [self hideAnimated:self.animateWhenDismissed];
-            [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:0.5];
             self.hasPic = NO;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [ShareToken recMsgShort];
+            [JDStatusBarNotification showWithStatus:@"发送失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
             NSLog(@"failed:%@",error);
         }];
     }else

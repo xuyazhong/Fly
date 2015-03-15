@@ -269,6 +269,7 @@
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell scrollingToState:(SWCellState)state
 {
+    
     switch (state) {
         case 0:
             NSLog(@"utility buttons closed");
@@ -277,7 +278,7 @@
             NSLog(@"left utility buttons open");
             break;
         case 2:
-            NSLog(@"right utility buttons open");
+            NSLog(@"right 2 buttons open");
             break;
         default:
             break;
@@ -286,45 +287,78 @@
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
 {
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
     switch (index) {
         case 0:
-            NSLog(@"left button 0 was pressed");
-            [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            NSLog(@"转发");
+            [[KGModal sharedInstance] repostTweet:getModel];
             break;
         case 1:
-            NSLog(@"left button 1 was pressed");
-            [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            NSLog(@"评论");
+            [[KGModal sharedInstance] commentTweet:getModel];
             break;
         case 2:
-            NSLog(@"left button 2 was pressed");
-            
-            [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2.0 styleName:@"XYZStyle"];
+            NSLog(@"收藏");
+            [self addFav:getModel];
             break;
         case 3:
-            [JDStatusBarNotification showWithStatus:@"测试成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
-            NSLog(@"left btton 3 was pressed");
+            NSLog(@"test");
+            break;
         default:
             break;
     }
 }
-
+-(void)addFav:(TweetModel *)getmodel
+{
+    NSLog(@"getModel:%@",getmodel);
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",getmodel.tid,@"id", nil];
+        NSLog(@"dict:%@",dict);
+        [manager POST:kURLFavoritesCreate parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSLog(@"success:%@",responseObject);
+             [ShareToken sendMsg];
+             [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             NSLog(@"failed:%@",error);
+             [JDStatusBarNotification showWithStatus:@"收藏失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         }];
+}
+-(void)deleteFav:(TweetModel *)getmodel
+{
+    NSLog(@"getModel:%@",getmodel);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",getmodel.tid,@"id", nil];
+    NSLog(@"dict:%@",dict);
+    [manager POST:kURLFavoritesDestroy parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success:%@",responseObject);
+         [ShareToken sendMsg];
+         [JDStatusBarNotification showWithStatus:@"取消收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"failed:%@",error);
+         [JDStatusBarNotification showWithStatus:@"取消收藏失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     }];
+}
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
 {
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    DetailViewController *detail = [[DetailViewController alloc]init];
     switch (index) {
         case 0:
         {
-            NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
-            
-            [cell hideUtilityButtonsAnimated:YES];
+            detail.model = getModel;
+            [self presentViewController:detail animated:YES completion:nil];
             break;
         }
         case 1:
         {
-            // Delete button was pressed
+            [self deleteFav:getModel];
             NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
-            
             [_dataArray removeObjectAtIndex:cellIndexPath.row];
             [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
             break;

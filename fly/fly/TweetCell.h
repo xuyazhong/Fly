@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
+#import "TweetModel.h"
 
 
 @interface TweetCell : SWTableViewCell<SWTableViewCellDelegate>
+@property (nonatomic,strong) TweetModel *model;
 @property (strong, nonatomic)  UIImageView *userInfo;
 @property (nonatomic,assign) BOOL isDelete;
 @property (strong, nonatomic)  UILabel *nickName;

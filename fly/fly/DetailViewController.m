@@ -15,8 +15,6 @@
 #import "DetailCommentCell.h"
 #import "DetailRepostCell.h"
 #import "UIImageView+WebCache.h"
-#import "RepostViewController.h"
-#import "CommentViewController.h"
 #import "KGModal.h"
 #import "ZoomImageView.h"
 
@@ -50,7 +48,7 @@
 {
     [super viewDidLoad];
     NSLog(@"begin");
-    /*
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     _dataArray = [[NSMutableArray alloc]init];
     _data1 = [[NSMutableArray alloc]init];
@@ -59,13 +57,13 @@
     [_dataArray addObject:_data1];
     [_dataArray addObject:_data2];
     [_dataArray addObject:_data3];
-    */
+    
     
     
     
     // Make views for the navigation bar
 
-    /*
+    
     myscrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0,104,[DeviceManager currentScreenSize].width, [DeviceManager currentScreenSize].height-114)];
     myscrollview.contentSize = CGSizeMake(320*3, 0);
     myscrollview.contentOffset = CGPointMake(320, 0);
@@ -91,10 +89,10 @@
     [self addHeaderWithFrame:CGRectMake(0,64 , [DeviceManager currentScreenSize].width, 40)];
     [self addFooterWithFrame:CGRectMake(0, [DeviceManager currentScreenSize].height-40,[DeviceManager currentScreenSize].width, 40)];
     // Do any additional setup after loading the view.
-    //[self loadTableView1];
-    //[self loadTableView2];
-    //[self loadTableView3];
-    */
+    [self loadTableView1];
+    [self loadTableView2];
+    [self loadTableView3];
+    
 
 
 }

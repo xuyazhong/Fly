@@ -229,9 +229,8 @@
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
-    [[KGModal sharedInstance] replyTweet:model];
+    [[KGModal sharedInstance] commentTweet:model];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

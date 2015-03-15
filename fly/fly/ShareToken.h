@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface ShareToken : NSObject
+@interface ShareToken : NSObject<AVAudioPlayerDelegate>
 
 @property (nonatomic,copy) NSString *token;
 @property (nonatomic,assign) BOOL isBusy;
@@ -22,5 +23,12 @@
 +(void)setUserInfo:(NSDictionary *)dict;
 +(NSDictionary *)readUserInfo;
 
++(void)checkin;
++(void)messageReceive;
++(void)messageSend;
++(void)recMsg;
++(void)recMsgShort;
++(void)sendMsg;
++(void)timeLimit;
 
 @end

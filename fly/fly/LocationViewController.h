@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
-//#import <MAMapKit/MAMapKit.h>
+#import <MAMapKit/MAMapKit.h>
+
 
 typedef void(^SelectBlock)(NSDictionary *latlong);
 typedef void(^notSelectBlock)(NSString *noLocation);

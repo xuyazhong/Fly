@@ -27,18 +27,30 @@
 }
 -(void)loadNewData
 {
-    NSLog(@"下拉刷新");
-    currentPage = 1;
-    [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
-    [self getJSON:currentPage andUrl:currentURL];
+    if (!self.isPost)
+    {
+        self.isPost = YES;
+        NSLog(@"下拉刷新");
+        currentPage = 1;
+        [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
+        [self getJSON:currentPage andUrl:currentURL];
+        self.isPost = NO;
+    }
+    
 }
 -(void)loadMoreData
 {
-    currentPage ++;
-    [self getJSON:currentPage andUrl:currentURL];
+    if (!self.isPost)
+    {
+        self.isPost = YES;
+        currentPage ++;
+        [self getJSON:currentPage andUrl:currentURL];
+        self.isPost = NO;
+    }
 }
 -(void)getJSON:(int)page andUrl:(NSString *)url
 {
+    
     NSDictionary *dict;
     dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page", nil];
     //NSLog(@"dict:%@",dict);
@@ -173,7 +185,7 @@
     {
         cell = [[TweetCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myFavCell];
         cell.leftUtilityButtons = [self leftButtons];
-        cell.rightUtilityButtons = [self rightButtons];
+        cell.rightUtilityButtons = [self rightDeleteButtons];
         cell.delegate = self;
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];

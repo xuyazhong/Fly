@@ -37,13 +37,16 @@ static NSString *const XYZStyle = @"XYZStyle";
 #define kURLupload      @"https://upload.api.weibo.com/2/statuses/upload.json"
 #define kURLUserTimeLine    @"https://api.weibo.com/2/statuses/user_timeline.json"
 
-#define kURLCreateComment   @"https://api.weibo.com/2/comments/create.json"
+
 //所有评论
 #define kURLCommentTimeLine    @"https://api.weibo.com/2/comments/timeline.json"
 //发出的评论
 #define kURLCommentByMe        @"https://api.weibo.com/2/comments/by_me.json"
 //收到的评论
 #define kURLCommentToMe        @"https://api.weibo.com/2/comments/to_me.json"
+
+//评论一条微博
+#define kURLCreateComment   @"https://api.weibo.com/2/comments/create.json"
 
 #define kURLCommentShow @"https://api.weibo.com/2/comments/show.json"
 
@@ -72,6 +75,9 @@ static NSString *const XYZStyle = @"XYZStyle";
 //删除一条评论
 #define kURLCommentDelete    @"https://api.weibo.com/2/comments/destroy.json"
 
-
+//添加收藏
+#define kURLFavoritesCreate     @"https://api.weibo.com/2/favorites/create.json"
+//取消收藏
+#define kURLFavoritesDestroy    @"https://api.weibo.com/2/favorites/destroy.json"
 
 #endif

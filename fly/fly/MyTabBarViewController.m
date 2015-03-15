@@ -18,7 +18,6 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 #import "KGModal.h"
-#import "SendTweetViewController.h"
 
 
 @interface MyTabBarViewController ()

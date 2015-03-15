@@ -12,6 +12,7 @@
 @implementation ShareToken
 {
     BOOL isChecked;
+    AVAudioPlayer *_audioPlayer;
 }
 - (instancetype)init
 {
@@ -125,6 +126,78 @@
         token.isBusy = NO;
     }
     return token;
+}
+
+
++(void)checkin
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"checkin_alarm" ofType:@"caf"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)messageReceive
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"messageReceived" ofType:@"aiff"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)messageSend
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"messageSent" ofType:@"aiff"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)recMsg
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"rec_msg" ofType:@"caf"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)recMsgShort
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"rec_msg_short" ofType:@"caf"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)sendMsg
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"send_msg" ofType:@"caf"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
++(void)timeLimit
+{
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"time_limit" ofType:@"caf"];
+    [[ShareToken sharedToken] loadAudioWithPath:path];
+}
+-(void)loadAudioWithPath:(NSString *)audioPath
+{
+    if (audioPath.length == 0)
+    {
+        NSLog(@"没有音频资源");
+        return;
+    }
+    //本地的资源路径转化成URL用fileURLWithPath
+    NSURL *url = [NSURL fileURLWithPath:audioPath];
+    //上一首歌的播放对象存在,销毁掉
+    if (_audioPlayer)
+    {
+        [_audioPlayer stop];
+        _audioPlayer = nil;
+    }
+    _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
+    //设置代理
+    _audioPlayer.delegate = self;
+    //准备播放
+    [_audioPlayer prepareToPlay];
+    //播放
+    [_audioPlayer play];
+    //    [_audioPlayer pause];//暂停
+    //    [_audioPlayer stop];//停止
+    
+}
+//停掉音频播放器
+-(void)stopAudioPlayer
+{
+    if (_audioPlayer)
+    {
+        [_audioPlayer stop];
+        _audioPlayer = nil;
+    }
 }
 
 @end

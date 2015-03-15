@@ -25,21 +25,25 @@
 #import "UIButton+WebCache.h"
 #import "MeCell.h"
 
+
 @interface ParentViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SWTableViewCellDelegate>
 {
-    UITableView *_myTableView;
-    NSMutableArray *_dataArray;
-    NSMutableArray *_groupListArray;
     int currentPage;
     NSString *currentGroupId;
     NSString *currentUrl;
     UIScrollView *groupList;
     UIButton *titleBtn;
     NSString *currentURL;
+    NSMutableArray *_groupListArray;
+    NSMutableArray *_dataArray;
+    UITableView *_myTableView;
 }
+
+@property (nonatomic,assign) BOOL isPost;
 -(void)addPic:(NSArray *)subArr toView:(UIScrollView *)myview;
 -(NSArray *)leftButtons;
 -(NSArray *)rightButtons;
 -(NSString *)flattenHTML:(NSString *)html;
 -(NSArray *)rightDeleteButtons;
+-(void)addFav:(TweetModel *)getmodel;
 @end

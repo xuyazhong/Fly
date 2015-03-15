@@ -20,16 +20,9 @@
 #import "MyTabBarViewController.h"
 #import "KGModal.h"
 #import "ZoomImageView.h"
-#import "SendTweetViewController.h"
-#import "SLPagingViewController.h"
-#import "TweetDetailViewController.h"
-#import "XHTwitterPaggingViewer.h"
 
 @interface HomeViewController ()
-{
-    XHTwitterPaggingViewer *twitterPaggingViewer;
 
-}
 @end
 
 @implementation HomeViewController
@@ -70,7 +63,8 @@
     currentPage = 1;
     [_myTableView setContentOffset:CGPointMake(0, 0) animated:YES];
     [self getJSON:currentPage andUrl:currentUrl andGroupID:currentGroupId];
-    _myTableView.scrollsToTop = YES;
+    //_myTableView.scrollsToTop = YES;
+    [ShareToken checkin];
 }
 -(void)loadMoreData
 {
@@ -335,6 +329,7 @@
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    /*
     [self setupNavigationBarStyle];
     
     twitterPaggingViewer = [[XHTwitterPaggingViewer alloc] init];
@@ -363,12 +358,12 @@
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:twitterPaggingViewer];
     [self presentViewController:nvc animated:YES completion:^{
     }];
-    /*
+    */
     DetailViewController *detail = [[DetailViewController alloc]init];
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     detail.model = model;
     [self presentViewController:detail animated:YES completion:nil];
-     */
+     
     
 }
 -(UIColor *)gradient:(double)percent top:(double)topX bottom:(double)bottomX init:(UIColor*)init goal:(UIColor*)goal{
@@ -409,6 +404,7 @@
         cell.delegate = self;
     }
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
+    cell.model = model;
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
     cell.tweetLabel.text = model.text;
@@ -487,7 +483,28 @@
 }
 
 
-
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
+{
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    switch (index)
+    {
+        case 0:
+            [[KGModal sharedInstance] repostTweet:getModel];
+            break;
+        case 1:
+            [[KGModal sharedInstance] commentTweet:getModel];
+            break;
+        case 2:
+            [self addFav:getModel];
+            break;
+        case 3:
+            NSLog(@"test");
+            break;
+        default:
+            break;
+    }
+}
 
 
 
