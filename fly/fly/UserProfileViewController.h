@@ -10,6 +10,9 @@
 
 @interface UserProfileViewController : UIViewController
 
+@property (nonatomic)UIImageView *profileImageView;
+@property (nonatomic)UIImageView *coverImageView;
+@property (nonatomic)UILabel *titleLabel;
 @property (nonatomic,copy)NSString *uid;
 
 @end
