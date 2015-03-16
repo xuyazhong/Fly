@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
+    self.navigationController.navigationBar.translucent = YES;
     self.view.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
     
     
