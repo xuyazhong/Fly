@@ -7,13 +7,17 @@
 //
 
 #import "ParentViewController.h"
+#import "SearchViewController.h"
 
 @interface ParentViewController ()
 
 @end
 
 @implementation ParentViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.navigationController.navigationBarHidden = NO;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -104,7 +108,8 @@
 }
 -(void)searchAction
 {
-    
+    SearchViewController *_search = [[SearchViewController alloc]init];
+    [self.navigationController pushViewController:_search animated:YES];
 }
 -(void)loadNewData
 {

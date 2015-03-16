@@ -203,6 +203,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     static NSString *myCellID = @"me";
     MeCell *cell = [tableView dequeueReusableCellWithIdentifier:myCellID];
     cell.isDelete = YES;
@@ -351,29 +352,6 @@
     }
 }
 
-- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
-{
-    switch (index) {
-        case 0:
-            NSLog(@"left button 0 was pressed");
-            [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
-            break;
-        case 1:
-            NSLog(@"left button 1 was pressed");
-            [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
-            break;
-        case 2:
-            NSLog(@"left button 2 was pressed");
-            
-            [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2.0 styleName:@"XYZStyle"];
-            break;
-        case 3:
-            [JDStatusBarNotification showWithStatus:@"测试成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
-            NSLog(@"left btton 3 was pressed");
-        default:
-            break;
-    }
-}
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
 {
@@ -391,9 +369,27 @@
         {
             // Delete button was pressed
             NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
-            
-            [_dataArray removeObjectAtIndex:cellIndexPath.row];
-            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            TweetModel *_getModel = [_dataArray objectAtIndex:cellIndexPath.row];
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确认删除吗？" contentText:@"确认删除吗？" leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
+            [alert show];
+            alert.leftBlock = ^()
+            {
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_getModel.tid,@"id", nil];
+                [manager POST:kURLTweetDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+                 {
+                     NSLog(@"delete success:%@",responseObject);
+                     [_dataArray removeObjectAtIndex:cellIndexPath.row];
+                     [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"删除失败:%@",error);
+                 }];
+                
+            };
+            alert.rightBlock = ^() {
+                NSLog(@"取消");
+            };
             break;
         }
         default:

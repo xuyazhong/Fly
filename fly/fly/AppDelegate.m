@@ -43,6 +43,7 @@
 {
     // Override point for customization after application launch.
     // Required
+    NSLog(@"%@",[[NSBundle mainBundle]bundleIdentifier]);
     /*
     [MAMapServices sharedServices].apiKey = @"fbc09ee09efe913d00eebc86568d1232";
     */

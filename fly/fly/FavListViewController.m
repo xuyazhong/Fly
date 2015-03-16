@@ -179,6 +179,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     static NSString *myFavCell = @"fav";
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:myFavCell];
     if (cell == nil)
@@ -266,7 +267,47 @@
     return cell;
 }
 
-
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
+{
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    DetailViewController *detail = [[DetailViewController alloc]init];
+    switch (index) {
+        case 0:
+        {
+            detail.model = getModel;
+            [self presentViewController:detail animated:YES completion:nil];
+            break;
+        }
+        case 1:
+        {
+            [self deleteFav:getModel];
+            NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
+            [_dataArray removeObjectAtIndex:cellIndexPath.row];
+            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+        }
+        default:
+            break;
+    }
+}
+-(void)deleteFav:(TweetModel *)getmodel
+{
+    NSLog(@"getModel:%@",getmodel);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",getmodel.tid,@"id", nil];
+    NSLog(@"dict:%@",dict);
+    [manager POST:kURLFavoritesDestroy parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success:%@",responseObject);
+         [ShareToken sendMsg];
+         [JDStatusBarNotification showWithStatus:@"取消收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"failed:%@",error);
+         [JDStatusBarNotification showWithStatus:@"取消收藏失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     }];
+}
 
 
 @end

@@ -263,6 +263,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     static NSString *myATMeCell = @"atme";
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:myATMeCell];
     if (cell == nil)

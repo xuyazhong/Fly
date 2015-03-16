@@ -776,11 +776,11 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
          {
              NSLog(@"success:%@",responseObject);
              [ShareToken sendMsg];
-             [JDStatusBarNotification showWithStatus:@"回复成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+             [JDStatusBarNotification showWithStatus:@"回复成功" dismissAfter:2 styleName:@"XYZStyle"];
              [self hideAnimated:self.animateWhenDismissed];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
-             [JDStatusBarNotification showWithStatus:@"回复失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+             [JDStatusBarNotification showWithStatus:@"回复失败" dismissAfter:2 styleName:@"XYZStyle"];
              NSLog(@"failed:%@",error.localizedDescription);
          }];
     }
@@ -799,11 +799,11 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
      {
          NSLog(@"success:%@",responseObject);
          [ShareToken recMsg];
-         [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         [JDStatusBarNotification showWithStatus:@"转发成功" dismissAfter:2 styleName:@"XYZStyle"];
          [self hideAnimated:self.animateWhenDismissed];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         [JDStatusBarNotification showWithStatus:@"转发失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         [JDStatusBarNotification showWithStatus:@"转发失败" dismissAfter:2 styleName:@"XYZStyle"];
          NSLog(@"failed:%@",error.localizedDescription);
      }];
 }
@@ -820,11 +820,11 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
      {
          NSLog(@"success:%@",responseObject);
          [ShareToken recMsgShort];
-         [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         [JDStatusBarNotification showWithStatus:@"评论成功" dismissAfter:2 styleName:@"XYZStyle"];
          [self hideAnimated:self.animateWhenDismissed];
      } failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         [JDStatusBarNotification showWithStatus:@"评论失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+         [JDStatusBarNotification showWithStatus:@"评论失败" dismissAfter:2 styleName:@"XYZStyle"];
          NSLog(@"failed:%@",error.localizedDescription);
      }];
 }
@@ -854,12 +854,12 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"success:%@",responseObject);
             [ShareToken messageSend];
-            [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:2 styleName:@"XYZStyle"];
             [self hideAnimated:self.animateWhenDismissed];
             self.hasPic = NO;
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [ShareToken recMsgShort];
-            [JDStatusBarNotification showWithStatus:@"发送失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+            [JDStatusBarNotification showWithStatus:@"发送失败" dismissAfter:2 styleName:@"XYZStyle"];
             NSLog(@"failed:%@",error);
         }];
     }else

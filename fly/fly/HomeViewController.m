@@ -394,6 +394,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     static NSString *cellID = @"custom";
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil)

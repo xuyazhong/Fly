@@ -239,6 +239,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     static NSString *myCommentCell = @"comment";
     MeCell *cell = [tableView dequeueReusableCellWithIdentifier:myCommentCell];
     if (cell == nil)

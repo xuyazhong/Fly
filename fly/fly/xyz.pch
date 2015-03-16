@@ -80,4 +80,12 @@ static NSString *const XYZStyle = @"XYZStyle";
 //取消收藏
 #define kURLFavoritesDestroy    @"https://api.weibo.com/2/favorites/destroy.json"
 
+//搜索用户
+#define kURLSearchUser          @"https://api.weibo.com/2/search/suggestions/users.json"
+//加关注
+#define kURLCreateFriendShips   @"https://api.weibo.com/2/friendships/create.json"
+//取消关注
+#define kURLDestoryFriendShips  @"https://api.weibo.com/2/friendships/destroy.json"
+
+
 #endif

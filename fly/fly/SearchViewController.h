@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "INSSearchBar.h"
 
-@interface SearchViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface SearchViewController :UIViewController<UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic, strong) INSSearchBar *searchBarWithDelegate;
+@property (nonatomic, assign) BOOL isSearch;
 
 @end
