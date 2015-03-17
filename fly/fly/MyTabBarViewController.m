@@ -18,7 +18,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 #import "KGModal.h"
-
+#import "AppDelegate.h"
 
 @interface MyTabBarViewController ()
 {
@@ -60,9 +60,10 @@
 }
 -(void)getJSON
 {
-    NSDictionary *info = [ShareToken readUserInfo];
-    NSString *uid = [info objectForKey:@"uid"];
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",uid,@"uid", nil];
+    AppDelegate *share = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    //NSDictionary *info = [ShareToken readUserInfo];
+    //NSString *uid = [info objectForKey:@"uid"];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",share.wbCurrentUserID,@"uid", nil];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:kURLShowMe parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
     {

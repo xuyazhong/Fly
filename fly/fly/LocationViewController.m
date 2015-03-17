@@ -198,6 +198,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     POIModel *model = [_dataArray objectAtIndex:indexPath.row];
     NSString *_lat = [NSString stringWithFormat:@"%@",model.lat];
     NSString *_long = [NSString stringWithFormat:@"%@",model.lon];
