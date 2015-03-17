@@ -408,11 +408,21 @@
     cell.model = model;
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     
-    cell.tweetLabel.text = model.text;
     cell.tweetLabel.font = [UIFont systemFontOfSize:16];
     cell.tweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
     cell.tweetLabel.numberOfLines = 0;
     cell.tweetLabel.frame = CGRectMake(10, 70, model.size.width, model.size.height);
+    cell.tweetLabel.text = model.text;
+    
+    cell.tweetLabel.highlightedTextColor = [UIColor blackColor];
+    [cell.tweetLabel setDetectionBlock:^(STTweetHotWord hotWord, NSString *string, NSString *protocol, NSRange range) {
+        NSArray *hotWords = @[@"Handle", @"Hashtag", @"Link"];
+        
+        NSString *myBlock = [NSString stringWithFormat:@"%@ [%d,%d]: %@%@", hotWords[hotWord], (int)range.location, (int)range.length, string, (protocol != nil) ? [NSString stringWithFormat:@" *%@*", protocol] : @""];
+        NSLog(@"str = %@",myBlock);
+//        UIWebView *myWebView = [[UIWebView alloc]initWithFrame:<#(CGRect)#>]
+    }];
+    
     
     cell.nickName.text = model.user.name;
     cell.timeLabel.text = model.created_at;
@@ -444,6 +454,12 @@
         cell.retweetView.hidden = NO;
         cell.retweetLabel.hidden = NO;
         cell.retweetLabel.text = model.model.text;
+        [cell.retweetLabel  setDetectionBlock:^(STTweetHotWord hotWord, NSString *string, NSString *protocol, NSRange range)
+        {
+            NSArray *hotWords = @[@"Handle", @"Hashtag", @"Link"];
+            
+            NSLog(@"link:%@",[NSString stringWithFormat:@"%@ [%d,%d]: %@%@", hotWords[hotWord], (int)range.location, (int)range.length, string, (protocol != nil) ? [NSString stringWithFormat:@" *%@*", protocol] : @""]);
+        }];
         cell.retweetLabel.font = [UIFont systemFontOfSize:16];
         cell.retweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
         cell.retweetLabel.numberOfLines = 0;
@@ -506,7 +522,6 @@
             break;
     }
 }
-
 
 
 

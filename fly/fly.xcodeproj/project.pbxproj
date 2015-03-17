@@ -438,6 +438,11 @@
 		BC79AF791AB01E2A00929832 /* OverLayView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC79AF6C1AB01E2A00929832 /* OverLayView.m */; };
 		BC79AF7A1AB01E2A00929832 /* TableMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BC79AF6E1AB01E2A00929832 /* TableMenuCell.m */; };
 		BC79AF7B1AB01E2A00929832 /* TableViewMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = BC79AF701AB01E2A00929832 /* TableViewMenu.m */; };
+		BC7AA5891AB84352003CC16C /* card_icon_addattention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7AA5881AB84352003CC16C /* card_icon_addattention@2x.png */; };
+		BC7AA58B1AB84402003CC16C /* music_icon_round@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7AA58A1AB84402003CC16C /* music_icon_round@2x.png */; };
+		BC7AA58D1AB84467003CC16C /* timeline_browser_min_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC7AA58C1AB84467003CC16C /* timeline_browser_min_icon@2x.png */; };
+		BC7AA59B1AB853E3003CC16C /* STTweetLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7AA5981AB853E3003CC16C /* STTweetLabel.m */; };
+		BC7AA59C1AB853E3003CC16C /* STTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7AA59A1AB853E3003CC16C /* STTweetTextStorage.m */; };
 		BC80EA811AB07C5700ABFC3B /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = BC80EA761AB07C5700ABFC3B /* NSMutableArray+SWUtilityButtons.m */; };
 		BC80EA821AB07C5700ABFC3B /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = BC80EA781AB07C5700ABFC3B /* SWCellScrollView.m */; };
 		BC80EA831AB07C5700ABFC3B /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BC80EA7A1AB07C5700ABFC3B /* SWLongPressGestureRecognizer.m */; };
@@ -474,7 +479,6 @@
 		BC99A0F71AAFE7CC00BB46B1 /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = BC99A0EA1AAFE7CC00BB46B1 /* UIScrollView+MJRefresh.m */; };
 		BC99A0F81AAFE7CC00BB46B1 /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BC99A0EC1AAFE7CC00BB46B1 /* UIView+MJExtension.m */; };
 		BCC3700F1AB6E0CF00AB2F03 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC3700E1AB6E0CF00AB2F03 /* SearchModel.m */; };
-		BCC370131AB6FB4200AB2F03 /* RKCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC370121AB6FB4200AB2F03 /* RKCardView.m */; };
 		BCC370161AB6FBAC00AB2F03 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC370151AB6FBAC00AB2F03 /* UserProfileViewController.m */; };
 		BCC370181AB715E500AB2F03 /* page_cover_default_background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BCC370171AB715E500AB2F03 /* page_cover_default_background@2x.jpg */; };
 		BCD0E5D81AAC53BD00BC20D5 /* hasLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCD0E5D61AAC53BD00BC20D5 /* hasLocation@2x.png */; };
@@ -1028,6 +1032,13 @@
 		BC79AF6E1AB01E2A00929832 /* TableMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableMenuCell.m; sourceTree = "<group>"; };
 		BC79AF6F1AB01E2A00929832 /* TableViewMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewMenu.h; sourceTree = "<group>"; };
 		BC79AF701AB01E2A00929832 /* TableViewMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewMenu.m; sourceTree = "<group>"; };
+		BC7AA5881AB84352003CC16C /* card_icon_addattention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "card_icon_addattention@2x.png"; sourceTree = "<group>"; };
+		BC7AA58A1AB84402003CC16C /* music_icon_round@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music_icon_round@2x.png"; sourceTree = "<group>"; };
+		BC7AA58C1AB84467003CC16C /* timeline_browser_min_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "timeline_browser_min_icon@2x.png"; sourceTree = "<group>"; };
+		BC7AA5971AB853E3003CC16C /* STTweetLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetLabel.h; sourceTree = "<group>"; };
+		BC7AA5981AB853E3003CC16C /* STTweetLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetLabel.m; sourceTree = "<group>"; };
+		BC7AA5991AB853E3003CC16C /* STTweetTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTweetTextStorage.h; sourceTree = "<group>"; };
+		BC7AA59A1AB853E3003CC16C /* STTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTweetTextStorage.m; sourceTree = "<group>"; };
 		BC80EA751AB07C5700ABFC3B /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
 		BC80EA761AB07C5700ABFC3B /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
 		BC80EA771AB07C5700ABFC3B /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
@@ -1084,8 +1095,6 @@
 		BC99A0EC1AAFE7CC00BB46B1 /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
 		BCC3700D1AB6E0CF00AB2F03 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
 		BCC3700E1AB6E0CF00AB2F03 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
-		BCC370111AB6FB4200AB2F03 /* RKCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCardView.h; sourceTree = "<group>"; };
-		BCC370121AB6FB4200AB2F03 /* RKCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCardView.m; sourceTree = "<group>"; };
 		BCC370141AB6FBAC00AB2F03 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		BCC370151AB6FBAC00AB2F03 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
 		BCC370171AB715E500AB2F03 /* page_cover_default_background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "page_cover_default_background@2x.jpg"; sourceTree = "<group>"; };
@@ -1205,8 +1214,8 @@
 				BC17CE161AAAD34800582DBB /* Models */,
 				BC17CE151AAAD33200582DBB /* Lib */,
 				BC17CE061AAAD21B00582DBB /* Utility */,
-				872E22601AAA010C00C552F7 /* AppDelegate.h */,
 				872E22611AAA010C00C552F7 /* AppDelegate.m */,
+				872E22601AAA010C00C552F7 /* AppDelegate.h */,
 				872E22631AAA010C00C552F7 /* ViewController.h */,
 				872E22641AAA010C00C552F7 /* ViewController.m */,
 				872E22661AAA010C00C552F7 /* Main.storyboard */,
@@ -1270,7 +1279,7 @@
 		BC17CE061AAAD21B00582DBB /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				BCC370101AB6FB2F00AB2F03 /* RKCard */,
+				BC7AA5961AB853E3003CC16C /* STTweetLabel */,
 				BC233EC11AB6C3170067B034 /* INSSearchBar */,
 				BC80EA741AB07C5700ABFC3B /* SWTableView */,
 				BC79AF601AB01E2A00929832 /* CustomTableView */,
@@ -1409,6 +1418,7 @@
 		BC17CE191AAAD37A00582DBB /* images */ = {
 			isa = PBXGroup;
 			children = (
+				BC7AA5881AB84352003CC16C /* card_icon_addattention@2x.png */,
 				BCC370171AB715E500AB2F03 /* page_cover_default_background@2x.jpg */,
 				BC95F2221AB1C718003BCB4C /* icon@2x.png */,
 				BC95F2231AB1C718003BCB4C /* icon.png */,
@@ -1616,6 +1626,8 @@
 		BC79AC9E1AB0152100929832 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				BC7AA58C1AB84467003CC16C /* timeline_browser_min_icon@2x.png */,
+				BC7AA58A1AB84402003CC16C /* music_icon_round@2x.png */,
 				BC5F267D1AB3F3DB00C69EC8 /* icn_title_search_default.png */,
 				BC5F267E1AB3F3DB00C69EC8 /* icn_title_search_default@2x.png */,
 				BC5F267F1AB3F3DB00C69EC8 /* icn_title_search_default@3x.png */,
@@ -3071,6 +3083,17 @@
 			path = image;
 			sourceTree = "<group>";
 		};
+		BC7AA5961AB853E3003CC16C /* STTweetLabel */ = {
+			isa = PBXGroup;
+			children = (
+				BC7AA5971AB853E3003CC16C /* STTweetLabel.h */,
+				BC7AA5981AB853E3003CC16C /* STTweetLabel.m */,
+				BC7AA5991AB853E3003CC16C /* STTweetTextStorage.h */,
+				BC7AA59A1AB853E3003CC16C /* STTweetTextStorage.m */,
+			);
+			path = STTweetLabel;
+			sourceTree = "<group>";
+		};
 		BC80EA741AB07C5700ABFC3B /* SWTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -3132,15 +3155,6 @@
 				BC99A0EC1AAFE7CC00BB46B1 /* UIView+MJExtension.m */,
 			);
 			path = MJRefresh;
-			sourceTree = "<group>";
-		};
-		BCC370101AB6FB2F00AB2F03 /* RKCard */ = {
-			isa = PBXGroup;
-			children = (
-				BCC370111AB6FB4200AB2F03 /* RKCardView.h */,
-				BCC370121AB6FB4200AB2F03 /* RKCardView.m */,
-			);
-			name = RKCard;
 			sourceTree = "<group>";
 		};
 		BCD0E5E81AAC6E8000BC20D5 /* AMap */ = {
@@ -3305,6 +3319,7 @@
 				BC79AEC21AB0152400929832 /* PullToRefresh_062.png in Resources */,
 				BC17CE571AAAD37B00582DBB /* tab_user_home_special_selected@3x.png in Resources */,
 				BC79AE841AB0152300929832 /* PullToRefresh_031.png in Resources */,
+				BC7AA58D1AB84467003CC16C /* timeline_browser_min_icon@2x.png in Resources */,
 				BC79AEEC1AB0152400929832 /* PullToRefresh_083.png in Resources */,
 				BC79AE671AB0152300929832 /* PullToRefresh_016@2x.png in Resources */,
 				BC79AEDB1AB0152400929832 /* PullToRefresh_074@2x.png in Resources */,
@@ -3365,6 +3380,7 @@
 				BC79AEFC1AB0152400929832 /* PullToRefresh_091.png in Resources */,
 				BC79AF541AB0152500929832 /* PullToRefresh_135.png in Resources */,
 				BC17CE3A1AAAD37B00582DBB /* corner_circle@2x.png in Resources */,
+				BC7AA5891AB84352003CC16C /* card_icon_addattention@2x.png in Resources */,
 				BC79AF281AB0152400929832 /* PullToRefresh_113.png in Resources */,
 				BC79AE931AB0152300929832 /* PullToRefresh_038@2x.png in Resources */,
 				BC79AE611AB0152300929832 /* PullToRefresh_013@2x.png in Resources */,
@@ -3442,6 +3458,7 @@
 				BC95F21D1AB1C61D003BCB4C /* Default-800-667h@2x.png in Resources */,
 				BC79AF3E1AB0152500929832 /* PullToRefresh_124.png in Resources */,
 				BC79AED41AB0152400929832 /* PullToRefresh_071.png in Resources */,
+				BC7AA58B1AB84402003CC16C /* music_icon_round@2x.png in Resources */,
 				BC79AE541AB0152300929832 /* PullToRefresh_007.png in Resources */,
 				BC79AE7F1AB0152300929832 /* PullToRefresh_028@2x.png in Resources */,
 				BC79AF761AB01E2A00929832 /* 3HighLight.png in Resources */,
@@ -3699,6 +3716,7 @@
 				BC17CF181AAAD8C100582DBB /* ListsModel.m in Sources */,
 				BC80EA831AB07C5700ABFC3B /* SWLongPressGestureRecognizer.m in Sources */,
 				BC80EA861AB07C5700ABFC3B /* SWUtilityButtonView.m in Sources */,
+				BC7AA59B1AB853E3003CC16C /* STTweetLabel.m in Sources */,
 				BC17CECB1AAAD54B00582DBB /* ShareToken.m in Sources */,
 				BC80EA851AB07C5700ABFC3B /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				BC233EC01AB6C22D0067B034 /* INSSearchBar.m in Sources */,
@@ -3725,7 +3743,6 @@
 				BC17CEB51AAAD4A500582DBB /* NSData+ImageContentType.m in Sources */,
 				BC79AF791AB01E2A00929832 /* OverLayView.m in Sources */,
 				BC17CEF81AAAD7D800582DBB /* FavListViewController.m in Sources */,
-				BCC370131AB6FB4200AB2F03 /* RKCardView.m in Sources */,
 				BCECDEB71AB2C33F008A65AD /* UzysWrapperPickerController.m in Sources */,
 				BC17CEB71AAAD4A500582DBB /* SDWebImageCompat.m in Sources */,
 				BCD0E5FA1AAC773600BC20D5 /* LocationViewController.m in Sources */,
@@ -3756,6 +3773,7 @@
 				872E225F1AAA010C00C552F7 /* main.m in Sources */,
 				BCD2B7CC1AB14C11005241F6 /* JDStatusBarNotification.m in Sources */,
 				BC17CE621AAAD43A00582DBB /* SVIndefiniteAnimatedView.m in Sources */,
+				BC7AA59C1AB853E3003CC16C /* STTweetTextStorage.m in Sources */,
 				BC17CEDD1AAAD6F500582DBB /* SendMessageToWeiboViewController.m in Sources */,
 				BC17CE7B1AAAD45600582DBB /* AFHTTPSessionManager.m in Sources */,
 				BCD2B7CE1AB14C11005241F6 /* JDStatusBarView.m in Sources */,

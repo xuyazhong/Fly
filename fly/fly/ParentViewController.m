@@ -217,7 +217,7 @@
     for (int i=0; i<subArr.count; i++)
     {
         ZoomImageView *_imageView=[[ZoomImageView alloc] initWithFrame:CGRectMake(85*i, 0, 80, 80)];
-        _imageView.contentMode =UIViewContentModeScaleAspectFit;
+//        _imageView.contentMode =UIViewContentModeScaleAspectFit;
         _imageView.backgroundColor=[UIColor clearColor];
         NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
         [_imageView sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];

@@ -87,5 +87,7 @@ static NSString *const XYZStyle = @"XYZStyle";
 //取消关注
 #define kURLDestoryFriendShips  @"https://api.weibo.com/2/friendships/destroy.json"
 
+#define kURLFansFollows         @"https://api.weibo.com/2/users/counts.json"
+#define kURLPhotos              @"https://api.weibo.com/2/place/users/photos.json"
 
 #endif

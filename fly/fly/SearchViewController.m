@@ -156,6 +156,10 @@
     NSLog(@"联想");
     NSLog(@"searchBarTextDidChange");
     NSString *str = searchBar.searchField.text;
+    if (str.length == 0)
+    {
+        [_currentArray removeAllObjects];
+    }
     NSLog(@"str:%@",str);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",str,@"q", nil];

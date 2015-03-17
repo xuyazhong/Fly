@@ -99,6 +99,7 @@
              model.mid = [subDict objectForKey:@"mid"];
              model.idstr = [subDict objectForKey:@"idstr"];
              model.text = [subDict objectForKey:@"text"];
+             [self regularTweet:model.text];
              //model.source = [subDict objectForKey:@"source"];
              model.source = [super flattenHTML:[subDict objectForKey:@"source"]];
              model.rid = [subDict objectForKey:@"rid"];
@@ -146,6 +147,7 @@
                  retuser.profile_image_url = [retuserDict objectForKey:@"profile_image_url"];
                  retweetModel.user = retuser;
                  retweetModel.text =[NSString stringWithFormat:@"@%@:%@",retuser.name,[retweeted objectForKey:@"text"]];
+                 [self regularTweet:retweetModel.text];
              }
              retweetModel.size = [retweetModel currentSize];
              model.model = retweetModel;
@@ -175,6 +177,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)regularTweet:(NSString *)str
+{
+    NSError *error;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"http+:[^\\s]*" options:0 error:&error];//筛选
+    
+    if (regex != nil) {
+        NSTextCheckingResult *firstMatch = [regex firstMatchInString:str options:0 range:NSMakeRange(0, [str length])];
+        
+        if (firstMatch) {
+            NSRange resultRange = [firstMatch rangeAtIndex:0];
+            //从urlString中截取数据
+            NSString *result1 = [str substringWithRange:resultRange];
+            NSLog(@"正则表达后的结果:%@",result1);
+            //return result1;
+            
+        }
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -272,8 +292,8 @@
         cell.retweetLabel.font = [UIFont systemFontOfSize:16];
         cell.retweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
         cell.retweetLabel.numberOfLines = 0;
-        //cell.retweetLabel.frame = CGRectMake(10, 70, model.size.width, model.size.height);
-        //        cell.retweetLabel.frame = CGRectMake(10, 0, model.model.size.width, model.model.size.height);
+//        cell.retweetLabel.frame = CGRectMake(10, 70, model.size.width, model.size.height);
+//        cell.retweetLabel.frame = CGRectMake(10, 0, model.model.size.width, model.model.size.height);
         
         if (model.model.pic_urls.count>0)
         {

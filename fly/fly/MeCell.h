@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SWTableViewCell.h"
-
+#import "STTweetLabel.h"
 #import "TweetModel.h"
 
 typedef void(^SuccessDeleTweet)(BOOL result);
@@ -24,14 +24,14 @@ typedef void(^FailedDeleTweet)(BOOL ret);
 @property (strong, nonatomic)  UILabel *nickName;
 @property (strong, nonatomic)  UILabel *timeLabel;
 @property (strong, nonatomic)  UILabel *sourceLabel;
-@property (strong, nonatomic)  UILabel *tweetLabel;
+@property (strong, nonatomic)  STTweetLabel *tweetLabel;
 @property (strong, nonatomic)  UIButton *forward;
 @property (strong, nonatomic)  UIButton *comment;
 @property (strong, nonatomic)  UIButton *like;
 //@property (strong, nonatomic)  UIImageView *tweetImage;
 @property (strong, nonatomic)  UIView *controlview;
 @property (strong, nonatomic)  UIView *retweetView;
-@property (strong, nonatomic)  UILabel *retweetLabel;
+@property (strong, nonatomic)  STTweetLabel *retweetLabel;
 //@property (strong, nonatomic)  UIImageView *retweetImage;
 @property (strong, nonatomic)  UIScrollView *myscrollview;
 @property (strong, nonatomic)  UIScrollView *rescrollview;

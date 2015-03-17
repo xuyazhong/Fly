@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWTableViewCell.h"
+#import "TweetModel.h"
 
-@interface UserProfileViewController : UIViewController
 
-@property (nonatomic)UIImageView *profileImageView;
-@property (nonatomic)UIImageView *coverImageView;
-@property (nonatomic)UILabel *titleLabel;
+
+@interface UserProfileViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SWTableViewCellDelegate>
+
+@property (nonatomic,strong)UIImageView *profileImageView;
+@property (nonatomic,strong)UIImageView *coverImageView;
+@property (nonatomic,strong)UILabel *titleLabel;
+@property (nonatomic,strong)UILabel *followCount;
+@property (nonatomic,strong)UILabel *fansCount;
+@property (nonatomic,strong)UILabel *profile;
+@property (nonatomic,strong)UIButton *followBtn;
+@property (nonatomic,assign) BOOL isFollow;
 @property (nonatomic,copy)NSString *uid;
 
 @end

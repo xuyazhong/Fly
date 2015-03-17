@@ -479,9 +479,9 @@
     TweetModel *model = [self model];
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
     cell.tweetLabel.text = model.text;
-    cell.tweetLabel.font = [UIFont systemFontOfSize:16];
-    cell.tweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    cell.tweetLabel.numberOfLines = 0;
+    //cell.tweetLabel.font = [UIFont systemFontOfSize:16];
+    //cell.tweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
+    //cell.tweetLabel.numberOfLines = 0;
     cell.tweetLabel.frame = CGRectMake(10, 70, model.size.width, model.size.height);
     cell.nickName.text = model.user.name;
     cell.timeLabel.text = model.created_at;
@@ -511,9 +511,9 @@
         cell.retweetLabel.hidden = NO;
         cell.retweetLabel.text = model.model.text;
         NSLog(@"text:%@",model.model.text);
-        cell.retweetLabel.font = [UIFont systemFontOfSize:16];
-        cell.retweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        cell.retweetLabel.numberOfLines = 0;
+        //cell.retweetLabel.font = [UIFont systemFontOfSize:16];
+        //cell.retweetLabel.lineBreakMode = NSLineBreakByCharWrapping;
+        //cell.retweetLabel.numberOfLines = 0;
         
         if (model.model.pic_urls.count>0)
         {
@@ -604,7 +604,7 @@
     {
         ZoomImageView *_imageView=[[ZoomImageView alloc] initWithFrame:CGRectMake(85*i, 0, 80, 80)];
         //UIViewContentModeScaleAspectFit 顯示圖片的原始比例,自適應
-        _imageView.contentMode =UIViewContentModeScaleAspectFit;
+        //_imageView.contentMode =UIViewContentModeScaleAspectFit;
         _imageView.backgroundColor=[UIColor clearColor];
         NSMutableString *bmiddle = [NSMutableString stringWithString:subArr[i]];
         [_imageView sd_setImageWithURL:[NSURL URLWithString:subArr[i]]];

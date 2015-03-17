@@ -129,7 +129,7 @@
 
 -(void)createTweet
 {
-    _tweetLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 300, 80)];
+    _tweetLabel = [[STTweetLabel alloc]initWithFrame:CGRectMake(10, 70, 300, 80)];
     [self.contentView addSubview:_tweetLabel];
     
 }
@@ -148,7 +148,7 @@
     //_retweetView.backgroundColor = [UIColor grayColor];
     //_retweetView.alpha = 0.5;
     
-    _retweetLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 80)];
+    _retweetLabel = [[STTweetLabel alloc] initWithFrame:CGRectMake(10, 0, 300, 80)];
     [_retweetView addSubview:_retweetLabel];
     
   
