@@ -68,10 +68,9 @@
     [manager GET:kURLShowMe parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         //NSLog(@"success:%@",responseObject);
-
         currentHeadImage = [responseObject objectForKey:@"profile_image_url"];
         [head sd_setImageWithURL:[NSURL URLWithString:currentHeadImage]];
-//        [headBtn sd_setImageWithURL:[NSURL URLWithString:currentHeadImage] forState:UIControlStateNormal];
+        //[headBtn sd_setImageWithURL:[NSURL URLWithString:currentHeadImage] forState:UIControlStateNormal];
         NSLog(@"head:%@",currentHeadImage);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
     {
