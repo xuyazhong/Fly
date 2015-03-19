@@ -2,6 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UINewsstandApp.error.message</key>
+	<true/>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<array>
+					<string>icon-120.png</string>
+					<string>icon-58.png</string>
+					<string>icon-180.png</string>
+					<string>icon-60.png</string>
+					<string>icon</string>
+					<string>icon-87.png</string>
+					<string>icon-152.png</string>
+					<string>icon@2x</string>
+					<string>icon-60.png</string>
+					<string>icon-76.png</string>
+				</array>
+				<string></string>
+			</array>
+			<key>UIPrerenderedIcon</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +39,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>

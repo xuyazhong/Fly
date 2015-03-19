@@ -225,12 +225,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
-    [[KGModal sharedInstance] commentTweet:model];
+    [[KGModal sharedInstance] replyTweet:model];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -246,7 +245,6 @@
     {
         cell = [[MeCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCommentCell];
         cell.leftUtilityButtons = [self leftButtons];
-        cell.rightUtilityButtons = [self rightDeleteButtons];
         cell.delegate = self;
     }
     cell.isDestroy = YES;
@@ -351,6 +349,23 @@
         [cell.controlview setFrame:CGRectMake(10, 55+model.size.height+10+10, 300, 40)];
     }
     return cell;
+}
+
+-(NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+//    [leftUtilityButtons sw_addUtilityButtonWithColor:
+//     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+//                                                icon:[UIImage imageNamed:@"messagescenter_at"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor orangeColor]
+                                                icon:[UIImage imageNamed:@"messagescenter_comments"]];
+    //    [leftUtilityButtons sw_addUtilityButtonWithColor:
+    //     [UIColor colorWithRed:0.55f green:0.27f blue:0.07f alpha:1.0]
+    //                                                icon:[UIImage imageNamed:@"list.png"]];
+    
+    return leftUtilityButtons;
 }
 -(void)deleDestroy
 {

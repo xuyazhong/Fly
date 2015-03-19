@@ -202,6 +202,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSString *searchCellName = @"cellNickName";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:searchCellName];
     if (cell == nil)

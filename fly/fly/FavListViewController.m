@@ -281,10 +281,34 @@
         }
         case 1:
         {
-            [self deleteFav:getModel];
             NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
-            [_dataArray removeObjectAtIndex:cellIndexPath.row];
-            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            TweetModel *_getModel = [_dataArray objectAtIndex:cellIndexPath.row];
+            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确认删除吗？" contentText:@"确认删除吗？" leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
+            [alert show];
+            alert.leftBlock = ^()
+            {
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_getModel.tid,@"id", nil];
+                [manager POST:kURLFavoritesDestroy parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+                 {
+                     NSLog(@"delete success:%@",responseObject);
+                     [_dataArray removeObjectAtIndex:cellIndexPath.row];
+                     [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                 {
+                     NSLog(@"删除失败:%@",error);
+                 }];
+                
+            };
+            alert.rightBlock = ^() {
+                NSLog(@"取消");
+            };
+
+//            
+//            [self deleteFav:getModel];
+//            NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
+//            [_dataArray removeObjectAtIndex:cellIndexPath.row];
+//            [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
             break;
         }
         default:
@@ -307,6 +331,18 @@
          NSLog(@"failed:%@",error);
          [JDStatusBarNotification showWithStatus:@"取消收藏失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
      }];
+}
+- (NSArray *)leftButtons
+{
+    NSMutableArray *leftUtilityButtons = [NSMutableArray new];
+    
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor colorWithRed:0.07 green:0.75f blue:0.16f alpha:1.0]
+                                                icon:[UIImage imageNamed:@"messagescenter_at"]];
+    [leftUtilityButtons sw_addUtilityButtonWithColor:
+     [UIColor orangeColor]
+                                                icon:[UIImage imageNamed:@"messagescenter_comments"]];
+    return leftUtilityButtons;
 }
 
 

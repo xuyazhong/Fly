@@ -125,7 +125,7 @@
         NSLog(@"dict:%@",dict);
         [manager GET:kURLRepostList parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
-             
+             NSLog(@"respost:%@",responseObject);
              NSArray *subArr = [responseObject objectForKey:@"reposts"];
              //NSLog(@"reposts subArr:%@",subArr);
              for (NSDictionary *subDict in subArr)
@@ -415,6 +415,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSLog(@"mytableviewtag:%d",tableView.tag);
     if (tableView.tag == 201)
     {

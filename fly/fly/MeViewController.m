@@ -7,6 +7,8 @@
 //
 
 #import "MeViewController.h"
+#import "AppDelegate.h"
+
 //#import "UIImageView+WebCache.h"
 //#import "UIButton+WebCache.h"
 //#import "AFNetworking.h"
@@ -64,6 +66,7 @@
 {
     NSDictionary *dict;
     dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page",[[ShareToken readUserInfo] objectForKey:@"uid"],@"uid", nil];
+
     NSLog(@"dict:%@",dict);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -375,14 +378,14 @@
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
 {
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    DetailViewController *detail = [[DetailViewController alloc]init];
     switch (index) {
         case 0:
         {
-            NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
-            
-            [cell hideUtilityButtonsAnimated:YES];
+            detail.model = getModel;
+            [self presentViewController:detail animated:YES completion:nil];
             break;
         }
         case 1:

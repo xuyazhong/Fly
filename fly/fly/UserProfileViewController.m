@@ -14,7 +14,7 @@
 #import "MJRefresh.h"
 #import "ZoomImageView.h"
 #import "TweetCell.h"
-
+#import "KGModal.h"
 
 @interface UserProfileViewController ()
 {
@@ -633,69 +633,68 @@
 
 - (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerRightUtilityButtonWithIndex:(NSInteger)index
 {
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    DetailViewController *detail = [[DetailViewController alloc]init];
     switch (index) {
         case 0:
         {
-            NSLog(@"More button was pressed");
-            UIAlertView *alertTest = [[UIAlertView alloc] initWithTitle:@"Hello" message:@"More more more" delegate:nil cancelButtonTitle:@"cancel" otherButtonTitles: nil];
-            [alertTest show];
-            
-            [cell hideUtilityButtonsAnimated:YES];
-            break;
-        }
-        case 1:
-        {
-            // Delete button was pressed
-            NSIndexPath *cellIndexPath = [_myTableView indexPathForCell:cell];
-            TweetModel *_getModel = [_dataArray objectAtIndex:cellIndexPath.row];
-            DXAlertView *alert = [[DXAlertView alloc]initWithTitle:@"确认删除吗？" contentText:@"确认删除吗？" leftButtonTitle:@"删除" rightButtonTitle:@"取消"];
-            [alert show];
-            alert.leftBlock = ^()
-            {
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",_getModel.tid,@"id", nil];
-                [manager POST:kURLTweetDelete parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
-                 {
-                     NSLog(@"delete success:%@",responseObject);
-                     [_dataArray removeObjectAtIndex:cellIndexPath.row];
-                     [_myTableView deleteRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                 {
-                     NSLog(@"删除失败:%@",error);
-                 }];
-                
-            };
-            alert.rightBlock = ^() {
-                NSLog(@"取消");
-            };
+            detail.model = getModel;
+            [self presentViewController:detail animated:YES completion:nil];
             break;
         }
         default:
             break;
     }
 }
-
 - (BOOL)swipeableTableViewCellShouldHideUtilityButtonsOnSwipe:(SWTableViewCell *)cell
 {
     // allow just one cell's utility button to be open at once
     return YES;
 }
 
-- (BOOL)swipeableTableViewCell:(SWTableViewCell *)cell canSwipeToState:(SWCellState)state
+- (void)swipeableTableViewCell:(SWTableViewCell *)cell didTriggerLeftUtilityButtonWithIndex:(NSInteger)index
 {
-    switch (state) {
+    NSIndexPath *indexpath = [_myTableView indexPathForCell:cell];
+    TweetModel *getModel = [_dataArray objectAtIndex:indexpath.row];
+    switch (index)
+    {
+        case 0:
+            [[KGModal sharedInstance] repostTweet:getModel];
+            break;
         case 1:
-            // set to NO to disable all left utility buttons appearing
-            return YES;
+            [[KGModal sharedInstance] commentTweet:getModel];
             break;
         case 2:
-            // set to NO to disable all right utility buttons appearing
-            return YES;
+            [self addFav:getModel];
+            break;
+        case 3:
+            NSLog(@"test");
             break;
         default:
             break;
     }
-    
-    return YES;
 }
+
+
+-(void)addFav:(TweetModel *)getmodel
+{
+    NSLog(@"getModel:%@",getmodel);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",getmodel.tid,@"id", nil];
+    NSLog(@"dict:%@",dict);
+    [manager POST:kURLFavoritesCreate parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success:%@",responseObject);
+         [ShareToken sendMsg];
+         [JDStatusBarNotification showWithStatus:@"收藏成功" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"failed:%@",error);
+         [JDStatusBarNotification showWithStatus:@"收藏失败" dismissAfter:2 styleName:JDStatusBarStyleSuccess];
+     }];
+}
+
+
+
 @end
