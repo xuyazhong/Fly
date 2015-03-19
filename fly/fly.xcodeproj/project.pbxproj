@@ -126,6 +126,7 @@
 		BC17CF181AAAD8C100582DBB /* ListsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC17CF131AAAD8C100582DBB /* ListsModel.m */; };
 		BC17CF191AAAD8C100582DBB /* TweetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC17CF151AAAD8C100582DBB /* TweetModel.m */; };
 		BC17CF1A1AAAD8C100582DBB /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BC17CF171AAAD8C100582DBB /* UserModel.m */; };
+		BC1F5D1B1ABA63E00080462A /* XYZWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC1F5D1A1ABA63E00080462A /* XYZWebViewController.m */; };
 		BC233EC01AB6C22D0067B034 /* INSSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = BC233EBF1AB6C22D0067B034 /* INSSearchBar.m */; };
 		BC233ECC1AB6C3EF0067B034 /* NavBarIconSearch_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = BC233EC21AB6C3EF0067B034 /* NavBarIconSearch_blue.png */; };
 		BC233ECD1AB6C3EF0067B034 /* NavBarIconSearch_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BC233EC31AB6C3EF0067B034 /* NavBarIconSearch_blue@2x.png */; };
@@ -725,6 +726,8 @@
 		BC17CF151AAAD8C100582DBB /* TweetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetModel.m; sourceTree = "<group>"; };
 		BC17CF161AAAD8C100582DBB /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		BC17CF171AAAD8C100582DBB /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		BC1F5D191ABA63E00080462A /* XYZWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZWebViewController.h; sourceTree = "<group>"; };
+		BC1F5D1A1ABA63E00080462A /* XYZWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZWebViewController.m; sourceTree = "<group>"; };
 		BC233EBE1AB6C22D0067B034 /* INSSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INSSearchBar.h; sourceTree = "<group>"; };
 		BC233EBF1AB6C22D0067B034 /* INSSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INSSearchBar.m; sourceTree = "<group>"; };
 		BC233EC21AB6C3EF0067B034 /* NavBarIconSearch_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NavBarIconSearch_blue.png; sourceTree = "<group>"; };
@@ -1431,6 +1434,8 @@
 				BC0EE9A21AAD45840020CD74 /* SelectImageVC.m */,
 				BCC370141AB6FBAC00AB2F03 /* UserProfileViewController.h */,
 				BCC370151AB6FBAC00AB2F03 /* UserProfileViewController.m */,
+				BC1F5D191ABA63E00080462A /* XYZWebViewController.h */,
+				BC1F5D1A1ABA63E00080462A /* XYZWebViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -3280,6 +3285,7 @@
 				TargetAttributes = {
 					872E22581AAA010C00C552F7 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 4JFM2YD45A;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3785,6 +3791,7 @@
 				BC17CEF81AAAD7D800582DBB /* FavListViewController.m in Sources */,
 				BCECDEB71AB2C33F008A65AD /* UzysWrapperPickerController.m in Sources */,
 				BC17CEB71AAAD4A500582DBB /* SDWebImageCompat.m in Sources */,
+				BC1F5D1B1ABA63E00080462A /* XYZWebViewController.m in Sources */,
 				BCD0E5FA1AAC773600BC20D5 /* LocationViewController.m in Sources */,
 				872E22621AAA010C00C552F7 /* AppDelegate.m in Sources */,
 				BC17CF0B1AAAD87700582DBB /* DetailCommentCell.m in Sources */,
@@ -3957,7 +3964,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/fly",
@@ -3972,7 +3980,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "87a6c36c-d315-4eb4-85c5-387a8e2200f3";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "fly/fly-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/fly/jpush";
@@ -3985,7 +3993,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/fly",
@@ -4000,7 +4009,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "87a6c36c-d315-4eb4-85c5-387a8e2200f3";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "fly/fly-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/fly/jpush";
 			};

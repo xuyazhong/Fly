@@ -125,7 +125,7 @@
         NSLog(@"dict:%@",dict);
         [manager GET:kURLRepostList parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
-             NSLog(@"respost:%@",responseObject);
+             //NSLog(@"respost:%@",responseObject);
              NSArray *subArr = [responseObject objectForKey:@"reposts"];
              //NSLog(@"reposts subArr:%@",subArr);
              for (NSDictionary *subDict in subArr)
@@ -142,7 +142,7 @@
                  model.user = user;
                  [_data1 addObject:model];
              }
-             NSLog(@"_data1:%@",_data1);
+             //NSLog(@"_data1:%@",_data1);
              //[myJSON setDictionary:responseObject];
              [mytableview1 reloadData];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -453,12 +453,10 @@
             cell.createTime.text = model.created_at;
             cell.tweetContent.text = model.text;
         }
-        
         return cell;
     }else if(tableView.tag == 203)
     {
         NSLog(@"微博");
-        
         return [self getMytableView3:mytableview3];
     }
     else
@@ -466,8 +464,6 @@
         NSLog(@"nil return");
         return nil;
     }
-    
-    
 }
 -(UITableViewCell *)getMytableView3:(UITableView *)tableView
 {

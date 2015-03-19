@@ -20,6 +20,9 @@
 #import "MyTabBarViewController.h"
 #import "KGModal.h"
 #import "ZoomImageView.h"
+#import "XYZWebViewController.h"
+
+
 
 @interface HomeViewController ()
 
@@ -404,6 +407,7 @@
         cell.rightUtilityButtons = [self rightButtons];
         cell.delegate = self;
     }
+    cell.userInteractionEnabled = YES;
     TweetModel *model = [_dataArray objectAtIndex:indexPath.row];
     cell.model = model;
     [cell.userInfo sd_setImageWithURL:[NSURL URLWithString:model.user.profile_image_url]];
@@ -420,7 +424,16 @@
         
         NSString *myBlock = [NSString stringWithFormat:@"%@ [%d,%d]: %@%@", hotWords[hotWord], (int)range.location, (int)range.length, string, (protocol != nil) ? [NSString stringWithFormat:@" *%@*", protocol] : @""];
         NSLog(@"str = %@",myBlock);
-//        UIWebView *myWebView = [[UIWebView alloc]initWithFrame:<#(CGRect)#>]
+        if (string.length>0)
+        {
+            NSLog(@"okokoko");
+            XYZWebViewController *myWebView = [[XYZWebViewController alloc]init];
+            myWebView.kUrlString = [NSString stringWithFormat:@"%@",string];
+            UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:myWebView];
+            [self presentViewController:nvc animated:YES completion:^{
+            }];
+        }
+//
     }];
     
     
