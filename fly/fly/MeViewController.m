@@ -63,7 +63,7 @@
 -(void)getJSON:(int)page andUrl:(NSString *)url
 {
     NSDictionary *dict;
-    dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page",@"uid",[[ShareToken readUserInfo] objectForKey:@"uid"], nil];
+    dict = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",[NSString stringWithFormat:@"%d",page],@"page",[[ShareToken readUserInfo] objectForKey:@"uid"],@"uid", nil];
     NSLog(@"dict:%@",dict);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
