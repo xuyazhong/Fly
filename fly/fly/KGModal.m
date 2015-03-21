@@ -114,8 +114,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     if (![ShareToken sharedToken].isBusy)
     {
         [ShareToken sharedToken].isBusy = YES;
-        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
-        [self showWithContentView:contentView andAnimated:YES];
+        [[KGModal sharedInstance] updateTweet];
     }
 }
 -(void)commentTweet:(TweetModel *)model

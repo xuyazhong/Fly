@@ -60,10 +60,9 @@
 }
 -(void)getJSON
 {
-    AppDelegate *share = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    //NSDictionary *info = [ShareToken readUserInfo];
-    //NSString *uid = [info objectForKey:@"uid"];
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",share.wbCurrentUserID,@"uid", nil];
+    NSDictionary *info = [ShareToken readUserInfo];
+    NSString *uid = [info objectForKey:@"uid"];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[ShareToken readToken],@"access_token",uid,@"uid", nil];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:kURLShowMe parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
