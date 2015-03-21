@@ -49,12 +49,10 @@
     
     UIBarButtonItem *item3 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshView)];
     
-    UIBarButtonItem *item4 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(loadHtmlString)];
     
-    UIBarButtonItem *item5 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(loadJSString)];
     UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     
-    NSArray *mArr = [NSArray arrayWithObjects:spaceItem,item1,spaceItem,item2,spaceItem,item3,spaceItem,item4,spaceItem,item5,spaceItem, nil];
+    NSArray *mArr = [NSArray arrayWithObjects:spaceItem,item1,spaceItem,item2,spaceItem,item3,spaceItem, nil];
     self.toolbarItems = mArr;
 }
 
