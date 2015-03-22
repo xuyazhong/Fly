@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "LocationViewController.h"
 #import "SelectImageVC.h"
+#import "UzysAssetsPickerController.h"
 
 CGFloat const kFadeInAnimationDuration = 0.3;
 CGFloat const kTransformPart1AnimationDuration = 0.2;
@@ -114,7 +115,8 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     if (![ShareToken sharedToken].isBusy)
     {
         [ShareToken sharedToken].isBusy = YES;
-        [[KGModal sharedInstance] updateTweet];
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 280, 220)];
+        [self showWithContentView:contentView andAnimated:YES];
     }
 }
 -(void)commentTweet:(TweetModel *)model
@@ -728,21 +730,33 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 -(void)addPicture
 {
     NSLog(@"picture");
+//    UzysAssetsPickerController *picker = [[UzysAssetsPickerController alloc] init];
+//    picker.delegate = self;
+//    picker.maximumNumberOfSelectionVideo = 0;
+//    picker.maximumNumberOfSelectionPhoto = 1;
+//    
+//    [self.viewController presentViewController:picker animated:YES completion:^{
+//        
+//    }];
+
+    
+    
     SelectImageVC *vc = [[SelectImageVC alloc]init];
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:vc];
     
-    [self.viewController presentViewController:nvc animated:NO completion:^{
+    [self.viewController presentViewController:nvc animated:YES completion:^{
+        
     }];
     [vc requestImageSuccess:^(NSData *image)
      {
          self.selectImage = image;
          self.hasPic = YES;
-         NSLog(@"get image!!");
+         NSLog(@"get image!!:%@",image);
          
      } failed:^(NSString *str)
      {
          self.hasPic = NO;
-         NSLog(@"str:%@",str);
+         NSLog(@"not getPic:%@",str);
      }];
     
 //    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
@@ -847,19 +861,22 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
             tweetdict = [NSDictionary dictionaryWithObjectsAndKeys:infoLabel.text,@"status",[ShareToken readToken],@"access_token", nil];
         }
         
-        
+        NSLog(@"current url :%@",currentUrl);
+        NSLog(@"sendImages:%@",self.selectImage);
+        NSLog(@"text:%@",infoLabel.text);
+        //manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
         [manager POST:currentUrl parameters:tweetdict constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [formData appendPartWithFileData:self.selectImage name:@"pic" fileName:@"test" mimeType:@"image/png"];
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"success:%@",responseObject);
             [ShareToken messageSend];
             [JDStatusBarNotification showWithStatus:@"发送成功" dismissAfter:2 styleName:@"XYZStyle"];
-            [self hideAnimated:self.animateWhenDismissed];
             self.hasPic = NO;
+            [self hideAnimated:self.animateWhenDismissed];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [ShareToken recMsgShort];
             [JDStatusBarNotification showWithStatus:@"发送失败" dismissAfter:2 styleName:@"XYZStyle"];
-            NSLog(@"failed:%@",error);
+            NSLog(@"send  failed:%@",error.description);
         }];
     }else
     {
@@ -966,7 +983,46 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
 - (void)dealloc{
     [self cleanup];
 }
-
+//- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+//{
+//    NSLog(@"cancel");
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//    }];
+//}
+//
+//#pragma mark - picker deleimage
+//- (void)UzysAssetsPickerControllerDidCancel:(UzysAssetsPickerController *)picker
+//{
+//    NSLog(@"取消选择图片");
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+//}
+//- (void)UzysAssetsPickerController:(UzysAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
+//{
+//    //NSLog(@"选择图片:%@",assets);
+//    __weak typeof(self) weakSelf = self;
+//    [assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        ALAsset *representation = obj;
+//        UIImage *img = [UIImage imageWithCGImage:representation.defaultRepresentation.fullResolutionImage scale:representation.defaultRepresentation.scale orientation:(UIImageOrientation)representation.defaultRepresentation.orientation];
+//        NSData *pngData = UIImagePNGRepresentation(img);
+//        
+//        if (pngData)
+//        {
+//            weakSelf.selectImage = pngData;
+//            weakSelf.hasPic = YES;
+//            NSLog(@"ok:%@",pngData);
+//        }else
+//        {
+//            weakSelf.hasPic = NO;
+//            NSLog(@"failed");
+//        }
+//    }];
+//    
+//    [picker dismissViewControllerAnimated:YES completion:^{
+//        
+//    }];
+//}
 @end
 
 @implementation KGModalViewController
@@ -1164,5 +1220,7 @@ NSString *const KGModalDidHideNotification = @"KGModalDidHideNotification";
     }
     return YES;
 }
+
+
 
 @end

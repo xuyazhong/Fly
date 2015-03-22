@@ -7,11 +7,11 @@
 //
 #import <AVFoundation/AVFoundation.h>
 #import "SelectImageVC.h"
-#import "UzysAssetsPickerController.h"
+//#import "UzysAssetsPickerController.h"
 
 
 
-@interface SelectImageVC ()<UzysAssetsPickerControllerDelegate>
+@interface SelectImageVC ()//<UzysAssetsPickerControllerDelegate>
 {
     selectImageBlock _finishedBlock;
     notSelectBlock _failedBlock;
@@ -24,31 +24,31 @@
 {
     [super viewDidLoad];
     
-//    UIButton *sucessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [sucessBtn setTitle:@"完成" forState:UIControlStateNormal];
-//    [sucessBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
-//    [sucessBtn setFrame:CGRectMake(0, 0, 60, 20)];
-//    [sucessBtn addTarget:self action:@selector(sucessBtnAction) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:sucessBtn];
-//    self.navigationItem.rightBarButtonItem = item;
+    UIButton *sucessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sucessBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [sucessBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+    [sucessBtn setFrame:CGRectMake(0, 0, 60, 20)];
+    [sucessBtn addTarget:self action:@selector(sucessBtnAction) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithCustomView:sucessBtn];
+    self.navigationItem.rightBarButtonItem = item;
     
-    UzysAssetsPickerController *picker = [[UzysAssetsPickerController alloc] init];
-    picker.delegate = self;
-    picker.maximumNumberOfSelectionVideo = 0;
-    picker.maximumNumberOfSelectionPhoto = 1;
-
-    [self presentViewController:picker animated:YES completion:^{
-        
-    }];
+//    UzysAssetsPickerController *picker = [[UzysAssetsPickerController alloc] init];
+//    picker.delegate = self;
+//    picker.maximumNumberOfSelectionVideo = 0;
+//    picker.maximumNumberOfSelectionPhoto = 1;
+//
+//    [self presentViewController:picker animated:YES completion:^{
+//        
+//    }];
     
-    /*
+    
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.allowsEditing = NO;
+    picker.allowsEditing = YES;
     picker.delegate = self;
     [self presentViewController:picker animated:YES completion:^{
     }];
-     */
+    
     // Do any additional setup after loading the view.
 }
 /*
@@ -74,7 +74,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -82,14 +82,11 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
-/*
+
 #pragma mark - image delegate
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     //NSLog(@"info:%@",info);
-//    _sendText(_myTextField.text);
-//    [self.navigationController popViewControllerAnimated:YES];
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (image)
     {
@@ -106,7 +103,7 @@
         }];
     }];
 }
-*/
+
 //点击cancel按钮的时候,触发此方法
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -117,7 +114,7 @@
         }];
     }];
 }
-
+/*
 #pragma mark - picker deleimage
 - (void)UzysAssetsPickerControllerDidCancel:(UzysAssetsPickerController *)picker
 {
@@ -129,9 +126,10 @@
         }];
     }];
 }
+
 - (void)UzysAssetsPickerController:(UzysAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
-    NSLog(@"选择图片:%@",assets);
+    //NSLog(@"选择图片:%@",assets);
 
     [assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         ALAsset *representation = obj;
@@ -148,11 +146,21 @@
             NSLog(@"failed");
         }
     }];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)(0.51 * NSEC_PER_SEC)),dispatch_get_main_queue(), ^
+                   {
+                       if (![self.presentedViewController isBeingDismissed])
+                       {
+                           [self dismissViewControllerAnimated:YES completion:^
+                            {
+                                NSLog(@"eof");
+                            }];
+                       }
+                   });
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            NSLog(@"eof");
-        }];
+
     }];
 }
 
+*/
 @end

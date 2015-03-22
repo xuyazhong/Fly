@@ -160,6 +160,7 @@
 -(void)longPressAction
 {
     [[KGModal sharedInstance] updateTweet];
+    //[[KGModal sharedInstance] updateTweet];
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
