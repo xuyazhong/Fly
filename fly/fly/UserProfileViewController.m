@@ -187,6 +187,7 @@
     _myTableView.dataSource = self;
     //_myTableView.tableHeaderView = self.coverImageView;
     
+/*
     // 设置普通状态的动画图片
     NSMutableArray *idleImages = [NSMutableArray array];
     for (NSUInteger i = 0; i<=72; i++)
@@ -212,7 +213,7 @@
     _myTableView.footer.stateHidden = YES;
     _myTableView.footer.stateHidden = YES;
     _myTableView.gifFooter.refreshingImages = refreshingImages;
-    
+*/    
     [self.view addSubview:_myTableView];
    
     
