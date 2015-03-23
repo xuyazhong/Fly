@@ -12,6 +12,10 @@
 
 #import "AppDelegate.h"
 
+
+#define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
+#define kAppSecret      @"cdea7b35f1421b640f58f9ca5ed6b465"
+
 @interface SendMessageToWeiboViewController()<UIScrollViewDelegate>
 {
     WBSDKRelationshipButton *relationshipButton;

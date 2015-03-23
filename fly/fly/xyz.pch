@@ -26,9 +26,8 @@ App Secret：
 
 static NSString *const XYZStyle = @"XYZStyle";
 
+
 #define kAppKey         @"2808054411"
-#define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
-#define kAppSecret      @"cdea7b35f1421b640f58f9ca5ed6b465"
 
 #define kURLHomeLine    @"https://api.weibo.com/2/statuses/home_timeline.json"
 #define kURLGroupLists  @"https://api.weibo.com/2/friendships/groups.json"
