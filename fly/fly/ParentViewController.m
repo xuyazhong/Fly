@@ -477,5 +477,27 @@
     return _initialAlpha;
 }
 
+#pragma mark - scrollview
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"contentoffset:%f",scrollView.contentOffset.y);
+    float _alpha = _myTableView.contentOffset.y/100.00;
+    NSLog(@"alpha:%f",_alpha);
+    if (_myTableView.contentOffset.y > 64.00)
+    {
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor orangeColor]];
+        [self.navigationController.navigationBar setBarTintColor:[UIColor orangeColor]];
+        [self.navigationController.navigationBar setAlpha:_alpha];
+    }
+    
+    if (_myTableView.contentOffset.y <= 64.00)
+    {
+        NSLog(@"=====滑动到顶");
+        [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
+        [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
+        [self.navigationController.navigationBar setAlpha:1.0];
+    }
+}
+
 
 @end
