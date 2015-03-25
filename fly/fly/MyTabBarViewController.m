@@ -19,6 +19,7 @@
 #import "UIButton+WebCache.h"
 #import "KGModal.h"
 #import "AppDelegate.h"
+#import "UIImage+Tint.h"
 
 @interface MyTabBarViewController ()
 {
@@ -27,6 +28,7 @@
     UILabel *selectLabel;
     CGFloat btnWidth;
     UIImageView  *customTabBar;
+    NSArray *norArr;
 }
 @end
 
@@ -110,7 +112,7 @@
     customTabBar.image = [UIImage imageNamed:@"myTabBar"];
     customTabBar.tintColor = [UIColor orangeColor];
     
-    NSArray *norArr = [NSArray arrayWithObjects:@"tab_favlist_selected",@"tab_user_comments_selected",@"tab_user_home_groups_selected",@"tab_user_at_selected",@"corner_circle", nil];
+    norArr = [NSArray arrayWithObjects:@"tab_favlist_selected",@"tab_user_comments_selected",@"tab_user_home_groups_selected",@"tab_user_at_selected",@"corner_circle", nil];
     
     //NSArray *selArr = [NSArray arrayWithObjects:@"home_tab_icon_1_selected",@"home_tab_icon_2_selected",@"home_tab_icon_3_selected",@"home_tab_icon_4_selected", nil];
     btnWidth = [DeviceManager currentScreenSize].width/norArr.count;
@@ -135,6 +137,21 @@
         }
         else
         {
+            UIImageView *btn = [[UIImageView alloc]initWithFrame:CGRectMake(10+btnWidth*i, 0, 40, 40)];
+            btn.userInteractionEnabled = YES;
+            btn.tag = 500 + i;
+            btn.image = [UIImage imageNamed:norArr[i]];
+            if (i==2)
+            {
+                btn.image = [[UIImage imageNamed:norArr[i]] imageWithGradientTintColor:[UIColor orangeColor]];
+                selectLabel = [[UILabel alloc]initWithFrame:CGRectMake(btnWidth*i+btnWidth/2, 45, 5, 5)];
+                selectLabel.backgroundColor = [UIColor orangeColor];
+                [customTabBar addSubview:selectLabel];
+            }
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+            [btn addGestureRecognizer:tap];
+            [customTabBar addSubview:btn];
+            /*
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.frame = CGRectMake(10+btnWidth*i, 0, 45, 45);
             //btn.tintColor = [UIColor orangeColor];
@@ -149,6 +166,7 @@
             [btn addTarget:self action:@selector(btnClickAction:) forControlEvents:UIControlEventTouchUpInside];
             [btn setImage:[UIImage imageNamed:norArr[i]] forState:UIControlStateNormal];
             [customTabBar addSubview:btn];
+            */
         }
 
         
@@ -164,16 +182,27 @@
 }
 -(void)tapAction:(UITapGestureRecognizer *)tap
 {
+    UIImageView *img = (UIImageView *)tap.view;
+    NSInteger getTag = img.tag-500;
+    NSLog(@"tag:%d",getTag);
+    CGRect frame = selectLabel.frame;
     for (int i=0; i<4; i++)
     {
-        UIButton *mybtn = (UIButton *)[self.view viewWithTag:500+i];
-        mybtn.selected = NO;
+        UIImageView *mybtn = (UIImageView *)[self.view viewWithTag:500+i];
+        //mybtn.selected = NO;
+        mybtn.image = [UIImage imageNamed:norArr[i]];
     }
-    UIImageView *img = (UIImageView *)tap.view;
-    
-    self.selectedIndex = 4;
-    CGRect frame = selectLabel.frame;
-    frame.origin.x = img.frame.origin.x+btnWidth/2-10;
+    //[[UIImage imageNamed:@"tab_user_comments_selected"] imageWithGradientTintColor:[UIColor orangeColor]];
+    if (getTag < 4)
+    {
+        img.image = [[UIImage imageNamed:norArr[img.tag-500]] imageWithGradientTintColor:[UIColor orangeColor]];
+        frame.origin.x = img.frame.origin.x+btnWidth/2-15;
+    }else
+    {
+        frame.origin.x = img.frame.origin.x+btnWidth/2-10;
+    }
+    self.selectedIndex = getTag;
+    //self.selectedIndex = 4;    
     selectLabel.frame = frame;
 }
 -(void)btnClickAction:(UIButton *)btn

@@ -45,9 +45,6 @@
     self.title = @"首页";
     currentUrl = kURLHomeLine;
     
-    
-    
-    
 //    UIButton *updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    updateBtn.frame = CGRectMake(0, 0, 40, 40);
 //    [updateBtn setBackgroundImage:[UIImage imageNamed:@"tab_send"] forState:UIControlStateNormal];
